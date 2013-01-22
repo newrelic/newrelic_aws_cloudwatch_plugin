@@ -1,0 +1,47 @@
+#! /usr/bin/env ruby
+
+#
+# This is an example agent which generates synthetic data.
+# A 1mHz (one cycle every 16 minutes) sin+1, cos+1 and sin+5 wave is generated,
+# using the Unix epoch as the base.
+#
+# Robert R. Henry (rrh@newrelic.com)
+# 2012-10-18
+#
+
+require "rubygems"
+require "bundler/setup"
+
+require "newrelic_plugin"
+
+module ExampleAgent
+
+  class Agent < NewRelic::Plugin::Agent::Base
+
+    agent_guid "PUT YOUR GUID HERE" 
+    agent_config_options :hertz  # frequency of the periodic functions
+    agent_human_labels("Example Agent") { "Synthetic example data" }
+
+    def poll_cycle
+      x = Time.now.to_f * hertz * Math::PI * 2
+      report_metric "SIN",     "Value", Math.sin(x) + 1.0 
+      report_metric "COS",     "Value", Math.cos(x) + 1.0 
+      report_metric "BIASSIN", "Value", Math.sin(x) + 5.0
+    end
+
+  end
+
+  #
+  # Register this agent with the component.
+  # The ExampleAgent is the name of the module that defines this
+  # driver (the module must contain at least three classes - a
+  # PollCycle, a Metric and an Agent class, as defined above).
+  #
+  NewRelic::Plugin::Setup.install_agent :example, ExampleAgent
+
+  #
+  # Launch the agent; this never returns.
+  #
+  NewRelic::Plugin::Run.setup_and_run
+
+end

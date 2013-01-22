@@ -1,0 +1,21 @@
+# Please make sure to update the license_key information with the license key for your New Relic
+# account.
+#
+#
+newrelic:
+  #
+  # Update with your New Relic account license key:
+  #
+  license_key: 'YOUR_LICENSE_KEY_HERE'
+  #
+  # Set to '1' for verbose output, remove for normal output.
+  # All output goes to stdout/stderr.
+  #
+  verbose: 1
+#
+# Agent Configuration:
+#
+agents:
+  # this is where configuration for agents belongs
+  example:
+    hertz: 1000
