@@ -18,7 +18,7 @@ module ExampleAgent
 
   class Agent < NewRelic::Plugin::Agent::Base
 
-    agent_guid "PUT YOUR GUID HERE" 
+    agent_guid "_DROP_GUID_FROM_PLUGIN_HERE_" 
     agent_config_options :hertz  # frequency of the periodic functions
     agent_human_labels("Example Agent") { "Synthetic example data" }
 
