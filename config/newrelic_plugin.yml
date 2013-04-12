@@ -1,0 +1,19 @@
+# Please make sure to update the license_key information with the license key for your New Relic
+# account.
+#
+newrelic:
+  #
+  # Update with your New Relic account license key:
+  #
+  license_key: 'e7b3d85ce615a352af9cf55aa0dcae67d05a2076'
+  #
+  # Set to '1' for verbose output, remove for normal output.
+  # All output goes to stdout/stderr.
+  #
+  # verbose: 1
+#
+# Agent Configuration:
+#
+agents:
+  apachehttpd:
+      hostname: httpd.apache.org
