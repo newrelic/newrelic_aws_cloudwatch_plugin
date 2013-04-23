@@ -1,3 +1,5 @@
+require "aws-sdk"
+
 module NewRelicAWS
   module Collectors
     class Base < Struct.new(:options); end
