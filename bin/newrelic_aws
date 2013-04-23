@@ -1,0 +1,14 @@
+#! /usr/bin/env ruby
+
+#
+# This plugin includes several AWS agents, each pulling data from CloudWatch.
+#
+# Sean Porter (portertech@hw-ops.com)
+# 2013-04-23
+#
+
+unless $:.include?(File.dirname(__FILE__) + '/../lib/')
+  $: << File.dirname(__FILE__) + '/../lib'
+end
+
+require 'newrelic_aws'
