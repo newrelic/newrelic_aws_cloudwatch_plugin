@@ -20,3 +20,5 @@ agents:
     # Update with you AWS account keys:
     access_key: 'YOUR_AWS_ACCESS_KEY'
     secret_key: 'YOUR_AWS_SECRET_KEY'
+    # Update with your AWS region (currently only support one per agent).
+    region: 'us-east-1'
