@@ -22,10 +22,11 @@ module AWSCloudWatch
     agent_version "0.0.1"
     agent_config_options :access_key # AWS access key
     agent_config_options :secret_key # AWS secret key
+    agent_config_options :region     # AWS region
     agent_human_labels("AWS CloudWatch") { "AWS CloudWatch metrics" }
 
     def poll_cycle
-      x = Time.now.to_f * hertz * Math::PI * 2
+      x = Time.now.to_f * 1000 * Math::PI * 2
       report_metric "SIN",     "Value", Math.sin(x) + 1.0
       report_metric "COS",     "Value", Math.cos(x) + 1.0
       report_metric "BIASSIN", "Value", Math.sin(x) + 5.0
