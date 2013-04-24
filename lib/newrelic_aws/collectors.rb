@@ -27,10 +27,11 @@ module NewRelicAWS
           :period      => options[:period],
           :start_time  => options[:start_time],
           :end_time    => options[:end_time],
-          :dimensions  => options[:dimensions]
+          :dimensions  => [options[:dimension]]
         )
         point = statistics[:datapoints].last
-        [options[:metric_name], point[:unit].downcase, point[:sum]]
+        point_name = [options[:dimension][:value], options[:metric_name]].join("/")
+        [point_name, point[:unit].downcase, point[:sum]]
       end
 
       def collect!; end
@@ -65,10 +66,10 @@ module NewRelicAWS
               :namespace   => "AWS/EC2",
               :metric_name => metric_name,
               :unit        => unit,
-              :dimensions  => [{
+              :dimension  => {
                 :name  => "InstanceId",
                 :value => instance_id
-              }]
+              }
             )
           end
         end
