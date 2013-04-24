@@ -30,6 +30,7 @@ module NewRelicAWS
           :dimensions  => [options[:dimension]]
         )
         point = statistics[:datapoints].last
+        return if point.nil?
         point_name = [options[:dimension][:value], options[:metric_name]].join("/")
         [point_name, point[:unit].downcase, point[:sum]]
       end
@@ -62,7 +63,7 @@ module NewRelicAWS
         data_points = []
         instance_ids.each do |instance_id|
           metric_list.each do |metric_name, unit|
-            data_points << get_data_point(
+            data_point = get_data_point(
               :namespace   => "AWS/EC2",
               :metric_name => metric_name,
               :unit        => unit,
@@ -71,6 +72,9 @@ module NewRelicAWS
                 :value => instance_id
               }
             )
+            unless data_point.nil?
+              data_points << data_point
+            end
           end
         end
         data_points
