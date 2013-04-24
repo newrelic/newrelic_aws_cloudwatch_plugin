@@ -29,11 +29,10 @@ module NewRelicAWS
       end
 
       def poll_cycle
-        puts @collector.inspect
-        #metrics = @collector.collect!
-        #metrics.each do |*args|
-        #  report_metric args
-        #end
+        data_points = @collector.collect!
+        data_points.each do |point|
+          report_metric *point
+        end
       end
     end
   end
@@ -45,11 +44,12 @@ module NewRelicAWS
       agent_version "0.0.1"
       agent_human_labels("AWS RDS") { "AWS RDS" }
 
+      def setup_metrics
+        @collector = NewRelicAWS::Collectors::RDS.new(Config.options)
+      end
+
       def poll_cycle
-        x = Time.now.to_f * 1000 * Math::PI * 2
-        report_metric "SIN",     "Value", Math.sin(x) + 1.0
-        report_metric "COS",     "Value", Math.cos(x) + 1.0
-        report_metric "BIASSIN", "Value", Math.sin(x) + 5.0
+        data_points = @collector.collect!
       end
     end
   end
