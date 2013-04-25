@@ -2,37 +2,28 @@ require "rubygems"
 require "bundler/setup"
 
 require "newrelic_plugin"
+require "newrelic_aws/components"
 require "newrelic_aws/collectors"
 
 module NewRelicAWS
-  module Config
-    def self.options
-      options = NewRelic::Plugin::Config.config.config["aws"]
-      unless options.is_a?(Hash) &&
-          options.has_key?("access_key") &&
-          options.has_key?("secret_key")
-        raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
-      end
-      options
-    end
-  end
-
   module EC2
     class Agent < NewRelic::Plugin::Agent::Base
 
-      agent_guid "com.newrelic.aws.ec2"
+      agent_guid "com.newrelic.aws.ec2_overview"
       agent_version "0.0.1"
-      agent_human_labels("AWS EC2") { "AWS EC2" }
+      agent_human_labels("EC2 Overview") { "EC2 Overview" }
 
       def setup_metrics
-        @collector = NewRelicAWS::Collectors::EC2.new(Config.options)
+        @collector = Collectors::EC2.new
+        @components = Components::Collection.new("com.newrelic.aws.ec2", version)
       end
 
       def poll_cycle
-        data_points = @collector.collect!
-        data_points.each do |point|
-          report_metric *point
+        @collector.collect.each do |component, metric_name, units, value|
+          report_metric("#{component}/#{metric_name}", units, value)
+          @components.report_metric(component, metric_name, units, value)
         end
+        @components.process
       end
     end
   end
@@ -40,16 +31,21 @@ module NewRelicAWS
   module RDS
     class Agent < NewRelic::Plugin::Agent::Base
 
-      agent_guid "com.newrelic.aws.rds"
+      agent_guid "com.newrelic.aws.rds_overview"
       agent_version "0.0.1"
-      agent_human_labels("AWS RDS") { "AWS RDS" }
+      agent_human_labels("RDS Overview") { "RDS Overview" }
 
       def setup_metrics
-        @collector = NewRelicAWS::Collectors::RDS.new(Config.options)
+        @collector = Collectors::RDS.new
+        @components = Components::Collection.new("com.newrelic.aws.rds", version)
       end
 
       def poll_cycle
-        data_points = @collector.collect!
+        @collector.collect.each do |component, metric_name, units, value|
+          report_metric("#{component}/#{metric_name}", units, value)
+          @components.report_metric(component, metric_name, units, value)
+        end
+        @components.process
       end
     end
   end

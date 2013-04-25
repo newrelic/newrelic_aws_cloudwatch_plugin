@@ -1,9 +1,10 @@
 GIT
   remote: git@github.com:newrelic-platform/newrelic_plugin.git
-  revision: 345deb7a8508680eb54bab0119a9e8c52df484e1
+  revision: 024d0c562a8ab73aabe7fab7f7485a2742b43adf
   specs:
-    newrelic_plugin (0.2.9)
+    newrelic_plugin (0.2.11)
       faraday (>= 0.8.1)
+      json
 
 GEM
   remote: https://rubygems.org/
@@ -12,10 +13,10 @@ GEM
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
-    faraday (0.8.4)
+    faraday (0.8.7)
       multipart-post (~> 1.1)
     json (1.7.7)
-    multipart-post (1.1.5)
+    multipart-post (1.2.0)
     nokogiri (1.5.9)
     uuidtools (2.1.3)
 
