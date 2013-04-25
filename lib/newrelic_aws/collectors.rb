@@ -4,14 +4,20 @@ require "aws-sdk"
 module NewRelicAWS
   module Collectors
     class Base
-      def initialize(options)
+      def initialize
+        options = NewRelic::Plugin::Config.config.options["aws"]
+        unless options.is_a?(Hash) &&
+            options.has_key?("access_key") &&
+            options.has_key?("secret_key")
+          raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
+        end
         @aws_access_key = options["access_key"]
         @aws_secret_key = options["secret_key"]
         @aws_region = options["region"] || "us-east-1"
         @cloudwatch = AWS::CloudWatch.new(
-          :access_key_id => @aws_access_key,
+          :access_key_id     => @aws_access_key,
           :secret_access_key => @aws_secret_key,
-          :region => @aws_region
+          :region            => @aws_region
         )
       end
 
@@ -31,11 +37,12 @@ module NewRelicAWS
         )
         point = statistics[:datapoints].last
         return if point.nil?
-        point_name = [options[:dimension][:value], options[:metric_name]].join("/")
-        [point_name, point[:unit].downcase, point[:sum]]
+        [options[:dimension][:value], options[:metric_name], point[:unit].downcase, point[:sum]]
       end
 
-      def collect!; end
+      def collect
+        []
+      end
     end
 
     class EC2 < Base
@@ -59,7 +66,7 @@ module NewRelicAWS
         }
       end
 
-      def collect!
+      def collect
         data_points = []
         instance_ids.each do |instance_id|
           metric_list.each do |metric_name, unit|
@@ -67,7 +74,7 @@ module NewRelicAWS
               :namespace   => "AWS/EC2",
               :metric_name => metric_name,
               :unit        => unit,
-              :dimension  => {
+              :dimension   => {
                 :name  => "InstanceId",
                 :value => instance_id
               }
