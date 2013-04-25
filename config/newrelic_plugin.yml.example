@@ -1,0 +1,28 @@
+# Please make sure to update the license_key information with the
+# license key for your New Relic account.
+#
+newrelic:
+  #
+  # Update with your New Relic account license key:
+  #
+  license_key: 'YOUR_LICENSE_KEY_HERE'
+  #
+  # Set to '1' for verbose output, remove for normal output.
+  # All output goes to stdout/stderr.
+  #
+  verbose: 1
+#
+# AWS configuration.
+#
+aws:
+  # Update with you AWS account keys:
+  access_key: 'YOUR_AWS_ACCESS_KEY_HERE'
+  secret_key: 'YOUR_AWS_SECRET_KEY_HERE'
+  # Update with your AWS region (eg. us-east-1):
+  region: 'YOUR_AWS_REGION_HERE'
+#
+# Agent configuration.
+#
+agents:
+  ec2:
+    enabled: true
