@@ -2,32 +2,55 @@ require "rubygems"
 require "bundler/setup"
 
 require "newrelic_plugin"
-require "newrelic_aws/config"
 require "newrelic_aws/components"
 require "newrelic_aws/collectors"
 
 module NewRelicAWS
-  module EC2
+  module Base
     class Agent < NewRelic::Plugin::Agent::Base
+      def agent_name
+        self.class.name.split("::")[-2].downcase
+      end
 
-      agent_guid "com.newrelic.aws.ec2_overview"
-      agent_version "0.0.1"
-      agent_human_labels("EC2 Overview") { "EC2 Overview" }
+      def collector_class
+        Collectors.const_get(agent_name.upcase)
+      end
+
+      def agent_options
+        options = NewRelic::Plugin::Config.config.options
+        aws = options["aws"]
+        unless aws.is_a?(Hash) &&
+            aws["access_key"].is_a?(String) &&
+            aws["secret_key"].is_a?(String) &&
+            aws["regions"].is_a?(Array)
+          raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
+        end
+        options
+      end
+
+      def overview_enabled?
+        agent_options["agents"][agent_name]["overview"]
+      end
 
       def setup_metrics
-        options = Config.options
         @collectors = []
-        options["regions"].each do |region|
-          @collectors << Collectors::EC2.new(options["access_key"], options["secret_key"], region)
+        agent_options["aws"]["regions"].each do |region|
+          @collectors << collector_class.new(
+            agent_options["aws"]["access_key"],
+            agent_options["aws"]["secret_key"],
+            region
+          )
         end
-        @components = Components::Collection.new("com.newrelic.aws.ec2", version)
+        @components = Components::Collection.new("com.newrelic.aws.#{agent_name}", version)
       end
 
       def poll_cycle
         @collectors.each do |collector|
           collector.collect.each do |component, metric_name, units, value|
-            report_metric("#{component}/#{metric_name}", units, value)
             @components.report_metric(component, metric_name, units, value)
+            if overview_enabled?
+              report_metric("#{component}/#{metric_name}", units, value)
+            end
           end
         end
         @components.process
@@ -35,31 +58,19 @@ module NewRelicAWS
     end
   end
 
-  module RDS
-    class Agent < NewRelic::Plugin::Agent::Base
+  module EC2
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.ec2_overview"
+      agent_version "0.0.1"
+      agent_human_labels("EC2 Overview") { "EC2 Overview" }
+    end
+  end
 
+  module RDS
+    class Agent < Base::Agent
       agent_guid "com.newrelic.aws.rds_overview"
       agent_version "0.0.1"
       agent_human_labels("RDS Overview") { "RDS Overview" }
-
-      def setup_metrics
-        options = Config.options
-        @collectors = []
-        options["regions"].each do |region|
-          @collectors << Collectors::RDS.new(options["access_key"], options["secret_key"], region)
-        end
-        @components = Components::Collection.new("com.newrelic.aws.rds", version)
-      end
-
-      def poll_cycle
-        @collectors.each do |collector|
-          collector.collect.each do |component, metric_name, units, value|
-            report_metric("#{component}/#{metric_name}", units, value)
-            @components.report_metric(component, metric_name, units, value)
-          end
-        end
-        @components.process
-      end
     end
   end
 
