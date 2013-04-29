@@ -43,14 +43,20 @@ module NewRelicAWS
       agent_human_labels("RDS Overview") { "RDS Overview" }
 
       def setup_metrics
-        @collector = Collectors::RDS.new
+        options = Config.options
+        @collectors = []
+        options["regions"].each do |region|
+          @collectors << Collectors::RDS.new(options["access_key"], options["secret_key"], region)
+        end
         @components = Components::Collection.new("com.newrelic.aws.rds", version)
       end
 
       def poll_cycle
-        @collector.collect.each do |component, metric_name, units, value|
-          report_metric("#{component}/#{metric_name}", units, value)
-          @components.report_metric(component, metric_name, units, value)
+        @collectors.each do |collector|
+          collector.collect.each do |component, metric_name, units, value|
+            report_metric("#{component}/#{metric_name}", units, value)
+            @components.report_metric(component, metric_name, units, value)
+          end
         end
         @components.process
       end
