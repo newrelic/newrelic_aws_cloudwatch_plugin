@@ -1,16 +1,10 @@
 module NewRelicAWS
   module Collectors
     class Base
-      def initialize
-        options = NewRelic::Plugin::Config.config.options["aws"]
-        unless options.is_a?(Hash) &&
-            options.has_key?("access_key") &&
-            options.has_key?("secret_key")
-          raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
-        end
-        @aws_access_key = options["access_key"]
-        @aws_secret_key = options["secret_key"]
-        @aws_region = options["region"] || "us-east-1"
+      def initialize(access_key, secret_key, region)
+        @aws_access_key = access_key
+        @aws_secret_key = secret_key
+        @aws_region = region
         @cloudwatch = AWS::CloudWatch.new(
           :access_key_id     => @aws_access_key,
           :secret_access_key => @aws_secret_key,

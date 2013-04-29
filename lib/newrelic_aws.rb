@@ -2,6 +2,7 @@ require "rubygems"
 require "bundler/setup"
 
 require "newrelic_plugin"
+require "newrelic_aws/config"
 require "newrelic_aws/components"
 require "newrelic_aws/collectors"
 
@@ -14,14 +15,20 @@ module NewRelicAWS
       agent_human_labels("EC2 Overview") { "EC2 Overview" }
 
       def setup_metrics
-        @collector = Collectors::EC2.new
+        options = Config.options
+        @collectors = []
+        options["regions"].each do |region|
+          @collectors << Collectors::EC2.new(options["access_key"], options["secret_key"], region)
+        end
         @components = Components::Collection.new("com.newrelic.aws.ec2", version)
       end
 
       def poll_cycle
-        @collector.collect.each do |component, metric_name, units, value|
-          report_metric("#{component}/#{metric_name}", units, value)
-          @components.report_metric(component, metric_name, units, value)
+        @collectors.each do |collector|
+          collector.collect.each do |component, metric_name, units, value|
+            report_metric("#{component}/#{metric_name}", units, value)
+            @components.report_metric(component, metric_name, units, value)
+          end
         end
         @components.process
       end
