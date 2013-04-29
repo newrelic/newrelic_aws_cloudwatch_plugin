@@ -27,5 +27,6 @@ aws:
 agents:
   ec2:
     enabled: true
+    overview: true
 #  rds:
 #    enabled: true
