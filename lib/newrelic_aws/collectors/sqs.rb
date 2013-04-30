@@ -33,8 +33,11 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "QueueName",
-                :value => url
-              }
+                :value => url.split("/").last
+              },
+              :period => 300,
+              :start_time => (Time.now.utc-360).iso8601,
+              :end_time => (Time.now.utc-60).iso8601
             )
             unless data_point.nil?
               data_points << data_point
