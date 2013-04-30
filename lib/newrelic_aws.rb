@@ -67,6 +67,14 @@ module NewRelicAWS
     end
   end
 
+  module EBS
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.ebs_overview"
+      agent_version "0.0.1"
+      agent_human_labels("EBS Overview") { "EBS Overview" }
+    end
+  end
+
   module RDS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.rds_overview"
@@ -87,6 +95,7 @@ module NewRelicAWS
   # Register each agent with the component.
   #
   NewRelic::Plugin::Setup.install_agent :ec2, EC2
+  NewRelic::Plugin::Setup.install_agent :ebs, EBS
   NewRelic::Plugin::Setup.install_agent :rds, RDS
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
 
