@@ -32,7 +32,6 @@ module NewRelicAWS
       def collect
         data_points = []
         instance_ids.each do |instance_id|
-          puts instance_id
           metric_list.each do |metric_name, unit|
             data_point = get_data_point(
               :namespace   => "AWS/RDS",
