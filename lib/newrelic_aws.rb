@@ -75,11 +75,20 @@ module NewRelicAWS
     end
   end
 
+  module SQS
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.sqs_overview"
+      agent_version "0.0.1"
+      agent_human_labels("SQS Overview") { "SQS Overview" }
+    end
+  end
+
   #
   # Register each agent with the component.
   #
   NewRelic::Plugin::Setup.install_agent :ec2, EC2
   NewRelic::Plugin::Setup.install_agent :rds, RDS
+  NewRelic::Plugin::Setup.install_agent :sqs, SQS
 
   #
   # Launch the agents; this never returns.
