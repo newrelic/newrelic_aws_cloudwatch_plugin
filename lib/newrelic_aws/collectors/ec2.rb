@@ -1,13 +1,13 @@
 module NewRelicAWS
   module Collectors
     class EC2 < Base
-      def instance_ids
+      def instances
         ec2 = AWS::EC2.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
           :region => @aws_region
         )
-        ec2.instances.map { |instance| instance.id }
+        ec2.instances
       end
 
       def metric_list
@@ -23,7 +23,8 @@ module NewRelicAWS
 
       def collect
         data_points = []
-        instance_ids.each do |instance_id|
+        instances.each do |instance|
+          detailed = instance.monitoring == :enabled
           metric_list.each do |metric_name, unit|
             data_point = get_data_point(
               :namespace   => "AWS/EC2",
@@ -31,8 +32,10 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "InstanceId",
-                :value => instance_id
-              }
+                :value => instance.id
+              },
+              :period => detailed ? 60 : 300,
+              :start_time => (Time.now.utc-(detailed ? 120 : 360)).iso8601
             )
             unless data_point.nil?
               data_points << data_point
