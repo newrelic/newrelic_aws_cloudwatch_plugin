@@ -47,10 +47,10 @@ module NewRelicAWS
 
       def poll_cycle
         @collectors.each do |collector|
-          collector.collect.each do |component, metric_name, units, value|
-            @components.report_metric(component, metric_name, units, value)
+          collector.collect.each do |component, metric_name, unit, value|
+            @components.report_metric(component, metric_name, unit, value)
             if overview_enabled?
-              report_metric("#{component}/#{metric_name}", units, value)
+              report_metric("#{component}/#{metric_name}", unit, value)
             end
           end
         end
@@ -91,6 +91,14 @@ module NewRelicAWS
     end
   end
 
+  module EC
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.ec_overview"
+      agent_version "0.0.1"
+      agent_human_labels("ElastiCache Overview") { "ElastiCache Overview" }
+    end
+  end
+
   #
   # Register each agent with the component.
   #
@@ -98,6 +106,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :ebs, EBS
   NewRelic::Plugin::Setup.install_agent :rds, RDS
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
+  NewRelic::Plugin::Setup.install_agent :ec, EC
 
   #
   # Launch the agents; this never returns.

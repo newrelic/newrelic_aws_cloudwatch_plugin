@@ -16,6 +16,7 @@ module NewRelicAWS
         options[:period]     ||= 60
         options[:start_time] ||= (Time.now.utc-120).iso8601
         options[:end_time]   ||= (Time.now.utc-60).iso8601
+        options[:dimensions] ||= [options[:dimension]]
         statistics = @cloudwatch.client.get_metric_statistics(
           :namespace   => options[:namespace],
           :metric_name => options[:metric_name],
@@ -24,11 +25,12 @@ module NewRelicAWS
           :period      => options[:period],
           :start_time  => options[:start_time],
           :end_time    => options[:end_time],
-          :dimensions  => [options[:dimension]]
+          :dimensions  => options[:dimensions]
         )
         point = statistics[:datapoints].last
         return if point.nil?
-        [options[:dimension][:value], options[:metric_name], point[:unit].downcase, point[:sum]]
+        component = options[:dimensions].map { |dimension| dimension[:value] }.join("/")
+        [component, options[:metric_name], point[:unit].downcase, point[:sum]]
       end
 
       def collect
