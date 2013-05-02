@@ -91,6 +91,14 @@ module NewRelicAWS
     end
   end
 
+  module SNS
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.sns_overview"
+      agent_version "0.0.1"
+      agent_human_labels("SNS Overview") { "SNS Overview" }
+    end
+  end
+
   module EC
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ec_overview"
@@ -106,6 +114,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :ebs, EBS
   NewRelic::Plugin::Setup.install_agent :rds, RDS
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
+  NewRelic::Plugin::Setup.install_agent :sns, SNS
   NewRelic::Plugin::Setup.install_agent :ec, EC
 
   #

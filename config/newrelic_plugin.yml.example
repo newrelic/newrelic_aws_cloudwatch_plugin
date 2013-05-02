@@ -34,5 +34,7 @@ agents:
 #    enabled: true
 #  sqs:
 #    enabled: true
+#  sns:
+#    enabled: true
 #  ec:
 #    enabled: true
