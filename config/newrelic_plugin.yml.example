@@ -28,5 +28,11 @@ agents:
   ec2:
     enabled: true
     overview: true
+#  ebs:
+#    enabled: true
 #  rds:
+#    enabled: true
+#  sqs:
+#    enabled: true
+#  ec:
 #    enabled: true
