@@ -10,7 +10,7 @@ module NewRelicAWS
         clusters = ec.client.describe_cache_clusters(:show_cache_node_info => true)
         clusters[:cache_clusters].map do |cluster|
           {
-            :id => cluster[:cache_cluster_id],
+            :id    => cluster[:cache_cluster_id],
             :nodes => cluster[:cache_nodes].map { |node| node[:cache_node_id] }
           }
         end
@@ -18,11 +18,45 @@ module NewRelicAWS
 
       def metric_list
         {
-          "CPUUtilization"  => "Percent",
-          "SwapUsage"       => "Bytes",
-          "FreeableMemory"  => "Bytes",
-          "NetworkBytesIn"  => "Bytes",
-          "NetworkBytesOut" => "Bytes"
+          "CPUUtilization"               => "Percent",
+          "SwapUsage"                    => "Bytes",
+          "FreeableMemory"               => "Bytes",
+          "NetworkBytesIn"               => "Bytes",
+          "NetworkBytesOut"              => "Bytes",
+          "BytesUsedForCacheItems"       => "Bytes",
+          "BytesReadIntoMemcached"       => "Bytes",
+          "BytesWrittenOutFromMemcached" => "Bytes",
+          "CasBadval"                    => "Count",
+          "CasHits"                      => "Count",
+          "CasMisses"                    => "Count",
+          "CmdFlush"                     => "Count",
+          "CmdGet"                       => "Count",
+          "CmdSet"                       => "Count",
+          "CurrConnections"              => "Count",
+          "CurrItems"                    => "Count",
+          "DecrHits"                     => "Count",
+          "DecrMisses"                   => "Count",
+          "DeleteHits"                   => "Count",
+          "DeleteMisses"                 => "Count",
+          "Evictions"                    => "Count",
+          "GetHits"                      => "Count",
+          "GetMisses"                    => "Count",
+          "IncrHits"                     => "Count",
+          "IncrMisses"                   => "Count",
+          "Reclaimed"                    => "Count",
+          "BytesUsedForHash"             => "Bytes",
+          "CmdConfigGet"                 => "Count",
+          "CmdConfigSet"                 => "Count",
+          "CmdTouch"                     => "Count",
+          "CurrConfig"                   => "Count",
+          "EvictedUnfetched"             => "Count",
+          "ExpiredUnfetched"             => "Count",
+          "SlabsMoved"                   => "Count",
+          "TouchHits"                    => "Count",
+          "TouchMisses"                  => "Count",
+          "NewConnections"               => "Count",
+          "NewItems"                     => "Count",
+          "UnusedMemory"                 => "Bytes"
         }
       end
 
