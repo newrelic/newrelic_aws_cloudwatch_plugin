@@ -47,7 +47,7 @@ module NewRelicAWS
 
       def poll_cycle
         @collectors.each do |collector|
-          collector.collect.each do |component, metric_name, unit, value|
+          collector.collect.each do |component, metric_name, unit, value, timestamp|
             @components.report_metric(component, metric_name, unit, value)
             if overview_enabled?
               report_metric("#{component}/#{metric_name}", unit, value)

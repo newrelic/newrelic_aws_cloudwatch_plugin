@@ -30,7 +30,7 @@ module NewRelicAWS
         point = statistics[:datapoints].last
         return if point.nil?
         component = options[:dimensions].map { |dimension| dimension[:value] }.join("/")
-        [component, options[:metric_name], point[:unit].downcase, point[:sum]]
+        [component, options[:metric_name], point[:unit].downcase, point[:sum], point[:timestamp].to_i]
       end
 
       def collect
