@@ -75,6 +75,14 @@ module NewRelicAWS
     end
   end
 
+  module ELB
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.elb_overview"
+      agent_version "0.0.1"
+      agent_human_labels("ELB Overview") { "ELB Overview" }
+    end
+  end
+
   module RDS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.rds_overview"
@@ -120,6 +128,7 @@ module NewRelicAWS
   #
   NewRelic::Plugin::Setup.install_agent :ec2, EC2
   NewRelic::Plugin::Setup.install_agent :ebs, EBS
+  NewRelic::Plugin::Setup.install_agent :elb, ELB
   NewRelic::Plugin::Setup.install_agent :rds, RDS
   NewRelic::Plugin::Setup.install_agent :ddb, DDB
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
