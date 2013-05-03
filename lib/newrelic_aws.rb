@@ -83,6 +83,14 @@ module NewRelicAWS
     end
   end
 
+  module DDB
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.ddb_overview"
+      agent_version "0.0.1"
+      agent_human_labels("DynamoDB Overview") { "DynamoDB Overview" }
+    end
+  end
+
   module SQS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.sqs_overview"
@@ -113,6 +121,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :ec2, EC2
   NewRelic::Plugin::Setup.install_agent :ebs, EBS
   NewRelic::Plugin::Setup.install_agent :rds, RDS
+  NewRelic::Plugin::Setup.install_agent :ddb, DDB
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
   NewRelic::Plugin::Setup.install_agent :sns, SNS
   NewRelic::Plugin::Setup.install_agent :ec, EC
