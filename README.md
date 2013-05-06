@@ -10,4 +10,4 @@
 3. Run `cp config/newrelic_plugin.yml.example config/newrelic_plugin.yml`
 4. Edit `config/newrelic_plugin.yml`
 5. Run `bundle install`
-6. Run `./bin/newrelic_aws`
+6. Run `bundle exec ./bin/newrelic_aws`
