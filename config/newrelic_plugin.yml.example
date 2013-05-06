@@ -30,7 +30,11 @@ agents:
     overview: true
 #  ebs:
 #    enabled: true
+#  elb:
+#    enabled: true
 #  rds:
+#    enabled: true
+#  ddb:
 #    enabled: true
 #  sqs:
 #    enabled: true
