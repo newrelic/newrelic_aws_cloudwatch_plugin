@@ -36,7 +36,7 @@ module NewRelicAWS
                 :value => url.split("/").last
               },
               :period => 300,
-              :start_time => (Time.now.utc-360).iso8601
+              :start_time => (Time.now.utc-660).iso8601
             )
             unless data_point.nil?
               data_points << data_point
