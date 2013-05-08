@@ -34,8 +34,6 @@ agents:
 #    enabled: true
 #  rds:
 #    enabled: true
-#  ddb:
-#    enabled: true
 #  sqs:
 #    enabled: true
 #  sns:

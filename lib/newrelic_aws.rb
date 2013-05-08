@@ -134,7 +134,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :ebs, EBS
   NewRelic::Plugin::Setup.install_agent :elb, ELB
   NewRelic::Plugin::Setup.install_agent :rds, RDS
-  NewRelic::Plugin::Setup.install_agent :ddb, DDB
+  # NewRelic::Plugin::Setup.install_agent :ddb, DDB # WIP
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
   NewRelic::Plugin::Setup.install_agent :sns, SNS
   NewRelic::Plugin::Setup.install_agent :ec, EC
