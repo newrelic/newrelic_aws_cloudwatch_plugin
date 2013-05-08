@@ -63,7 +63,7 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ec2_overview"
       agent_version "0.0.1"
-      agent_human_labels("EC2 Overview") { "EC2 Overview" }
+      agent_human_labels("EC2") { "EC2" }
     end
   end
 
@@ -71,7 +71,7 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ebs_overview"
       agent_version "0.0.1"
-      agent_human_labels("EBS Overview") { "EBS Overview" }
+      agent_human_labels("EBS") { "EBS" }
     end
   end
 
@@ -79,7 +79,7 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.elb_overview"
       agent_version "0.0.1"
-      agent_human_labels("ELB Overview") { "ELB Overview" }
+      agent_human_labels("ELB") { "ELB" }
     end
   end
 
@@ -87,7 +87,7 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.rds_overview"
       agent_version "0.0.1"
-      agent_human_labels("RDS Overview") { "RDS Overview" }
+      agent_human_labels("RDS") { "RDS" }
     end
   end
 
@@ -95,7 +95,7 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ddb_overview"
       agent_version "0.0.1"
-      agent_human_labels("DynamoDB Overview") { "DynamoDB Overview" }
+      agent_human_labels("DynamoDB") { "DynamoDB" }
     end
   end
 
@@ -103,7 +103,7 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.sqs_overview"
       agent_version "0.0.1"
-      agent_human_labels("SQS Overview") { "SQS Overview" }
+      agent_human_labels("SQS") { "SQS" }
     end
   end
 
@@ -111,7 +111,7 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.sns_overview"
       agent_version "0.0.1"
-      agent_human_labels("SNS Overview") { "SNS Overview" }
+      agent_human_labels("SNS") { "SNS" }
     end
   end
 
@@ -119,7 +119,11 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ec_overview"
       agent_version "0.0.1"
-      agent_human_labels("ElastiCache Overview") { "ElastiCache Overview" }
+      agent_human_labels("ElastiCache") { "ElastiCache" }
+
+      def overview_enabled?
+        false
+      end
     end
   end
 
