@@ -6,6 +6,17 @@ require "newrelic_aws/components"
 require "newrelic_aws/collectors"
 
 module NewRelicAWS
+  AWS_REGIONS = %w[
+    us-east-1
+    us-west-1
+    us-west-2
+    eu-west-1
+    ap-southeast-1
+    ap-southeast-2
+    ap-northeast-1
+    sa-east-1
+  ]
+
   module Base
     class Agent < NewRelic::Plugin::Agent::Base
       def agent_name
@@ -22,8 +33,7 @@ module NewRelicAWS
         aws = @agent_options["aws"]
         unless aws.is_a?(Hash) &&
             aws["access_key"].is_a?(String) &&
-            aws["secret_key"].is_a?(String) &&
-            aws["regions"].is_a?(Array)
+            aws["secret_key"].is_a?(String)
           raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
         end
         @agent_options
@@ -35,7 +45,7 @@ module NewRelicAWS
 
       def setup_metrics
         @collectors = []
-        agent_options["aws"]["regions"].each do |region|
+        AWS_REGIONS.each do |region|
           @collectors << collector_class.new(
             agent_options["aws"]["access_key"],
             agent_options["aws"]["secret_key"],
