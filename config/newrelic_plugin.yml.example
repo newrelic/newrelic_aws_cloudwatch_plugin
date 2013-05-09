@@ -27,16 +27,3 @@ aws:
 agents:
   ec2:
     enabled: true
-    overview: true
-#  ebs:
-#    enabled: true
-#  elb:
-#    enabled: true
-#  rds:
-#    enabled: true
-#  sqs:
-#    enabled: true
-#  sns:
-#    enabled: true
-#  ec:
-#    enabled: true
