@@ -11,7 +11,7 @@ This tool provides the metric collection agents for the following New Relic plug
 - ElastiCache (Not Published)
 
 Multi-region support.
-Runs on a single machine.
+Runs on a single machine, a t1.micro EC2 instance is recommended.
 
 ## Dependencies
 - Ruby
