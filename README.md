@@ -3,15 +3,14 @@
 This tool provides the metric collection agents for the following New Relic plugins:
 
 - EC2
-- EBS
-- ELB
-- RDS
-- SQS
-- SNS
-- ElastiCache
+- EBS (Not Published)
+- ELB (Not Published)
+- RDS (Not Published)
+- SQS (Not Published)
+- SNS (Not Published)
+- ElastiCache (Not Published)
 
 Multi-region support.
-
 Runs on a single machine.
 
 ## Dependencies
