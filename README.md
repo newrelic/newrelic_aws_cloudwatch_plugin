@@ -10,12 +10,12 @@ This tool provides the metric collection agents for the following New Relic plug
 - SNS
 - ElastiCache
 
-Multi-region support.
-
-Runs on a single machine, a t1.micro EC2 instance is recommended.
+Overview versions of the plugins above are also available.
 
 ## Dependencies
+- A single t1.micro EC2 instance (in any region)
 - Ruby (>= 1.8.7)
+- Rubygems (>= 1.3.7)
 - Bundler `gem install bundler`
 
 ## Install
@@ -28,6 +28,7 @@ Runs on a single machine, a t1.micro EC2 instance is recommended.
 
 ## Notes
 
-- Recommend using detailed monitoring (CloudWatch) when possible.
+- CloudWatch detailed monitoring is recommended, please enable when available.
 - Chart x-axis (time) is off by 60 seconds, due to CloudWatch's lag & lack of New Relic backfill (end time) support.
-- Last data point is used to fill gaps in low resolution metrics.
+- Latest data point is used to fill gaps in low resolution metrics.
+- Can use services like Upstart, Systemd, Runit, and Monit to manage the process.
