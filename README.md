@@ -28,7 +28,7 @@ Overview versions of the plugins above are also available.
 
 ## Notes
 
-- CloudWatch detailed monitoring is recommended, please enable when available.
-- Chart x-axis (time) is off by 60 seconds, due to CloudWatch's lag & lack of New Relic backfill (end time) support.
+- CloudWatch detailed monitoring is recommended, please enable it when available.
+- Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag & lack of New Relic backfill (end time) support.
 - Latest data point is used to fill gaps in low resolution metrics.
 - Can use services like Upstart, Systemd, Runit, and Monit to manage the process.
