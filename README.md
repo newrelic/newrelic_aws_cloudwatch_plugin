@@ -26,6 +26,18 @@ Overview versions of the plugins above are also available.
 5. Run `bundle install`
 6. Run `bundle exec ./bin/newrelic_aws`
 
+## AMI
+
+An Amazon Machine Image (AMI) is available, making it easier to begin collecting metrics.
+
+The AMI takes the contents of `config/newrelic_plugin.yml` as user-data, which is configured when creating the EC2 instance.
+Once the instance is running with valid user-data, no further action is required.
+To change the configuration, terminate the current instance and create another.
+
+Name `newrelic_aws`
+
+ID   `ami-2f60f61f`
+
 ## Notes
 
 - CloudWatch detailed monitoring is recommended, please enable it when available.
