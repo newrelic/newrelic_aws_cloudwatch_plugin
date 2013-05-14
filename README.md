@@ -20,7 +20,7 @@ Overview versions of the plugins above are also available.
 
 ## Install
 1. Download the latest tagged version from `https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags`
-2. Extract to the location you want to run the extention from
+2. Extract to the location you want to run the plugin from
 3. Run `cp config/newrelic_plugin.yml.example config/newrelic_plugin.yml`
 4. Edit `config/newrelic_plugin.yml`
 5. Run `bundle install`
@@ -28,15 +28,17 @@ Overview versions of the plugins above are also available.
 
 ## AMI
 
-An Amazon Machine Image (AMI) is available, making it easier to begin collecting metrics.
+This collection of plugins is also available as an Amazon Machine Image (AMI) named `newrelic_aws`, making it easier to begin collecting metrics.
 
 The AMI takes the contents of `config/newrelic_plugin.yml` as user-data, which is configured when creating the EC2 instance.
 Once the instance is running with valid user-data, no further action is required.
 To change the configuration, terminate the current instance and create another.
 
-Name `newrelic_aws`
-
-ID   `ami-2f60f61f`
+To to access this AMI via the AWS EC2 console and launch an instance in your own AWS account, follow these steps:
+1. Log in to your AWS account
+1. Copy your AWS account number and paste into an email to mei@newrelic.com, CC'ing cooper@newrelic.com
+1. Mei will enable sharing of this currently-private AMI to your AWS account
+1. Once Mei notifies you that you can access the AMI, visit this URL https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-2f60f61f
 
 ## Notes
 
