@@ -27,18 +27,17 @@ Overview versions of the plugins above are also available.
 6. Run `bundle exec ./bin/newrelic_aws`
 
 ## AMI
-
 This collection of plugins is also available as an Amazon Machine Image (AMI) named `newrelic_aws`, making it easier to begin collecting metrics.
 
 The AMI takes the contents of `config/newrelic_plugin.yml` as user-data, which is configured when creating the EC2 instance.
 Once the instance is running with valid user-data, no further action is required.
 To change the configuration, terminate the current instance and create another.
 
-To to access this AMI via the AWS EC2 console and launch an instance in your own AWS account, follow these steps:
+To access this AMI via the AWS EC2 console and launch an instance in your own AWS account, follow these steps:
 1. Log in to your AWS account
-1. Copy your AWS account number and paste into an email to mei@newrelic.com, CC'ing cooper@newrelic.com
-1. Mei will enable sharing of this currently-private AMI to your AWS account
-1. Once Mei notifies you that you can access the AMI, visit this URL https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-2f60f61f
+2. Copy your AWS account number and paste into an email to mei@newrelic.com, CC'ing cooper@newrelic.com
+3. Mei will enable sharing of this currently-private AMI to your AWS account
+4. Once Mei notifies you that you can access the AMI, visit this URL `https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-2f60f61f`
 
 ## Notes
 
