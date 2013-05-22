@@ -38,7 +38,7 @@ To access this AMI via the AWS EC2 console and launch an instance in your own AW
 1. Log in to your AWS account
 2. Copy your AWS account number and paste into an email to mei@newrelic.com, CC'ing cooper@newrelic.com
 3. Mei will enable sharing of this currently-private AMI to your AWS account
-4. Once Mei notifies you that you can access the AMI, visit https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-2f60f61f
+4. Once Mei notifies you that you can access the AMI, visit https://console.aws.amazon.com/ec2/home?region=us-west-2#launchAmi=ami-4dfd6c7d
 
 ## Notes
 
