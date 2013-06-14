@@ -39,8 +39,12 @@ module NewRelicAWS
         @agent_options
       end
 
+      def self.overview_available(available=false)
+        @overview_available ||= available
+      end
+
       def overview_enabled?
-        !!agent_options["agents"][agent_name][:overview]
+        self.class.overview_available ? !!agent_options["agents"][agent_name][:overview] : false
       end
 
       def setup_metrics
@@ -74,6 +78,7 @@ module NewRelicAWS
       agent_guid "com.newrelic.aws.ec2_overview"
       agent_version "0.0.1"
       agent_human_labels("EC2") { "EC2" }
+      overview_available true
     end
   end
 
@@ -82,6 +87,7 @@ module NewRelicAWS
       agent_guid "com.newrelic.aws.ebs_overview"
       agent_version "0.0.1"
       agent_human_labels("EBS") { "EBS" }
+      overview_available true
     end
   end
 
@@ -130,10 +136,6 @@ module NewRelicAWS
       agent_guid "com.newrelic.aws.ec_overview"
       agent_version "0.0.1"
       agent_human_labels("ElastiCache") { "ElastiCache" }
-
-      def overview_enabled?
-        false
-      end
     end
   end
 
