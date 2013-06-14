@@ -24,7 +24,8 @@ module NewRelicAWS
       def collect
         data_points = []
         instances.each do |instance|
-          detailed = instance.monitoring == :enabled
+          detailed = instance.monitoring == :enable
+          name_tag = instance.tags.detect { |tag| tag.first == "Name" }
           metric_list.each do |metric_name, unit|
             data_point = get_data_point(
               :namespace   => "AWS/EC2",
@@ -35,7 +36,8 @@ module NewRelicAWS
                 :value => instance.id
               },
               :period => detailed ? 60 : 300,
-              :start_time => (Time.now.utc-(detailed ? 120 : 660)).iso8601
+              :start_time => (Time.now.utc-(detailed ? 120 : 660)).iso8601,
+              :component => name_tag.nil? ? instance.id : name_tag.last
             )
             unless data_point.nil?
               data_points << data_point
