@@ -25,19 +25,19 @@ agents:
   #
   # Uncomment an agent to enable it. Set 'overview' to true to
   # enable its overview plugin (eg. EC2 Overview), displaying all
-  # metrics on a single dashboard.
+  # metrics on a single dashboard (currently only available for EC2 & EBS).
   #
   ec2:
-    overview: false
-  #ebs:
-  #  overview: false
-  #elb:
-  #  overview: false
-  #rds:
-  #  overview: false
-  #sqs:
-  #  overview: false
-  #sns:
-  #  overview: false
-  #ec:
-  #  overview : false
+    overview: true
+  ebs:
+    overview: true
+  # elb:
+  #   overview: false
+  # rds:
+  #   overview: false
+  # sqs:
+  #   overview: false
+  # sns:
+  #   overview: false
+  # ec:
+  #   overview: false
