@@ -25,7 +25,7 @@ module NewRelicAWS
         data_points = []
         instances.each do |instance|
           detailed = instance.monitoring == :enable
-          name_tag = instance.tags.detect { |tag| tag.first == "Name" }
+          name_tag = instance.tags.detect { |tag| tag.first =~ /^name$/i }
           metric_list.each do |metric_name, unit|
             data_point = get_data_point(
               :namespace   => "AWS/EC2",

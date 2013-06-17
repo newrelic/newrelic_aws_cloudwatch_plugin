@@ -29,6 +29,7 @@ module NewRelicAWS
         data_points = []
         volumes.each do |volume|
           detailed = !!volume.iops
+          name_tag = volume.tags.detect { |tag| tag.first =~ /^name$/i }
           metric_list.each do |metric_name, unit|
             data_point = get_data_point(
               :namespace   => "AWS/EBS",
@@ -39,7 +40,8 @@ module NewRelicAWS
                 :value => volume.id
               },
               :period => detailed ? 60 : 300,
-              :start_time => (Time.now.utc-(detailed ? 120 : 660)).iso8601
+              :start_time => (Time.now.utc-(detailed ? 120 : 660)).iso8601,
+              :component => name_tag.nil? ? volume.id : name_tag.last
             )
             unless data_point.nil?
               data_points << data_point
