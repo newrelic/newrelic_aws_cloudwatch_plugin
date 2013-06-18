@@ -39,3 +39,15 @@ To change the configuration, terminate the current instance and create another.
 - Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag & lack of New Relic backfill (end time) support.
 - Latest data point is used to fill gaps in low resolution metrics.
 - Can use services like Upstart, Systemd, Runit, and Monit to manage the process.
+
+## Keep this process running
+You can use services like these to manage this process.
+
+- [Upstart](http://upstart.ubuntu.com/)
+- [Systemd](http://www.freedesktop.org/wiki/Software/systemd/)
+- [Runit](http://smarden.org/runit/)
+- [Monit](http://mmonit.com/monit/)
+
+## For support
+Plugin support for troubleshooting assistance can be obtained by visiting [support.newrelic.com](https://support.newrelic.com)
+
