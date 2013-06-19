@@ -14,7 +14,7 @@ Overview versions of the plugins above are also available.
 
 ## Dependencies
 - A single t1.micro EC2 instance (in any region)
-- Ruby (>= 1.8.7)
+- Ruby (>= 1.9.2)
 - Rubygems (>= 1.3.7)
 - Bundler `gem install bundler`
 
