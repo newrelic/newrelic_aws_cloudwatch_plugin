@@ -23,8 +23,9 @@ Overview versions of the plugins above are also available.
 2. Extract to the location you want to run the plugin from
 3. Rename `config/template_newrelic_plugin.yml` to `config/newrelic_plugin.yml`
 4. Add New Relic license key to `config/newrelic_plugin.yml`
-5. Run `bundle install`
-6. Run `bundle exec ./bin/newrelic_aws`
+5. Add your Amazon Web Services security credentials to `config/newrelic_plugin.yml`
+6. Run `bundle install`
+7. Run `bundle exec ./bin/newrelic_aws`
 
 ## AMI
 This plugin will soon be available as an Amazon Machine Image (AMI) named newrelic_aws, making it easier to begin collecting metrics.
