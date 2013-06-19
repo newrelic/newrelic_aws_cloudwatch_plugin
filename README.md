@@ -17,7 +17,7 @@ Overview versions of the plugins above are also available.
 - Ruby (>= 1.8.7)
 - Rubygems (>= 1.3.7)
 - Bundler `gem install bundler`
-- git
+- Git
 
 ## Install
 1. Download the latest tagged version from [https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags](https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags)
