@@ -19,7 +19,7 @@ Overview versions of the plugins above are also available.
 - Bundler `gem install bundler`
 
 ## Install
-1. Download the latest tagged version from `https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags`
+1. Download the latest tagged version from [https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags](https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags)
 2. Extract to the location you want to run the plugin from
 3. Rename `config/template_newrelic_plugin.yml` to `config/newrelic_plugin.yml`
 4. Add New Relic license key to `config/newrelic_plugin.yml`
