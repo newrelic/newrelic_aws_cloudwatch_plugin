@@ -37,7 +37,7 @@ To change the configuration, terminate the current instance and create another.
 ## Notes
 
 - CloudWatch detailed monitoring is recommended, please enable it when available. (see *Using Amazon CloudWatch* section on http://aws.amazon.com/cloudwatch/)
-- Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag & lack of New Relic backfill (end time) support.
+- Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag in reporting metrics.
 - Latest data point is used to fill gaps in low resolution metrics.
 - Can use services like Upstart, Systemd, Runit, and Monit to manage the process.
 
