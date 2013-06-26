@@ -11,27 +11,28 @@ module NewRelicAWS
       end
 
       def metric_list
-        {
-          "Latency"              => "Seconds",
-          "RequestCount"         => "Count",
-          "HealthyHostCount"     => "Count",
-          "UnHealthyHostCount"   => "Count",
-          "HTTPCode_ELB_4XX"     => "Count",
-          "HTTPCode_ELB_5XX"     => "Count",
-          "HTTPCode_Backend_2XX" => "Count",
-          "HTTPCode_Backend_3XX" => "Count",
-          "HTTPCode_Backend_4XX" => "Count",
-          "HTTPCode_Backend_5XX" => "Count"
-        }
+        [
+          ["Latency", "Average", "Seconds"],
+          ["RequestCount", "Sum", "Count"],
+          ["HealthyHostCount", "Maximum", "Count"],
+          ["UnHealthyHostCount", "Maximum", "Count"],
+          ["HTTPCode_ELB_4XX", "Sum", "Count"],
+          ["HTTPCode_ELB_5XX", "Sum", "Count"],
+          ["HTTPCode_Backend_2XX", "Sum", "Count"],
+          ["HTTPCode_Backend_3XX", "Sum", "Count"],
+          ["HTTPCode_Backend_4XX", "Sum", "Count"],
+          ["HTTPCode_Backend_5XX", "Sum", "Count"]
+        ]
       end
 
       def collect
         data_points = []
         load_balancers.each do |load_balancer_name|
-          metric_list.each do |metric_name, unit|
+          metric_list.each do |(metric_name, statistic, unit)|
             data_point = get_data_point(
               :namespace   => "AWS/ELB",
               :metric_name => metric_name,
+              :statistic   => statistic,
               :unit        => unit,
               :dimension   => {
                 :name  => "LoadBalancerName",
