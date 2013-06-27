@@ -11,18 +11,18 @@ module NewRelicAWS
       end
 
       def metric_list
-        {
-          "VolumeReadBytes"            => "Bytes",
-          "VolumeWriteBytes"           => "Bytes",
-          "VolumeReadOps"              => "Count",
-          "VolumeWriteOps"             => "Count",
-          "VolumeTotalReadTime"        => "Seconds",
-          "VolumeTotalWriteTime"       => "Seconds",
-          "VolumeIdleTime"             => "Seconds",
-          "VolumeQueueLength"          => "Count",
-          "VolumeThroughputPercentage" => "Percent",
-          "VolumeConsumedReadWriteOps" => "Count"
-        }
+        [
+          ["VolumeReadBytes", "Sum", "Bytes"],
+          ["VolumeWriteBytes", "Sum", "Bytes"],
+          ["VolumeReadOps", "Sum", "Count"],
+          ["VolumeWriteOps", "Sum", "Count"],
+          ["VolumeTotalReadTime", "Sum", "Seconds"],
+          ["VolumeTotalWriteTime", "Sum", "Seconds"],
+          ["VolumeIdleTime", "Sum", "Seconds"],
+          ["VolumeQueueLength", "Sum", "Count"],
+          ["VolumeThroughputPercentage", "Average", "Percent"],
+          ["VolumeConsumedReadWriteOps", "Sum", "Count"]
+        ]
       end
 
       def collect
@@ -30,10 +30,11 @@ module NewRelicAWS
         volumes.each do |volume|
           detailed = !!volume.iops
           name_tag = volume.tags.detect { |tag| tag.first =~ /^name$/i }
-          metric_list.each do |metric_name, unit|
+          metric_list.each do |(metric_name, statistic, unit)|
             data_point = get_data_point(
               :namespace   => "AWS/EBS",
               :metric_name => metric_name,
+              :statistic   => statistic,
               :unit        => unit,
               :dimension   => {
                 :name  => "VolumeId",
