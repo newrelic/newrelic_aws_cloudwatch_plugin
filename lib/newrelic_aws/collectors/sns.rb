@@ -11,21 +11,22 @@ module NewRelicAWS
       end
 
       def metric_list
-        {
-          "NumberOfMessagesPublished"      => "Count",
-          "PublishSize"                    => "Bytes",
-          "NumberOfNotificationsDelivered" => "Count",
-          "NumberOfNotificationsFailed"    => "Count"
-        }
+        [
+          ["NumberOfMessagesPublished", "Sum", "Count"],
+          ["PublishSize", "Average", "Bytes"],
+          ["NumberOfNotificationsDelivered" , "Sum", "Count"],
+          ["NumberOfNotificationsFailed", "Sum", "Count"]
+        ]
       end
 
       def collect
         data_points = []
         topic_names.each do |topic_name|
-          metric_list.each do |metric_name, unit|
+          metric_list.each do |(metric_name, statistic, unit)|
             data_point = get_data_point(
               :namespace   => "AWS/SNS",
               :metric_name => metric_name,
+              :statistic   => statistic,
               :unit        => unit,
               :dimension   => {
                 :name  => "TopicName",
