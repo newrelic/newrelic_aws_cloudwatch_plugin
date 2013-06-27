@@ -17,7 +17,6 @@ module NewRelicAWS
         options[:start_time] ||= (Time.now.utc-120).iso8601
         options[:end_time]   ||= (Time.now.utc-60).iso8601
         options[:dimensions] ||= [options[:dimension]]
-        options[:statistic]  ||= "Sum"
         statistics = @cloudwatch.client.get_metric_statistics(
           :namespace   => options[:namespace],
           :metric_name => options[:metric_name],

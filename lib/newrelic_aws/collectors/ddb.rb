@@ -10,25 +10,26 @@ module NewRelicAWS
       end
 
       def metric_list
-        {
-          "UserErrors"                    => "Count",
-          "SystemErrors"                  => "Count",
-          "ThrottledRequests"             => "Count",
-          "ProvisionedReadCapacityUnits"  => "Count",
-          "ProvisionedWriteCapacityUnits" => "Count",
-          "ConsumedReadCapacityUnits"     => "Count",
-          "ConsumedWriteCapacityUnits"    => "Count",
-          "ReturnedItemCount"             => "Count"
-        }
+        [
+          ["UserErrors", "Sum", "Count"],
+          ["SystemErrors", "Sum", "Count"],
+          ["ThrottledRequests", "Sum", "Count"],
+          ["ProvisionedReadCapacityUnits", "Sum", "Count"],
+          ["ProvisionedWriteCapacityUnits", "Sum", "Count"],
+          ["ConsumedReadCapacityUnits", "Sum", "Count"],
+          ["ConsumedWriteCapacityUnits", "Sum", "Count"],
+          ["ReturnedItemCount", "Sum", "Count"]
+        ]
       end
 
       def collect
         data_points = []
         tables.each do |table_name|
-          metric_list.each do |metric_name, unit|
+          metric_list.each do |(metric_name, statistic, unit)|
             data_point = get_data_point(
               :namespace   => "AWS/DynamoDB",
               :metric_name => metric_name,
+              :statistic   => statistic,
               :unit        => unit,
               :dimension   => {
                 :name  => "TableName",
