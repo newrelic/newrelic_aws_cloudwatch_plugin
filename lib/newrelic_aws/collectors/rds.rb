@@ -11,31 +11,32 @@ module NewRelicAWS
       end
 
       def metric_list
-        {
-          "BinLogDiskUsage"     => "Bytes",
-          "CPUUtilization"      => "Percent",
-          "DatabaseConnections" => "Count",
-          "DiskQueueDepth"      => "Count",
-          "FreeableMemory"      => "Bytes",
-          "FreeStorageSpace"    => "Bytes",
-          "ReplicaLag"          => "Seconds",
-          "SwapUsage"           => "Bytes",
-          "ReadIOPS"            => "Count/Second",
-          "WriteIOPS"           => "Count/Second",
-          "ReadLatency"         => "Seconds",
-          "WriteLatency"        => "Seconds",
-          "ReadThroughput"      => "Bytes/Second",
-          "WriteThroughput"     => "Bytes/Second"
-        }
+        [
+          ["BinLogDiskUsage", "Average", "Bytes"],
+          ["CPUUtilization", "Average", "Percent"],
+          ["DatabaseConnections", "Average", "Count"],
+          ["DiskQueueDepth", "Average", "Count"],
+          ["FreeableMemory", "Average", "Bytes"],
+          ["FreeStorageSpace", "Average", "Bytes"],
+          ["ReplicaLag", "Average", "Seconds"],
+          ["SwapUsage", "Average", "Bytes"],
+          ["ReadIOPS", "Average", "Count/Second"],
+          ["WriteIOPS", "Average", "Count/Second"],
+          ["ReadLatency", "Average", "Seconds"],
+          ["WriteLatency", "Average", "Seconds"],
+          ["ReadThroughput", "Average", "Bytes/Second"],
+          ["WriteThroughput", "Average", "Bytes/Second"]
+        ]
       end
 
       def collect
         data_points = []
         instance_ids.each do |instance_id|
-          metric_list.each do |metric_name, unit|
+          metric_list.each do |(metric_name, statistic, unit)|
             data_point = get_data_point(
               :namespace   => "AWS/RDS",
               :metric_name => metric_name,
+              :statistic   => statistic,
               :unit        => unit,
               :dimension   => {
                 :name  => "DBInstanceIdentifier",
