@@ -11,25 +11,26 @@ module NewRelicAWS
       end
 
       def metric_list
-        {
-          "NumberOfMessagesSent"                  => "Count",
-          "SentMessageSize"                       => "Bytes",
-          "NumberOfMessagesReceived"              => "Count",
-          "NumberOfEmptyReceives"                 => "Count",
-          "NumberOfMessagesDeleted"               => "Count",
-          "ApproximateNumberOfMessagesDelayed"    => "Count",
-          "ApproximateNumberOfMessagesVisible"    => "Count",
-          "ApproximateNumberOfMessagesNotVisible" => "Count"
-        }
+        [
+          ["NumberOfMessagesSent", "Sum", "Count"],
+          ["SentMessageSize", "Average", "Bytes"],
+          ["NumberOfMessagesReceived", "Sum", "Count"],
+          ["NumberOfEmptyReceives", "Sum", "Count"],
+          ["NumberOfMessagesDeleted", "Sum", "Count"],
+          ["ApproximateNumberOfMessagesDelayed", "Average", "Count"],
+          ["ApproximateNumberOfMessagesVisible", "Average", "Count"],
+          ["ApproximateNumberOfMessagesNotVisible", "Average", "Count"]
+        ]
       end
 
       def collect
         data_points = []
         queue_urls.each do |url|
-          metric_list.each do |metric_name, unit|
+          metric_list.each do |(metric_name, statistic, unit)|
             data_point = get_data_point(
               :namespace   => "AWS/SQS",
               :metric_name => metric_name,
+              :statistic   => statistic,
               :unit        => unit,
               :dimension   => {
                 :name  => "QueueName",

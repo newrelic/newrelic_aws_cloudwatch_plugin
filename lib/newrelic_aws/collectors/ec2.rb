@@ -11,14 +11,14 @@ module NewRelicAWS
       end
 
       def metric_list
-        {
-          "CPUUtilization" => "Percent",
-          "DiskReadOps"    => "Count",
-          "DiskWriteOps"   => "Count",
-          "DiskWriteBytes" => "Bytes",
-          "NetworkIn"      => "Bytes",
-          "NetworkOut"     => "Bytes"
-        }
+        [
+          ["CPUUtilization", "Average", "Percent"],
+          ["DiskReadOps", "Sum", "Count"],
+          ["DiskWriteOps", "Sum", "Count"],
+          ["DiskWriteBytes" , "Sum", "Bytes"],
+          ["NetworkIn", "Sum", "Bytes"],
+          ["NetworkOut", "Sum", "Bytes"]
+        ]
       end
 
       def collect
@@ -26,10 +26,11 @@ module NewRelicAWS
         instances.each do |instance|
           detailed = instance.monitoring == :enable
           name_tag = instance.tags.detect { |tag| tag.first =~ /^name$/i }
-          metric_list.each do |metric_name, unit|
+          metric_list.each do |(metric_name, statistic, unit)|
             data_point = get_data_point(
               :namespace   => "AWS/EC2",
               :metric_name => metric_name,
+              :statistic   => statistic,
               :unit        => unit,
               :dimension   => {
                 :name  => "InstanceId",

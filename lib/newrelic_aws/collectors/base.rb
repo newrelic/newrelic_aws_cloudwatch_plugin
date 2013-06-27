@@ -21,7 +21,7 @@ module NewRelicAWS
           :namespace   => options[:namespace],
           :metric_name => options[:metric_name],
           :unit        => options[:unit],
-          :statistics  => ["Sum"],
+          :statistics  => [options[:statistic]],
           :period      => options[:period],
           :start_time  => options[:start_time],
           :end_time    => options[:end_time],
@@ -31,7 +31,8 @@ module NewRelicAWS
         return if point.nil?
         component   = options[:component]
         component ||= options[:dimensions].map { |dimension| dimension[:value] }.join("/")
-        [component, options[:metric_name], point[:unit].downcase, point[:sum], point[:timestamp].to_i]
+        statistic = options[:statistic].downcase.to_sym
+        [component, options[:metric_name], point[:unit].downcase, point[statistic], point[:timestamp].to_i]
       end
 
       def collect
