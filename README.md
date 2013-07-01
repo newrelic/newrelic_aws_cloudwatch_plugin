@@ -28,11 +28,13 @@ Overview versions of the plugins above are also available.
 6. Run `bundle exec ./bin/newrelic_aws`
 
 ## AMI
-This plugin will soon be available as an Amazon Machine Image (AMI) named newrelic_aws, making it easier to begin collecting metrics.
+This plugin is also available as an Amazon Machine Image (AMI) via the AWS Marketplace. Learn more, then quickly install and configure the AMI here: https://aws.amazon.com/marketplace/pp/B00DMMUO0O/
 
-The AMI takes the contents of `config/newrelic_plugin.yml` as user-data, which is configured when creating the EC2 instance.
-Once the instance is running with valid user-data, no further action is required.
-To change the configuration, terminate the current instance and create another.
+The AMI takes the contents of `config/newrelic_plugin.yml` as user-data, which is configured when creating the EC2 instance. Once the instance is running with valid user-data, no further action is required. To change the configuration, terminate the current instance and create another.
+
+If you like the AMI, please leave a 5-star review in the AWS Marketplace.
+
+If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with New Relic Support (via the support link) and let us know what we could do better. We take your feedback very seriously and will work on improvements as soon as possible. Plus, by opening a ticket, we'll notify you when we've addressed your feedback.
 
 ## Notes
 
