@@ -42,7 +42,7 @@ module NewRelicAWS
               },
               :period => detailed ? 60 : 300,
               :start_time => (Time.now.utc-(detailed ? 120 : 660)).iso8601,
-              :component => name_tag.nil? ? volume.id : name_tag.last
+              :component => name_tag.nil? ? volume.id : "#{name_tag.last} (#{volume.id})"
             )
             unless data_point.nil?
               data_points << data_point
