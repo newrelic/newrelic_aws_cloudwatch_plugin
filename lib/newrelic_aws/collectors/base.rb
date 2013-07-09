@@ -12,11 +12,17 @@ module NewRelicAWS
         )
       end
 
+      def verbose?
+        return @verbose unless @verbose.nil?
+        @verbose = NewRelic::Plugin::Config.config.newrelic["verbose"].to_i > 1
+      end
+
       def get_data_point(options)
         options[:period]     ||= 60
         options[:start_time] ||= (Time.now.utc-120).iso8601
         options[:end_time]   ||= (Time.now.utc-60).iso8601
         options[:dimensions] ||= [options[:dimension]]
+        Logger.write("Retrieving statistics: #{options.inspect}") if verbose?
         statistics = @cloudwatch.client.get_metric_statistics(
           :namespace   => options[:namespace],
           :metric_name => options[:metric_name],
@@ -27,6 +33,7 @@ module NewRelicAWS
           :end_time    => options[:end_time],
           :dimensions  => options[:dimensions]
         )
+        Logger.write("Retrived statistics: #{statistics.inspect}") if verbose?
         point = statistics[:datapoints].last
         return if point.nil?
         component   = options[:component]
