@@ -86,7 +86,7 @@ module NewRelicAWS
   module EC2
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ec2_overview"
-      agent_version "2.0.0"
+      agent_version "2.1.0"
       agent_human_labels("EC2") { "EC2" }
       overview_available true
     end
@@ -95,7 +95,7 @@ module NewRelicAWS
   module EBS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ebs_overview"
-      agent_version "2.0.0"
+      agent_version "2.1.0"
       agent_human_labels("EBS") { "EBS" }
       overview_available true
     end
@@ -104,7 +104,7 @@ module NewRelicAWS
   module ELB
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.elb_overview"
-      agent_version "2.0.0"
+      agent_version "2.1.0"
       agent_human_labels("ELB") { "ELB" }
     end
   end
@@ -112,7 +112,7 @@ module NewRelicAWS
   module RDS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.rds_overview"
-      agent_version "2.0.0"
+      agent_version "2.1.0"
       agent_human_labels("RDS") { "RDS" }
     end
   end
@@ -120,7 +120,7 @@ module NewRelicAWS
   module DDB
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ddb_overview"
-      agent_version "2.0.0"
+      agent_version "2.1.0"
       agent_human_labels("DynamoDB") { "DynamoDB" }
     end
   end
@@ -128,7 +128,7 @@ module NewRelicAWS
   module SQS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.sqs_overview"
-      agent_version "2.0.0"
+      agent_version "2.1.0"
       agent_human_labels("SQS") { "SQS" }
     end
   end
@@ -136,7 +136,7 @@ module NewRelicAWS
   module SNS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.sns_overview"
-      agent_version "2.0.0"
+      agent_version "2.1.0"
       agent_human_labels("SNS") { "SNS" }
     end
   end
@@ -144,7 +144,7 @@ module NewRelicAWS
   module EC
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.ec_overview"
-      agent_version "2.0.0"
+      agent_version "2.1.0"
       agent_human_labels("ElastiCache") { "ElastiCache" }
     end
   end
