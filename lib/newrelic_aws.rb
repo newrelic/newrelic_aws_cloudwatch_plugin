@@ -48,9 +48,18 @@ module NewRelicAWS
         self.class.overview_available ? !!agent_options["agents"][agent_name][:overview] : false
       end
 
+      def aws_regions
+        if agent_options["aws"]["regions"]
+          Array(agent_options["aws"]["regions"])
+        else
+          AWS_REGIONS
+        end
+      end
+
       def setup_metrics
         @collectors = []
-        AWS_REGIONS.each do |region|
+        aws_regions.each do |region|
+          Logger.write("Creating a #{agent_name} metrics collector for region: #{region}")
           @collectors << collector_class.new(
             agent_options["aws"]["access_key"],
             agent_options["aws"]["secret_key"],

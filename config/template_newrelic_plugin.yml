@@ -18,6 +18,9 @@ aws:
   # Update with you AWS account keys:
   access_key: 'YOUR_AWS_ACCESS_KEY_HERE'
   secret_key: 'YOUR_AWS_SECRET_KEY_HERE'
+  # Specify AWS regions to query for metrics
+  # regions:
+  #   us-east-1
 #
 # Agent configuration.
 #
