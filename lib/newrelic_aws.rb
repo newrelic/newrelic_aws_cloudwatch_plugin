@@ -2,6 +2,7 @@ require "rubygems"
 require "bundler/setup"
 
 require "newrelic_plugin"
+require "newrelic_aws/logger"
 require "newrelic_aws/components"
 require "newrelic_aws/collectors"
 
