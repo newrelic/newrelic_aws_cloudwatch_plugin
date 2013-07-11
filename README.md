@@ -23,7 +23,7 @@ Overview versions of the plugins above are also available.
 1. Download the latest tagged version from [https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags](https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags)
 2. Extract to the location you want to run the plugin from
 3. Rename `config/template_newrelic_plugin.yml` to `config/newrelic_plugin.yml`
-4. Add New Relic license key to `config/newrelic_plugin.yml`
+4. Edit `config/newrelic_plugin.yml`
 5. Run `bundle install`
 6. Run `bundle exec ./bin/newrelic_aws`
 
@@ -37,7 +37,6 @@ If you like the AMI, please leave a 5-star review in the AWS Marketplace.
 If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with New Relic Support (via the support link) and let us know what we could do better. We take your feedback very seriously and will work on improvements as soon as possible. Plus, by opening a ticket, we'll notify you when we've addressed your feedback.
 
 ## Notes
-
 - CloudWatch detailed monitoring is recommended, please enable it when available. (see *Using Amazon CloudWatch* section on http://aws.amazon.com/cloudwatch/)
 - Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag in reporting metrics.
 - Latest data point is used to fill gaps in low resolution metrics.
