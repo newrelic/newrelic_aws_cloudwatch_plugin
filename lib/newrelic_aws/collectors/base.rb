@@ -22,17 +22,23 @@ module NewRelicAWS
         options[:start_time] ||= (Time.now.utc-120).iso8601
         options[:end_time]   ||= (Time.now.utc-60).iso8601
         options[:dimensions] ||= [options[:dimension]]
-        Logger.write("Retrieving statistics: #{options.inspect}") if verbose?
-        statistics = @cloudwatch.client.get_metric_statistics(
-          :namespace   => options[:namespace],
-          :metric_name => options[:metric_name],
-          :unit        => options[:unit],
-          :statistics  => [options[:statistic]],
-          :period      => options[:period],
-          :start_time  => options[:start_time],
-          :end_time    => options[:end_time],
-          :dimensions  => options[:dimensions]
-        )
+        Logger.write("Retrieving statistics: " + options.inspect) if verbose?
+        begin
+          statistics = @cloudwatch.client.get_metric_statistics(
+            :namespace   => options[:namespace],
+            :metric_name => options[:metric_name],
+            :unit        => options[:unit],
+            :statistics  => [options[:statistic]],
+            :period      => options[:period],
+            :start_time  => options[:start_time],
+            :end_time    => options[:end_time],
+            :dimensions  => options[:dimensions]
+          )
+        rescue => error
+          Logger.write("Unexpected error: " + error.message)
+          Logger.write("Backtrace: " + error.backtrace.join("\n ")) if verbose?
+          raise error
+        end
         Logger.write("Retrived statistics: #{statistics.inspect}") if verbose?
         point = statistics[:datapoints].last
         return if point.nil?
