@@ -88,7 +88,7 @@ module NewRelicAWS
       agent_guid "com.newrelic.aws.ec2_overview"
       agent_version "3.0.0"
       agent_human_labels("EC2") { "EC2" }
-      overview_available true
+      overview_available false
     end
   end
 
@@ -97,7 +97,7 @@ module NewRelicAWS
       agent_guid "com.newrelic.aws.ebs_overview"
       agent_version "3.0.0"
       agent_human_labels("EBS") { "EBS" }
-      overview_available true
+      overview_available false
     end
   end
 
