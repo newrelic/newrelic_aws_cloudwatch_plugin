@@ -149,6 +149,15 @@ module NewRelicAWS
     end
   end
 
+  module SWF
+    class Agent < Base::Agent
+        agent_guid "com.newrelic.aws.swf"
+        agent_version "7/13"
+        agent_human_labels("SWF") { "SWF" }
+        overview_available true
+    end
+  end
+
   #
   # Register each agent with the component.
   #
@@ -160,6 +169,8 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
   NewRelic::Plugin::Setup.install_agent :sns, SNS
   NewRelic::Plugin::Setup.install_agent :ec, EC
+  NewRelic::Plugin::Setup.install_agent :swf, SWF
+
 
   #
   # Launch the agents; this never returns.
