@@ -32,7 +32,7 @@ This plugin is also available as an Amazon Machine Image (AMI) via the AWS Marke
 
 The AMI takes the contents of `config/newrelic_plugin.yml` as user-data, which is configured when creating the EC2 instance. Once the instance is running with valid user-data, no further action is required. To change the configuration, terminate the current instance and create another.
 
-If you like the AMI, please leave a 5-star review in the AWS Marketplace.
+If you like the AMI, please [leave a 5-star review](https://aws.amazon.com/marketplace/review/product-reviews/ref=dtl_pop_customer_reviews?ie=UTF8&asin=B00DMMUO0O) in the AWS Marketplace.
 
 If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with [New Relic Support](https://support.newrelic.com) and let us know what we could do better. We take your feedback very seriously - and by opening a ticket, we can notify you when we've addressed your feedback.
 
