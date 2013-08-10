@@ -10,8 +10,6 @@ This tool provides the metric collection agents for the following New Relic plug
 - SNS
 - ElastiCache
 
-Overview versions of the plugins above are also available.
-
 ## Dependencies
 - A single t1.micro EC2 instance (in any region)
 - Ruby (>= 1.9.2)
@@ -32,15 +30,14 @@ This plugin is also available as an Amazon Machine Image (AMI) via the AWS Marke
 
 The AMI takes the contents of `config/newrelic_plugin.yml` as user-data, which is configured when creating the EC2 instance. Once the instance is running with valid user-data, no further action is required. To change the configuration, terminate the current instance and create another.
 
-If you like the AMI, please leave a 5-star review in the AWS Marketplace.
+If you like the AMI, please [leave a 5-star review](https://aws.amazon.com/marketplace/review/product-reviews/ref=dtl_pop_customer_reviews?ie=UTF8&asin=B00DMMUO0O) in the AWS Marketplace.
 
-If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with New Relic Support (via the support link) and let us know what we could do better. We take your feedback very seriously and will work on improvements as soon as possible. Plus, by opening a ticket, we'll notify you when we've addressed your feedback.
+If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with [New Relic Support](https://support.newrelic.com) and let us know what we could do better. We take your feedback very seriously - and by opening a ticket, we can notify you when we've addressed your feedback.
 
 ## Notes
 - CloudWatch detailed monitoring is recommended, please enable it when available. (see *Using Amazon CloudWatch* section on http://aws.amazon.com/cloudwatch/)
 - Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag in reporting metrics.
 - Latest data point is used to fill gaps in low resolution metrics.
-- Can use services like Upstart, Systemd, Runit, and Monit to manage the process.
 
 ## Keep this process running
 You can use services like these to manage this process.
@@ -51,5 +48,8 @@ You can use services like these to manage this process.
 - [Monit](http://mmonit.com/monit/)
 
 ## For support
-Plugin support for troubleshooting assistance can be obtained by visiting [support.newrelic.com](https://support.newrelic.com)
+Plugin support and troubleshooting assistance can be obtained by visiting [support.newrelic.com](https://support.newrelic.com)
+
+## Credits
+The New Relic AWS plugin was originally authored by [Sean Porter](https://github.com/portertech) and the team at [Heavy Water Operations](http://hw-ops.com/). Subsequent updates and support are provided by [New Relic](http://newrelic.com/platform).
 
