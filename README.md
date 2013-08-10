@@ -34,7 +34,7 @@ The AMI takes the contents of `config/newrelic_plugin.yml` as user-data, which i
 
 If you like the AMI, please leave a 5-star review in the AWS Marketplace.
 
-If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with New Relic Support (via the support link) and let us know what we could do better. We take your feedback very seriously and will work on improvements as soon as possible. Plus, by opening a ticket, we'll notify you when we've addressed your feedback.
+If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with [New Relic Support](https://support.newrelic.com) and let us know what we could do better. We take your feedback very seriously - and by opening a ticket, we can notify you when we've addressed your feedback.
 
 ## Notes
 - CloudWatch detailed monitoring is recommended, please enable it when available. (see *Using Amazon CloudWatch* section on http://aws.amazon.com/cloudwatch/)
