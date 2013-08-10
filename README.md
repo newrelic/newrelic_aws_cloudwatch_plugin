@@ -40,7 +40,6 @@ If you don't like the AMI, New Relic would appreciate that you do not leave a ba
 - CloudWatch detailed monitoring is recommended, please enable it when available. (see *Using Amazon CloudWatch* section on http://aws.amazon.com/cloudwatch/)
 - Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag in reporting metrics.
 - Latest data point is used to fill gaps in low resolution metrics.
-- Can use services like Upstart, Systemd, Runit, and Monit to manage the process.
 
 ## Keep this process running
 You can use services like these to manage this process.
