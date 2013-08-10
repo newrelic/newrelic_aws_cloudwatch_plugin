@@ -51,5 +51,5 @@ You can use services like these to manage this process.
 - [Monit](http://mmonit.com/monit/)
 
 ## For support
-Plugin support for troubleshooting assistance can be obtained by visiting [support.newrelic.com](https://support.newrelic.com)
+Plugin support and troubleshooting assistance can be obtained by visiting [support.newrelic.com](https://support.newrelic.com)
 
