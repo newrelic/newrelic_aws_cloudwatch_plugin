@@ -10,8 +10,6 @@ This tool provides the metric collection agents for the following New Relic plug
 - SNS
 - ElastiCache
 
-Overview versions of the plugins above are also available.
-
 ## Dependencies
 - A single t1.micro EC2 instance (in any region)
 - Ruby (>= 1.9.2)
