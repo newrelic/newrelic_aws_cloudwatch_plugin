@@ -34,6 +34,43 @@ If you like the AMI, please [leave a 5-star review](https://aws.amazon.com/marke
 
 If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with [New Relic Support](https://support.newrelic.com) and let us know what we could do better. We take your feedback very seriously - and by opening a ticket, we can notify you when we've addressed your feedback.
 
+## IAM (AWS API Credentials)
+
+Note: There is a fantastic blog post on this topic [here](http://www.paulsamiq.com/how-to-use-amazons-iam-with-new-relics-aws-plugin/) (screenshots).
+
+This plugin requires AWS API credentials, using IAM is highly recommended, giving it read-only access to select services.
+
+You will need to create a new IAM group, `NewRelicCloudWatch`, where the permissions will be defined. You will want to use a custom policy for the group, `NewRelicCloudWatch`, using the following JSON for the policy document.
+
+```
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "autoscaling:Describe*",
+        "cloudwatch:Describe*",
+        "cloudwatch:List*",
+        "cloudwatch:Get*",
+        "ec2:Describe*",
+        "ec2:Get*",
+        "ec2:ReportInstanceStatus",
+        "elasticache:DescribeCacheClusters",
+        "elasticloadbalancing:Describe*",
+        "sqs:GetQueueAttributes",
+        "sqs:ListQueues",
+        "rds:DescribeDBInstances",
+        "SNS:ListTopics"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+To get API credentials, a IAM user must be created, `NewRelicCloudWatch`. Be sure to save the user access key id and secret access key on creation. Add the user to the `NewRelicCloudWatch` IAM group. Use the IAM user API credentials in the plugin configuration file.
+
 ## Notes
 - CloudWatch detailed monitoring is recommended, please enable it when available. (see *Using Amazon CloudWatch* section on http://aws.amazon.com/cloudwatch/)
 - Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag in reporting metrics.
@@ -52,4 +89,3 @@ Plugin support and troubleshooting assistance can be obtained by visiting [suppo
 
 ## Credits
 The New Relic AWS plugin was originally authored by [Sean Porter](https://github.com/portertech) and the team at [Heavy Water Operations](http://hw-ops.com/). Subsequent updates and support are provided by [New Relic](http://newrelic.com/platform).
-
