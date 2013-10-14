@@ -2,9 +2,9 @@ require "rubygems"
 require "bundler/setup"
 
 require "newrelic_plugin"
-require "newrelic_aws/logger"
 require "newrelic_aws/components"
 require "newrelic_aws/collectors"
+require 'newrelic_aws/version'
 
 module NewRelicAWS
   AWS_REGIONS = %w[
@@ -40,14 +40,6 @@ module NewRelicAWS
         @agent_options
       end
 
-      def self.overview_available(available=false)
-        @overview_available ||= available
-      end
-
-      def overview_enabled?
-        self.class.overview_available ? !!agent_options["agents"][agent_name][:overview] : false
-      end
-
       def aws_regions
         if agent_options["aws"]["regions"]
           Array(agent_options["aws"]["regions"])
@@ -59,26 +51,33 @@ module NewRelicAWS
       def setup_metrics
         @collectors = []
         aws_regions.each do |region|
-          Logger.write("Creating a #{agent_name} metrics collector for region: #{region}")
+          NewRelic::PlatformLogger.info("Creating a #{agent_name} metrics collector for region: #{region}")
           @collectors << collector_class.new(
             agent_options["aws"]["access_key"],
             agent_options["aws"]["secret_key"],
             region
           )
         end
-        @components = Components::Collection.new("com.newrelic.aws.#{agent_name}", version)
+        @components_collection = Components::Collection.new("com.newrelic.aws.#{agent_name}", NewRelicAWS::VERSION)
+        @context = NewRelic::Binding::Context.new(NewRelic::Plugin::Config.config.newrelic['license_key'])
+        @context.version = NewRelicAWS::VERSION
       end
 
       def poll_cycle
+        request = @context.get_request
+        start_time = Time.now
+        NewRelic::PlatformLogger.debug("############## start poll_cycle ############")
+        metric_count = 0
         @collectors.each do |collector|
-          collector.collect.each do |component, metric_name, unit, value, timestamp|
-            @components.report_metric(component, metric_name, unit, value)
-            if overview_enabled?
-              report_metric("#{component}/#{metric_name}", unit, value)
-            end
+          collector.collect.each do |component_name, metric_name, unit, value, timestamp|
+            component = @context.get_component(component_name, @components_collection.guid)
+            @components_collection.report_metric(request, component, metric_name, unit, value) unless component.nil?
+            metric_count += 1
           end
         end
-        @components.process
+        NewRelic::PlatformLogger.debug("#{ metric_count } metrics collected in #{ Time.now - start_time } seconds")
+        NewRelic::PlatformLogger.debug("############## end poll_cycle ############")
+        request.deliver
       end
     end
   end
@@ -88,7 +87,6 @@ module NewRelicAWS
       agent_guid "com.newrelic.aws.ec2_overview"
       agent_version "3.0.0"
       agent_human_labels("EC2") { "EC2" }
-      overview_available false
     end
   end
 
@@ -97,7 +95,6 @@ module NewRelicAWS
       agent_guid "com.newrelic.aws.ebs_overview"
       agent_version "3.0.0"
       agent_human_labels("EBS") { "EBS" }
-      overview_available false
     end
   end
 
@@ -160,6 +157,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
   NewRelic::Plugin::Setup.install_agent :sns, SNS
   NewRelic::Plugin::Setup.install_agent :ec, EC
+
 
   #
   # Launch the agents; this never returns.
