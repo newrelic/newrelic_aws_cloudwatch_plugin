@@ -22,7 +22,7 @@ module NewRelicAWS
         options[:start_time] ||= (Time.now.utc-120).iso8601
         options[:end_time]   ||= (Time.now.utc-60).iso8601
         options[:dimensions] ||= [options[:dimension]]
-        Logger.write("Retrieving statistics: " + options.inspect) if verbose?
+        NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect) if verbose?
         begin
           statistics = @cloudwatch.client.get_metric_statistics(
             :namespace   => options[:namespace],
@@ -35,11 +35,11 @@ module NewRelicAWS
             :dimensions  => options[:dimensions]
           )
         rescue => error
-          Logger.write("Unexpected error: " + error.message)
-          Logger.write("Backtrace: " + error.backtrace.join("\n ")) if verbose?
+          NewRelic::PlatformLogger.error("Unexpected error: " + error.message)
+          NewRelic::PlatformLogger.debug("Backtrace: " + error.backtrace.join("\n ")) if verbose?
           raise error
         end
-        Logger.write("Retrived statistics: #{statistics.inspect}") if verbose?
+        NewRelic::PlatformLogger.info("Retrieved statistics: #{statistics.inspect}") if verbose?
         point = statistics[:datapoints].last
         return if point.nil?
         component   = options[:component]
