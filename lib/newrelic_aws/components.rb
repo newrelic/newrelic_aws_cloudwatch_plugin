@@ -7,7 +7,7 @@ module NewRelicAWS
       end
 
       def report_metric(request, component, metric_name, unit, value)
-        request.add_metric(component, "#{metric_name}[#{unit}]", value)
+        request.add_metric(component, "Component/#{metric_name}[#{unit}]", value)
       end
     end
   end
