@@ -36,7 +36,7 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "LoadBalancerName",
-                :value => load_balancer_name
+                :value => load_balancer_name.to_s
               }
             )
             unless data_point.nil?

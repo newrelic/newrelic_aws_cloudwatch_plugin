@@ -30,7 +30,7 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "TopicName",
-                :value => topic_name
+                :value => topic_name.to_s
               },
               :period => 300,
               :start_time => (Time.now.utc-660).iso8601

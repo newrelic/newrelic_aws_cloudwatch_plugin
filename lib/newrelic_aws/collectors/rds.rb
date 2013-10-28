@@ -40,7 +40,7 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "DBInstanceIdentifier",
-                :value => instance_id
+                :value => instance_id.to_s
               }
             )
             unless data_point.nil?

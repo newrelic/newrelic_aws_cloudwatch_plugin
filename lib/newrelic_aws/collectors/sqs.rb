@@ -34,7 +34,7 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "QueueName",
-                :value => url.split("/").last
+                :value => url.split("/").last.to_s
               },
               :period => 300,
               :start_time => (Time.now.utc-660).iso8601

@@ -34,7 +34,7 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "InstanceId",
-                :value => instance.id
+                :value => instance.id.to_s
               },
               :period => detailed ? 60 : 300,
               :start_time => (Time.now.utc-(detailed ? 120 : 660)).iso8601,

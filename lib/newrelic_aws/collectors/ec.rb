@@ -73,7 +73,7 @@ module NewRelicAWS
                 :dimensions  => [
                   {
                     :name  => "CacheClusterId",
-                    :value => cluster[:id]
+                    :value => cluster[:id].to_s
                   },
                   {
                     :name => "CacheNodeId",
