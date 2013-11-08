@@ -45,3 +45,5 @@ agents:
   #   overview: false
   # ec:
   #   overview: false
+  # ecr:
+  #   overview: false
