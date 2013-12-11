@@ -12,17 +12,12 @@ module NewRelicAWS
         )
       end
 
-      def verbose?
-        return @verbose unless @verbose.nil?
-        @verbose = NewRelic::Plugin::Config.config.newrelic["verbose"].to_i > 1
-      end
-
       def get_data_point(options)
         options[:period]     ||= 60
         options[:start_time] ||= (Time.now.utc-120).iso8601
         options[:end_time]   ||= (Time.now.utc-60).iso8601
         options[:dimensions] ||= [options[:dimension]]
-        NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect) if verbose?
+        NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect)
         begin
           statistics = @cloudwatch.client.get_metric_statistics(
             :namespace   => options[:namespace],
@@ -36,10 +31,10 @@ module NewRelicAWS
           )
         rescue => error
           NewRelic::PlatformLogger.error("Unexpected error: " + error.message)
-          NewRelic::PlatformLogger.debug("Backtrace: " + error.backtrace.join("\n ")) if verbose?
+          NewRelic::PlatformLogger.debug("Backtrace: " + error.backtrace.join("\n "))
           raise error
         end
-        NewRelic::PlatformLogger.info("Retrieved statistics: #{statistics.inspect}") if verbose?
+        NewRelic::PlatformLogger.info("Retrieved statistics: #{statistics.inspect}")
         point = statistics[:datapoints].last
         return if point.nil?
         component   = options[:component]
