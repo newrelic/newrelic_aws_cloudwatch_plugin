@@ -44,6 +44,7 @@ module NewRelicAWS
               :start_time => (Time.now.utc-(detailed ? 120 : 660)).iso8601,
               :component => name_tag.nil? ? volume.id : "#{name_tag.last} (#{volume.id})"
             )
+            NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
             unless data_point.nil?
               data_points << data_point
             end

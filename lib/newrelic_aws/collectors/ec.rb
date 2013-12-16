@@ -81,6 +81,7 @@ module NewRelicAWS
                   }
                 ]
               )
+              NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
               unless data_point.nil?
                 data_points << data_point
               end
