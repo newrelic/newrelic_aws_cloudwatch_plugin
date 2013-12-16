@@ -25,6 +25,35 @@ This tool provides the metric collection agents for the following New Relic plug
 5. Run `bundle install`
 6. Run `bundle exec ./bin/newrelic_aws`
 
+## Configuration
+
+This plugin is configured through the `config/newrelic_plugin.yml` file. It requires: 
+
+- a New Relic license key that can be found at https://rpm.newrelic.com/extensions/com.newrelic.aws.ec2
+- an AWS Access Key
+- an AWS Secret Key
+
+### Regions
+The plugin can also be configured to query specific CloudWatch regions, e.g. `us-east-1` or `us-west-1`. By default the plugin will query all available regions.
+
+### CloudWatch Delay
+As noted below, there is a default 60 second delay in reporting metrics from CloudWatch which adjusts the time window for queried data. This is due to CloudWatch metrics not being immediately available for querying as they may take some time to process. Unfortunately there is little that can be done from the plugin to address this, besides adjusting the time window for metric querying from CloudWatch. The configuration option `cloudwatch_delay` can be specified for each AWS agent to override the default 60 second delay.
+
+```
+...
+agents:
+  ec2:
+    overview: false
+    cloudwatch_delay: 120
+  ebs:
+    overview: false
+...
+```
+
+####Affected Metrics
+
+- `RDS/CPU Utilization` - If you see 0% CPU utilization, try increasing the `cloudwatch_delay` option for the AWS RDS agent.
+
 ## AMI
 This plugin is also available as an Amazon Machine Image (AMI) via the AWS Marketplace. Learn more, then quickly install and configure the AMI here: https://aws.amazon.com/marketplace/pp/B00DMMUO0O/
 

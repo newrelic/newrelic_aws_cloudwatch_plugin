@@ -1,7 +1,7 @@
 module NewRelicAWS
   module Collectors
     class Base
-      def initialize(access_key, secret_key, region)
+      def initialize(access_key, secret_key, region, cloudwatch_delay)
         @aws_access_key = access_key
         @aws_secret_key = secret_key
         @aws_region = region
@@ -10,12 +10,13 @@ module NewRelicAWS
           :secret_access_key => @aws_secret_key,
           :region            => @aws_region
         )
+        @cloudwatch_delay = cloudwatch_delay || 60
       end
 
       def get_data_point(options)
         options[:period]     ||= 60
-        options[:start_time] ||= (Time.now.utc-120).iso8601
-        options[:end_time]   ||= (Time.now.utc-60).iso8601
+        options[:start_time] ||= (Time.now.utc - (@cloudwatch_delay * 2)).iso8601
+        options[:end_time]   ||= (Time.now.utc - @cloudwatch_delay).iso8601
         options[:dimensions] ||= [options[:dimension]]
         NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect)
         begin
