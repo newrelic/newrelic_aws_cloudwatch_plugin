@@ -63,7 +63,8 @@ module NewRelicAWS
           @collectors << collector_class.new(
             agent_options["aws"]["access_key"],
             agent_options["aws"]["secret_key"],
-            region
+            region,
+            agent_options["agents"][agent_name][:cloudwatch_delay]
           )
         end
         @components_collection = Components::Collection.new("com.newrelic.aws.#{agent_name}", NewRelicAWS::VERSION)
