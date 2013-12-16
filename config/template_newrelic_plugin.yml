@@ -30,7 +30,11 @@ agents:
   # enable its overview plugin (eg. EC2 Overview), displaying all
   # metrics on a single dashboard (currently only available for EC2 & EBS).
   # Note: Overview dashboards are being deprecated
-  #
+  # 
+  # An optional cloudwatch_delay attribute can be added for each agent
+  # which adjusts the time window in seconds for CloudWatch querying.
+  # Some of the Cloudwatch metrics are not immediately available and may 
+  # require a delay before being queried.
   ec2:
     overview: false
   ebs:
