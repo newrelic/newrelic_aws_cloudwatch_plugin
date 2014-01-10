@@ -36,6 +36,33 @@ This plugin is configured through the `config/newrelic_plugin.yml` file. It requ
 ### Regions
 The plugin can also be configured to query specific CloudWatch regions, e.g. `us-east-1` or `us-west-1`. By default the plugin will query all available regions.
 
+### Tag Filtering
+
+Filtering instances by tags is supported for both `EC2` and `EBS`. Details on adding tags to instances is available in the [AWS documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html).
+
+A list of case-sensitive tags can be added to the yml configuration for `EC2` and `EBS` and only instances containing one or more of those tags will be monitored. This can reduce CloudWatch requests and costs.
+
+Tagged instances will be monitored if they:
+
+- have a tag with a matching key in the tag list (e.g. tagged with key `newrelic_monitored` and any value: `true`, `yes`, etc.)
+- have a `Name` or `name` tag with a matching value in the tag list (e.g. tagged with key `Name` and value `prod_1_db`)
+
+If there are no configured tags, all available instances will be monitored. This is the default behavior.
+
+```
+...
+agents:
+  ec2:
+    overview: false
+    tags:
+      - newrelic_monitored
+      - prod_1_db
+  ebs:
+    overview: false
+    tags:
+      - newrelic_monitored
+```
+
 ### CloudWatch Delay
 As noted below, there is a default 60 second delay in reporting metrics from CloudWatch which adjusts the time window for queried data. This is due to CloudWatch metrics not being immediately available for querying as they may take some time to process. Unfortunately there is little that can be done from the plugin to address this, besides adjusting the time window for metric querying from CloudWatch. The configuration option `cloudwatch_delay` can be specified for each AWS agent to override the default 60 second delay.
 
