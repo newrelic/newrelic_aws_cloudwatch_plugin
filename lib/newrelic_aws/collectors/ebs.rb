@@ -1,13 +1,28 @@
 module NewRelicAWS
   module Collectors
     class EBS < Base
-      def volumes
-        ec2 = AWS::EC2.new(
+      def initialize(access_key, secret_key, region, options)
+        super(access_key, secret_key, region, options)
+        @ec2 = AWS::EC2.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
           :region => @aws_region
         )
-        ec2.volumes.select { |volume| volume.status == :in_use }
+        @tags = options[:tags]
+      end
+
+      def volumes
+        if @tags
+          tagged_volumes
+        else
+          @ec2.volumes.filter('status', 'in-use')
+        end
+      end
+
+      def tagged_volumes
+        volumes = @ec2.volumes.filter('status', 'in-use').tagged(@tags).to_a
+        volumes.concat(@ec2.volumes.filter('status', 'in-use').tagged('Name', 'name').tagged_values(@tags).to_a)
+        volumes
       end
 
       def metric_list

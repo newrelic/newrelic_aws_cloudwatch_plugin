@@ -1,7 +1,7 @@
 module NewRelicAWS
   module Collectors
     class Base
-      def initialize(access_key, secret_key, region, cloudwatch_delay)
+      def initialize(access_key, secret_key, region, options)
         @aws_access_key = access_key
         @aws_secret_key = secret_key
         @aws_region = region
@@ -10,7 +10,7 @@ module NewRelicAWS
           :secret_access_key => @aws_secret_key,
           :region            => @aws_region
         )
-        @cloudwatch_delay = cloudwatch_delay || 60
+        @cloudwatch_delay = options[:cloudwatch_delay] || 60
       end
 
       def get_data_point(options)

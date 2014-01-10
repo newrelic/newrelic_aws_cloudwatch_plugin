@@ -1,13 +1,28 @@
 module NewRelicAWS
   module Collectors
     class EC2 < Base
-      def instances
-        ec2 = AWS::EC2.new(
+      def initialize(access_key, secret_key, region, options)
+        super(access_key, secret_key, region, options)
+        @ec2 = AWS::EC2.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
           :region => @aws_region
         )
-        ec2.instances
+        @tags = options[:tags]
+      end
+
+      def instances
+        if @tags
+          tagged_instances
+        else
+          @ec2.instances
+        end
+      end
+
+      def tagged_instances
+        instances = @ec2.instances.tagged(@tags).to_a
+        instances.concat(@ec2.instances.tagged('Name', 'name').tagged_values(@tags).to_a)
+        instances
       end
 
       def metric_list
