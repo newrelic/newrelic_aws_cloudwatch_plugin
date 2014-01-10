@@ -30,6 +30,9 @@ agents:
   # enable its overview plugin (eg. EC2 Overview), displaying all
   # metrics on a single dashboard (currently only available for EC2 & EBS).
   # Note: Overview dashboards are being deprecated
+  #
+  # Tag filtering is available and is documented at
+  # https://github.com/newrelic-platform/newrelic_aws_cloudwatch_plugin/blob/master/README.md#tag-filtering
   # 
   # An optional cloudwatch_delay attribute can be added for each agent
   # which adjusts the time window in seconds for CloudWatch querying.
