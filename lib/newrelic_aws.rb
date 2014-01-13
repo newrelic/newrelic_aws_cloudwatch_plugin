@@ -78,7 +78,7 @@ module NewRelicAWS
         NewRelic::PlatformLogger.debug("############## start poll_cycle ############")
         metric_count = 0
         @collectors.each do |collector|
-          collector.collect.each do |component_name, metric_name, unit, value, timestamp|
+          collector.collect.each do |component_name, metric_name, unit, value|
             component = @context.get_component(component_name, @components_collection.guid)
             @components_collection.report_metric(request, component, metric_name, unit, value) unless component.nil?
             metric_count += 1
