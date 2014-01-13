@@ -41,7 +41,7 @@ module NewRelicAWS
         component   = options[:component]
         component ||= options[:dimensions].map { |dimension| dimension[:value] }.join("/")
         statistic = options[:statistic].downcase.to_sym
-        [component, options[:metric_name], point[:unit].downcase, point[statistic], point[:timestamp].to_i]
+        [component, options[:metric_name], point[:unit].downcase, point[statistic]]
       end
 
       def collect
