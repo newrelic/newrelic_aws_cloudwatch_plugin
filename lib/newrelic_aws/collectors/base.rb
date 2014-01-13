@@ -36,16 +36,34 @@ module NewRelicAWS
           raise error
         end
         NewRelic::PlatformLogger.info("Retrieved statistics: #{statistics.inspect}")
+
         point = statistics[:datapoints].last
-        return if point.nil?
-        component   = options[:component]
-        component ||= options[:dimensions].map { |dimension| dimension[:value] }.join("/")
-        statistic = options[:statistic].downcase.to_sym
-        [component, options[:metric_name], point[:unit].downcase, point[statistic]]
+        value = get_value(point, options)
+        return if value.nil?
+
+        component_name = get_component_name(options)
+        [component_name, options[:metric_name], options[:unit].downcase, value]
       end
 
       def collect
         []
+      end
+
+      private
+
+      def get_value(point, options)
+        value = options[:default_value]
+        unless point.nil?
+          statistic = options[:statistic].downcase.to_sym
+          value = point[statistic]
+        end
+        value
+      end
+
+      def get_component_name(options)
+        component_name   = options[:component_name]
+        component_name ||= options[:dimensions].map { |dimension| dimension[:value] }.join("/")
+        component_name
       end
     end
   end

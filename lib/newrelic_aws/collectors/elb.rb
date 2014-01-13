@@ -13,28 +13,32 @@ module NewRelicAWS
       def metric_list
         [
           ["Latency", "Average", "Seconds"],
-          ["RequestCount", "Sum", "Count"],
-          ["HealthyHostCount", "Maximum", "Count"],
-          ["UnHealthyHostCount", "Maximum", "Count"],
-          ["HTTPCode_ELB_4XX", "Sum", "Count"],
-          ["HTTPCode_ELB_5XX", "Sum", "Count"],
-          ["HTTPCode_Backend_2XX", "Sum", "Count"],
-          ["HTTPCode_Backend_3XX", "Sum", "Count"],
-          ["HTTPCode_Backend_4XX", "Sum", "Count"],
-          ["HTTPCode_Backend_5XX", "Sum", "Count"]
+          ["RequestCount", "Sum", "Count", 0],
+          ["HealthyHostCount", "Maximum", "Count", 0],
+          ["UnHealthyHostCount", "Maximum", "Count", 0],
+          ["HTTPCode_ELB_4XX", "Sum", "Count", 0],
+          ["HTTPCode_ELB_5XX", "Sum", "Count", 0],
+          ["HTTPCode_Backend_2XX", "Sum", "Count", 0],
+          ["HTTPCode_Backend_3XX", "Sum", "Count", 0],
+          ["HTTPCode_Backend_4XX", "Sum", "Count", 0],
+          ["HTTPCode_Backend_5XX", "Sum", "Count", 0],
+          ["BackendConnectionErrors", "Sum", "Count", 0],
+          ["SurgeQueueLength", "Maximum", "Count", 0],
+          ["SpilloverCount", "Sum", "Count", 0]
         ]
       end
 
       def collect
         data_points = []
         load_balancers.each do |load_balancer_name|
-          metric_list.each do |(metric_name, statistic, unit)|
+          metric_list.each do |(metric_name, statistic, unit, default_value)|
             data_point = get_data_point(
-              :namespace   => "AWS/ELB",
-              :metric_name => metric_name,
-              :statistic   => statistic,
-              :unit        => unit,
-              :dimension   => {
+              :namespace     => "AWS/ELB",
+              :metric_name   => metric_name,
+              :statistic     => statistic,
+              :unit          => unit,
+              :default_value => default_value,
+              :dimension     => {
                 :name  => "LoadBalancerName",
                 :value => load_balancer_name
               }
