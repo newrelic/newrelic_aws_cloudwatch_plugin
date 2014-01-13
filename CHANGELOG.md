@@ -5,6 +5,7 @@
 **Features**
 
 * Added AWS tag filtering for EC2 and EBS instances
+* Added new metrics to ELB: `BackendConnectionErrors`, `SurgeQueueLength`, and `SpilloverCount`
 
 **Bug Fixes**
 
