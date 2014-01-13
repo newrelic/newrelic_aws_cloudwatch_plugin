@@ -39,7 +39,7 @@ module NewRelicAWS
       def collect
         data_points = []
         instances.each do |instance|
-          detailed = instance.monitoring == :enable
+          detailed = instance.monitoring == :enabled
           name_tag = instance.tags.detect { |tag| tag.first =~ /^name$/i }
           metric_list.each do |(metric_name, statistic, unit)|
             data_point = get_data_point(
