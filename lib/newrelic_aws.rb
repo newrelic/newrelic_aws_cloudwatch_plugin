@@ -93,7 +93,7 @@ module NewRelicAWS
 
   module EC2
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.ec2_overview"
+      agent_guid "com.newrelic.aws.ec2"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("EC2") { "EC2" }
     end
@@ -101,7 +101,7 @@ module NewRelicAWS
 
   module EBS
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.ebs_overview"
+      agent_guid "com.newrelic.aws.ebs"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("EBS") { "EBS" }
     end
@@ -109,7 +109,7 @@ module NewRelicAWS
 
   module ELB
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.elb_overview"
+      agent_guid "com.newrelic.aws.elb"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("ELB") { "ELB" }
     end
@@ -117,7 +117,7 @@ module NewRelicAWS
 
   module RDS
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.rds_overview"
+      agent_guid "com.newrelic.aws.rds"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("RDS") { "RDS" }
     end
@@ -125,7 +125,7 @@ module NewRelicAWS
 
   module DDB
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.ddb_overview"
+      agent_guid "com.newrelic.aws.ddb"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("DynamoDB") { "DynamoDB" }
     end
@@ -133,7 +133,7 @@ module NewRelicAWS
 
   module SQS
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.sqs_overview"
+      agent_guid "com.newrelic.aws.sqs"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("SQS") { "SQS" }
     end
@@ -141,7 +141,7 @@ module NewRelicAWS
 
   module SNS
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.sns_overview"
+      agent_guid "com.newrelic.aws.sns"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("SNS") { "SNS" }
     end
@@ -149,7 +149,7 @@ module NewRelicAWS
 
   module EC
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.ec_overview"
+      agent_guid "com.newrelic.aws.ec"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("ElastiCache") { "ElastiCache" }
     end
