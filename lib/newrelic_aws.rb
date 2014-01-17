@@ -155,6 +155,14 @@ module NewRelicAWS
     end
   end
 
+  module ECR
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.ecr_overview"
+      agent_version NewRelicAWS::VERSION
+      agent_human_labels("ElastiCacheRedis") { "ElastiCacheRedis" }
+    end
+  end
+
   #
   # Register each agent with the component.
   #
@@ -166,6 +174,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :sqs, SQS
   NewRelic::Plugin::Setup.install_agent :sns, SNS
   NewRelic::Plugin::Setup.install_agent :ec, EC
+  NewRelic::Plugin::Setup.install_agent :ecr, ECR
 
 
   #

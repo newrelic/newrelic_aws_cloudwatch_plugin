@@ -1,19 +1,14 @@
 module NewRelicAWS
   module Collectors
     class EC < Base
-      def clusters
+      def clusters(engine='memcached')
         ec = AWS::ElastiCache.new(
-          :access_key_id => @aws_access_key,
-          :secret_access_key => @aws_secret_key,
-          :region => @aws_region
+            :access_key_id => @aws_access_key,
+            :secret_access_key => @aws_secret_key,
+            :region => @aws_region
         )
         clusters = ec.client.describe_cache_clusters(:show_cache_node_info => true)
-        clusters[:cache_clusters].map do |cluster|
-          {
-            :id    => cluster[:cache_cluster_id],
-            :nodes => cluster[:cache_nodes].map { |node| node[:cache_node_id] }
-          }
-        end
+        clusters[:cache_clusters].map { |cluster| { :id => cluster[:cache_cluster_id], :nodes => cluster[:cache_nodes].map { |node| node[:cache_node_id] } } if cluster[:engine] == engine }.compact
       end
 
       def metric_list
