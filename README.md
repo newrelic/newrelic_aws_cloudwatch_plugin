@@ -1,4 +1,4 @@
-# New Relic AWS
+# New Relic Amazon CloudWatch Plugin
 
 This tool provides the metric collection agents for the following New Relic plugins:
 
