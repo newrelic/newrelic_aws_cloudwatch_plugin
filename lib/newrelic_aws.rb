@@ -26,6 +26,28 @@ module NewRelicAWS
     sa-east-1
   ]
 
+  def self.agent_options_exist?(agent_options)
+    # agent is commented out when options are nil
+    !agent_options.nil?
+  end
+
+  def self.get_enabled_option(agent_options)
+    if agent_options['enabled'].nil? 
+      true
+    else
+      agent_options['enabled']
+    end
+  end
+
+  def self.agent_enabled?(agent)
+    enabled = false
+    agent_options = NewRelic::Plugin::Config.config.agents[agent.to_s]
+    if NewRelicAWS::agent_options_exist?(agent_options)
+      enabled = NewRelicAWS::get_enabled_option(agent_options)
+    end
+    enabled
+  end
+
   module Base
     class Agent < NewRelic::Plugin::Agent::Base
       def agent_name
@@ -158,14 +180,14 @@ module NewRelicAWS
   #
   # Register each agent with the component.
   #
-  NewRelic::Plugin::Setup.install_agent :ec2, EC2
-  NewRelic::Plugin::Setup.install_agent :ebs, EBS
-  NewRelic::Plugin::Setup.install_agent :elb, ELB
-  NewRelic::Plugin::Setup.install_agent :rds, RDS
+  NewRelic::Plugin::Setup.install_agent :ec2, EC2 if NewRelicAWS::agent_enabled?(:ec2)
+  NewRelic::Plugin::Setup.install_agent :ebs, EBS if NewRelicAWS::agent_enabled?(:ebs)
+  NewRelic::Plugin::Setup.install_agent :elb, ELB if NewRelicAWS::agent_enabled?(:elb)
+  NewRelic::Plugin::Setup.install_agent :rds, RDS if NewRelicAWS::agent_enabled?(:rds)
   # NewRelic::Plugin::Setup.install_agent :ddb, DDB # WIP
-  NewRelic::Plugin::Setup.install_agent :sqs, SQS
-  NewRelic::Plugin::Setup.install_agent :sns, SNS
-  NewRelic::Plugin::Setup.install_agent :ec, EC
+  NewRelic::Plugin::Setup.install_agent :sqs, SQS if NewRelicAWS::agent_enabled?(:sqs)
+  NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
+  NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
 
 
   #
