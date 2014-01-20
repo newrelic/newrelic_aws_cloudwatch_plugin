@@ -1,4 +1,4 @@
-## New Relic AWS CloudWatch Plugin ##
+## New Relic Amazon CloudWatch Plugin ##
 
 ### v3.3.0 - Unreleased ###
 
