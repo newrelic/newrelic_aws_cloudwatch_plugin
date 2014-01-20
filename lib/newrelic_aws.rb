@@ -26,6 +26,28 @@ module NewRelicAWS
     sa-east-1
   ]
 
+  def self.agent_options_exist?(agent_options)
+    # agent is commented out when options are nil
+    !agent_options.nil?
+  end
+
+  def self.get_enabled_option(agent_options)
+    if agent_options['enabled'].nil? 
+      true
+    else
+      agent_options['enabled']
+    end
+  end
+
+  def self.agent_enabled?(agent)
+    enabled = false
+    agent_options = NewRelic::Plugin::Config.config.agents[agent.to_s]
+    if NewRelicAWS::agent_options_exist?(agent_options)
+      enabled = NewRelicAWS::get_enabled_option(agent_options)
+    end
+    enabled
+  end
+
   module Base
     class Agent < NewRelic::Plugin::Agent::Base
       def agent_name
@@ -93,7 +115,7 @@ module NewRelicAWS
 
   module EC2
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.ec2_overview"
+      agent_guid "com.newrelic.aws.ec2"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("EC2") { "EC2" }
     end
@@ -101,7 +123,7 @@ module NewRelicAWS
 
   module EBS
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.ebs_overview"
+      agent_guid "com.newrelic.aws.ebs"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("EBS") { "EBS" }
     end
@@ -109,7 +131,7 @@ module NewRelicAWS
 
   module ELB
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.elb_overview"
+      agent_guid "com.newrelic.aws.elb"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("ELB") { "ELB" }
     end
@@ -117,7 +139,7 @@ module NewRelicAWS
 
   module RDS
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.rds_overview"
+      agent_guid "com.newrelic.aws.rds"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("RDS") { "RDS" }
     end
@@ -125,7 +147,7 @@ module NewRelicAWS
 
   module DDB
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.ddb_overview"
+      agent_guid "com.newrelic.aws.ddb"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("DynamoDB") { "DynamoDB" }
     end
@@ -133,7 +155,7 @@ module NewRelicAWS
 
   module SQS
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.sqs_overview"
+      agent_guid "com.newrelic.aws.sqs"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("SQS") { "SQS" }
     end
@@ -141,7 +163,7 @@ module NewRelicAWS
 
   module SNS
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.sns_overview"
+      agent_guid "com.newrelic.aws.sns"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("SNS") { "SNS" }
     end
@@ -149,7 +171,7 @@ module NewRelicAWS
 
   module EC
     class Agent < Base::Agent
-      agent_guid "com.newrelic.aws.ec_overview"
+      agent_guid "com.newrelic.aws.ec"
       agent_version NewRelicAWS::VERSION
       agent_human_labels("ElastiCache") { "ElastiCache" }
     end
@@ -158,14 +180,14 @@ module NewRelicAWS
   #
   # Register each agent with the component.
   #
-  NewRelic::Plugin::Setup.install_agent :ec2, EC2
-  NewRelic::Plugin::Setup.install_agent :ebs, EBS
-  NewRelic::Plugin::Setup.install_agent :elb, ELB
-  NewRelic::Plugin::Setup.install_agent :rds, RDS
+  NewRelic::Plugin::Setup.install_agent :ec2, EC2 if NewRelicAWS::agent_enabled?(:ec2)
+  NewRelic::Plugin::Setup.install_agent :ebs, EBS if NewRelicAWS::agent_enabled?(:ebs)
+  NewRelic::Plugin::Setup.install_agent :elb, ELB if NewRelicAWS::agent_enabled?(:elb)
+  NewRelic::Plugin::Setup.install_agent :rds, RDS if NewRelicAWS::agent_enabled?(:rds)
   # NewRelic::Plugin::Setup.install_agent :ddb, DDB # WIP
-  NewRelic::Plugin::Setup.install_agent :sqs, SQS
-  NewRelic::Plugin::Setup.install_agent :sns, SNS
-  NewRelic::Plugin::Setup.install_agent :ec, EC
+  NewRelic::Plugin::Setup.install_agent :sqs, SQS if NewRelicAWS::agent_enabled?(:sqs)
+  NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
+  NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
 
 
   #

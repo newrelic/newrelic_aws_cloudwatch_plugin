@@ -26,10 +26,7 @@ aws:
 #
 agents:
   #
-  # Uncomment an agent to enable it. Set 'overview' to true to
-  # enable its overview plugin (eg. EC2 Overview), displaying all
-  # metrics on a single dashboard (currently only available for EC2 & EBS).
-  # Note: Overview dashboards are being deprecated
+  # Enable/disable agents with the enabled attribute or by commenting out each agent.
   #
   # Tag filtering is available and is documented at
   # https://github.com/newrelic-platform/newrelic_aws_cloudwatch_plugin/blob/master/README.md#tag-filtering
@@ -39,16 +36,16 @@ agents:
   # Some of the Cloudwatch metrics are not immediately available and may 
   # require a delay before being queried.
   ec2:
-    overview: false
+    enabled: true
   ebs:
-    overview: false
-  # elb:
-  #   overview: false
-  # rds:
-  #   overview: false
-  # sqs:
-  #   overview: false
-  # sns:
-  #   overview: false
-  # ec:
-  #   overview: false
+    enabled: true
+  elb:
+    enabled: false
+  rds:
+    enabled: false
+  sqs:
+    enabled: false
+  sns:
+    enabled: false
+  ec:
+    enabled: false

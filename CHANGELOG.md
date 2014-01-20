@@ -11,6 +11,10 @@
 
 * Fixed detailed one minute monitoring for EC2 instances
 
+**Changes**
+
+* Overview dashboards have been deprecated
+
 ### v3.2.1 - December 16, 2013 ###
 
 **Features**
