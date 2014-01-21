@@ -9,6 +9,8 @@ This tool provides the metric collection agents for the following New Relic plug
 - SQS
 - SNS
 - ElastiCache
+  - Memcached
+  - Redis
 
 ## Dependencies
 - A single t1.micro EC2 instance (in any region)
@@ -35,6 +37,10 @@ This plugin is configured through the `config/newrelic_plugin.yml` file. It requ
 
 ### Regions
 The plugin can also be configured to query specific CloudWatch regions, e.g. `us-east-1` or `us-west-1`. By default the plugin will query all available regions.
+
+### Amazon ElastiCache
+
+Amazon ElastiCache supports both Memcached and Redis caching technologies. The Memcached agent is configured under the `ec` section, while the Redis agent is configured under the `ecr` section.
 
 ### Tag Filtering
 
