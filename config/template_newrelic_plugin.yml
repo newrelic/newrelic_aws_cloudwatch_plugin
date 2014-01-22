@@ -49,3 +49,5 @@ agents:
     enabled: false
   ec:
     enabled: false
+  ecr:
+    enabled: false

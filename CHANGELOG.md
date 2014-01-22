@@ -6,6 +6,7 @@
 
 * Added AWS tag filtering for EC2 and EBS instances
 * Added new metrics to ELB: `BackendConnectionErrors`, `SurgeQueueLength`, and `SpilloverCount`
+* Added new `ECR` plugin support for ElastiCache Redis
 
 **Bug Fixes**
 
