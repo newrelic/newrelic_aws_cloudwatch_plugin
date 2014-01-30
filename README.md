@@ -20,12 +20,23 @@ This tool provides the metric collection agents for the following New Relic plug
 - Git
 
 ## Install
+
+### Manual Installation
 1. Download the latest tagged version from [https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags](https://github.com/newrelic-platform/newrelic_aws_cloudwatch_extension/tags)
 2. Extract to the location you want to run the plugin from
 3. Rename `config/template_newrelic_plugin.yml` to `config/newrelic_plugin.yml`
 4. Edit `config/newrelic_plugin.yml`
 5. Run `bundle install`
 6. Run `bundle exec ./bin/newrelic_aws`
+
+### Installation with Chef/Puppet
+
+[Chef](http://www.getchef.com) and [Puppet](http://puppetlabs.com) are tools that automate software installation. The Amazon CloudWatch plugin has installation support for both:
+
+  - [Chef Cookbook](http://community.opscode.com/cookbooks/newrelic_plugins)
+  - [Puppet Module](https://forge.puppetlabs.com/newrelic/newrelic_plugins)
+
+**Note:** For more information on using Chef and Puppet with New Relic, see the New Relic [docs](https://docs.newrelic.com/docs/plugins/plugin-installation-with-chef-and-puppet).
 
 ## Configuration
 
