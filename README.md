@@ -80,6 +80,21 @@ agents:
       - newrelic_monitored
 ```
 
+### RDS Instance Filtering
+When an IAM policy for rds:DescribeDBInstances has Resource restrictions, the rds-describe-db-instances call will fail when an allowed DBInstanceIdentifier is not specified.
+
+If there are no configured instance_identifiers, all available instances will be monitored. This is the default behavior.
+
+```
+...
+agents:
+  rds:
+    enabled: true
+    instance_identifiers:
+      - db1
+      - db2
+```
+
 ### CloudWatch Delay
 As noted below, there is a default 60 second delay in reporting metrics from CloudWatch which adjusts the time window for queried data. This is due to CloudWatch metrics not being immediately available for querying as they may take some time to process. Unfortunately there is little that can be done from the plugin to address this, besides adjusting the time window for metric querying from CloudWatch. The configuration option `cloudwatch_delay` can be specified for each AWS agent to override the default 60 second delay.
 
