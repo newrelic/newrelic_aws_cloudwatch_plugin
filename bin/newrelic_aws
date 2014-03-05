@@ -11,6 +11,8 @@ unless $:.include?(File.dirname(__FILE__) + '/../lib/')
   $: << File.dirname(__FILE__) + '/../lib'
 end
 
+Dir.chdir(File.join(File.dirname(__FILE__), "../"))
+
 STDOUT.sync = true
 
 require 'newrelic_aws'
