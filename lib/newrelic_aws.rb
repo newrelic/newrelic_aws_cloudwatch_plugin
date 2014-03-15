@@ -32,7 +32,7 @@ module NewRelicAWS
   end
 
   def self.get_enabled_option(agent_options)
-    if agent_options['enabled'].nil? 
+    if agent_options['enabled'].nil?
       true
     else
       agent_options['enabled']
@@ -61,17 +61,17 @@ module NewRelicAWS
       def agent_options
         return @agent_options if @agent_options
         @agent_options = NewRelic::Plugin::Config.config.options
-        aws = @agent_options["aws"]
-        unless aws.is_a?(Hash) &&
-            aws["access_key"].is_a?(String) &&
-            aws["secret_key"].is_a?(String)
-          raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
+        if @agent_options["aws"].nil?
+          @agent_options["aws"] = {
+            "access_key" => nil,
+            "secret_key" => nil
+          }
         end
         @agent_options
       end
 
       def aws_regions
-        if agent_options["aws"]["regions"]
+        if !agent_options["aws"].nil? && agent_options["aws"]["regions"]
           Array(agent_options["aws"]["regions"])
         else
           AWS_REGIONS
