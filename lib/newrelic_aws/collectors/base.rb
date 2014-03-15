@@ -1,7 +1,7 @@
 module NewRelicAWS
   module Collectors
     class Base
-      def initialize(access_key, secret_key, region, options)
+      def initialize(access_key=nil, secret_key=nil, region, options)
         @aws_access_key = access_key
         @aws_secret_key = secret_key
         @aws_region = region
