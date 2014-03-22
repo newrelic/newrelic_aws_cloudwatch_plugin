@@ -205,7 +205,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
   NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
   NewRelic::Plugin::Setup.install_agent :ecr, ECR if NewRelicAWS::agent_enabled?(:ecr)
-  NewRelic::Plugin::Setup.install_agent :asg, ECR if NewRelicAWS::agent_enabled?(:asg)
+  NewRelic::Plugin::Setup.install_agent :asg, ASG if NewRelicAWS::agent_enabled?(:asg)
 
   #
   # Launch the agents; this never returns.
