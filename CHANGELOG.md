@@ -1,5 +1,11 @@
 ## New Relic Amazon CloudWatch Plugin ##
 
+### v3.3.1 - March 22, 2014 ###
+
+**Features**
+
+* Added new `ASG` plugin support for AutoScaling Groups (Brett Cave <brett@cave.za.net>)
+
 ### v3.3.0 - January 22, 2014 ###
 
 **Features**

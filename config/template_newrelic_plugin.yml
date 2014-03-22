@@ -51,3 +51,5 @@ agents:
     enabled: false
   ecr:
     enabled: false
+  asg:
+    enabled: false
