@@ -11,6 +11,7 @@ This tool provides the metric collection agents for the following New Relic plug
 - ElastiCache
   - Memcached
   - Redis
+- ASG
 
 ## Dependencies
 - A single t1.micro EC2 instance (in any region)
@@ -52,6 +53,10 @@ The plugin can also be configured to query specific CloudWatch regions, e.g. `us
 ### Amazon ElastiCache
 
 Amazon ElastiCache supports both Memcached and Redis caching technologies. The Memcached agent is configured under the `ec` section, while the Redis agent is configured under the `ecr` section.
+
+### Amazon AutoScaling groups
+
+Amazon AutoScaling is a sub-service of EC2, and in CloudWatch is reported in the EC2 namespace. However, the New Relic plugin has been implemented as a seperate plugin, as this allows you to monitoring Auto Scaling groups independently of individual instances.
 
 ### Tag Filtering
 
