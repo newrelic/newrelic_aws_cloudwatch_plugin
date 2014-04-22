@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+#
+# Start
+# - bundle exec bin/daemon start
+#
+# Stop
+# - bundle exec bin/daemon stop
+#
+
+require 'rubygems'
+require 'daemons'
+
+pwd  = File.join(File.dirname(File.expand_path(__FILE__)), "../")
+Daemons.run('bin/newrelic_aws', :dir_mode => :normal, :dir => pwd)

@@ -40,7 +40,7 @@ This tool provides the metric collection agents for the following New Relic plug
 
 ## Configuration
 
-This plugin is configured through the `config/newrelic_plugin.yml` file. It requires: 
+This plugin is configured through the `config/newrelic_plugin.yml` file. It requires:
 
 - a New Relic license key that can be found at https://rpm.newrelic.com/extensions/com.newrelic.aws.ec2
 - an AWS Access Key
@@ -156,6 +156,13 @@ You can use services like these to manage this process.
 - [Systemd](http://www.freedesktop.org/wiki/Software/systemd/)
 - [Runit](http://smarden.org/runit/)
 - [Monit](http://mmonit.com/monit/)
+
+## Or run it as a daemon
+The provided daemon.rb file allows newrelic_aws to run as a daemon.
+
+    chmod +x bin/daemon
+    bundle exec bin/daemon start
+    bundle exec bin/daemon stop
 
 ## For support
 Plugin support and troubleshooting assistance can be obtained by visiting [support.newrelic.com](https://support.newrelic.com)
