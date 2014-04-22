@@ -8,7 +8,6 @@
 # - bundle exec bin/daemon stop
 #
 
-require 'rubygems'
 require 'daemons'
 
 pwd  = File.join(File.dirname(File.expand_path(__FILE__)), "../")
