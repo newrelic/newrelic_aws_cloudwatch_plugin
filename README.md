@@ -27,7 +27,7 @@ This tool provides the metric collection agents for the following New Relic plug
 3. Rename `config/template_newrelic_plugin.yml` to `config/newrelic_plugin.yml`
 4. Edit `config/newrelic_plugin.yml`
 5. Run `bundle install`
-6. Run `bundle exec ./bin/newrelic_aws`
+6. Run `bundle exec ./bin/newrelic_aws` (or on Windows `bundle exec ruby bin\newrelic_aws`)
 
 ### Installation with Chef/Puppet
 
