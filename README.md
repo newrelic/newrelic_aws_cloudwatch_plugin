@@ -70,12 +70,12 @@ If there are no configured tags, all available instances will be monitored. This
 ...
 agents:
   ec2:
-    overview: false
+    enabled: true
     tags:
       - newrelic_monitored
       - prod_1_db
   ebs:
-    overview: false
+    enabled: true
     tags:
       - newrelic_monitored
 ```
@@ -87,10 +87,10 @@ As noted below, there is a default 60 second delay in reporting metrics from Clo
 ...
 agents:
   ec2:
-    overview: false
+    enabled: true
     cloudwatch_delay: 120
   ebs:
-    overview: false
+    enabled: true
 ...
 ```
 
