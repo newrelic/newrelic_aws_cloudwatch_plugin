@@ -23,6 +23,8 @@ module NewRelicAWS
         data_points = []
         topic_names.each do |topic_name|
           metric_list.each do |(metric_name, statistic, unit)|
+            period = 300
+            time_offset = 600 + @cloudwatch_delay
             data_point = get_data_point(
               :namespace   => "AWS/SNS",
               :metric_name => metric_name,
@@ -32,8 +34,9 @@ module NewRelicAWS
                 :name  => "TopicName",
                 :value => topic_name
               },
-              :period => 300,
-              :start_time => (Time.now.utc-660).iso8601
+              :period => period,
+              :start_time => (Time.now.utc - (time_offset + period)).iso8601,
+              :end_time => (Time.now.utc - time_offset).iso8601
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
             unless data_point.nil?

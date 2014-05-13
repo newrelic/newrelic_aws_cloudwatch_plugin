@@ -46,6 +46,9 @@ module NewRelicAWS
           detailed = !!volume.iops
           name_tag = volume.tags.detect { |tag| tag.first =~ /^name$/i }
           metric_list.each do |(metric_name, statistic, unit)|
+            period = detailed ? 60 : 300
+            time_offset = detailed ? 60 : 600
+            time_offset += @cloudwatch_delay
             data_point = get_data_point(
               :namespace   => "AWS/EBS",
               :metric_name => metric_name,
@@ -55,8 +58,9 @@ module NewRelicAWS
                 :name  => "VolumeId",
                 :value => volume.id
               },
-              :period => detailed ? 60 : 300,
-              :start_time => (Time.now.utc-(detailed ? 120 : 660)).iso8601,
+              :period => period,
+              :start_time => (Time.now.utc - (time_offset + period)).iso8601,
+              :end_time => (Time.now.utc - time_offset).iso8601,
               :component_name => name_tag.nil? ? volume.id : "#{name_tag.last} (#{volume.id})"
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")

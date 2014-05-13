@@ -15,7 +15,7 @@ module NewRelicAWS
 
       def get_data_point(options)
         options[:period]     ||= 60
-        options[:start_time] ||= (Time.now.utc - (@cloudwatch_delay * 2)).iso8601
+        options[:start_time] ||= (Time.now.utc - (@cloudwatch_delay + options[:period])).iso8601
         options[:end_time]   ||= (Time.now.utc - @cloudwatch_delay).iso8601
         options[:dimensions] ||= [options[:dimension]]
         NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect)
