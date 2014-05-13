@@ -1,5 +1,11 @@
 ## New Relic Amazon CloudWatch Plugin ##
 
+### v3.3.1 - Unreleased ###
+
+**Bug Fixes**
+
+* Fixed cloudwatch_delay bug for EC2, EBS, SNS, and SQS where end_time was being set incorrectly
+
 ### v3.3.0 - January 22, 2014 ###
 
 **Features**
