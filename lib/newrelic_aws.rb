@@ -32,7 +32,7 @@ module NewRelicAWS
   end
 
   def self.get_enabled_option(agent_options)
-    if agent_options['enabled'].nil? 
+    if agent_options['enabled'].nil?
       true
     else
       agent_options['enabled']
@@ -62,9 +62,20 @@ module NewRelicAWS
         return @agent_options if @agent_options
         @agent_options = NewRelic::Plugin::Config.config.options
         aws = @agent_options["aws"]
-        unless aws.is_a?(Hash) &&
-            aws["access_key"].is_a?(String) &&
-            aws["secret_key"].is_a?(String)
+        if aws.is_a?(Hash)
+          if aws["use_aws_metadata"] == true
+            @agent_options["aws"] = {
+              "use_aws_metadata" => true,
+              "access_key" => nil,
+              "secret_key" => nil
+            }
+          else
+            unless aws["access_key"].is_a?(String) &&
+                aws["secret_key"].is_a?(String)
+              raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
+            end
+          end
+        else
           raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
         end
         @agent_options

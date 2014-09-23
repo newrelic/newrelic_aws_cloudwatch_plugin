@@ -1,6 +1,11 @@
 ## New Relic Amazon CloudWatch Plugin ##
 
-### v3.3.1 - Unreleased ###
+### v3.3.1 - September 23, 2014 ###
+
+**Features**
+
+* Added support for pulling AWS credentials from IAM Roles and Instance Profiles
+* Added support for filtering RDS instances by instance identifiers
 
 **Bug Fixes**
 

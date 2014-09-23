@@ -18,6 +18,14 @@ aws:
   # Update with you AWS account keys:
   access_key: 'YOUR_AWS_ACCESS_KEY_HERE'
   secret_key: 'YOUR_AWS_SECRET_KEY_HERE'
+
+  #Use the following if you would like to configure AWS keys with ENV variables
+  #access_key: <%= ENV['AWS_ACCESS_KEY'] %>
+  #secret_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+
+  #Use the following line disable the key checks and enable usage of AWS instance metadata for setting keys
+  #use_aws_metadata: true
+
   # Specify AWS regions to query for metrics
   # regions:
   #   us-east-1
@@ -28,12 +36,12 @@ agents:
   #
   # Enable/disable agents with the enabled attribute or by commenting out each agent.
   #
-  # Tag filtering is available and is documented at
+  # Tag and instance ID filtering are available and are documented at
   # https://github.com/newrelic-platform/newrelic_aws_cloudwatch_plugin/blob/master/README.md#tag-filtering
-  # 
+  #
   # An optional cloudwatch_delay attribute can be added for each agent
   # which adjusts the time window in seconds for CloudWatch querying.
-  # Some of the Cloudwatch metrics are not immediately available and may 
+  # Some of the Cloudwatch metrics are not immediately available and may
   # require a delay before being queried.
   ec2:
     enabled: true
