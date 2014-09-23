@@ -1,7 +1,13 @@
 module NewRelicAWS
   module Collectors
     class RDS < Base
+      def initialize(access_key, secret_key, region, options)
+        super(access_key, secret_key, region, options)
+        @instance_ids = options[:instance_identifiers]
+      end
+
       def instance_ids
+        return @instance_ids if @instance_ids
         rds = AWS::RDS.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
