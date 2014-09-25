@@ -1,5 +1,11 @@
 ## New Relic Amazon CloudWatch Plugin ##
 
+### v3.3.2 - September 25, 2014 ###
+
+**Bug Fixes**
+
+* Fixed a Ruby 1.8.7 bug that was introduced in v3.3.1
+
 ### v3.3.1 - September 23, 2014 ###
 
 **Features**
