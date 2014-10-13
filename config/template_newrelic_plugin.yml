@@ -28,7 +28,11 @@ aws:
 
   # Specify AWS regions to query for metrics
   # regions:
-  #   us-east-1
+  #  -
+  #   us-west-1
+  #  -
+  #   us-east-2
+
 #
 # Agent configuration.
 #
