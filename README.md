@@ -47,7 +47,17 @@ This plugin is configured through the `config/newrelic_plugin.yml` file. It requ
 - an AWS Secret Key
 
 ### Regions
-The plugin can also be configured to query specific CloudWatch regions, e.g. `us-east-1` or `us-west-1`. By default the plugin will query all available regions.
+The plugin can also be configured to query specific CloudWatch regions, e.g. `us-east-1` or `us-west-1`. By default the plugin will query all available regions.  
+
+```
+  regions:
+    -
+      us-east-1
+    -
+      us-east-2
+    -
+      us-west-1
+```
 
 ### Amazon ElastiCache
 
