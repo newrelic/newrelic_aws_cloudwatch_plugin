@@ -72,7 +72,7 @@ module NewRelicAWS
           else
             unless aws["access_key"].is_a?(String) &&
                 aws["secret_key"].is_a?(String)
-              raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
+              #raise NewRelic::Plugin::BadConfig, "Missing or invalid AWS configuration."
             end
           end
         else
