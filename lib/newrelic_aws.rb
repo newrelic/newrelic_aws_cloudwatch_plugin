@@ -67,7 +67,8 @@ module NewRelicAWS
             @agent_options["aws"] = {
               "use_aws_metadata" => true,
               "access_key" => nil,
-              "secret_key" => nil
+              "secret_key" => nil,
+              "regions" => aws["regions"]
             }
           else
             unless aws["access_key"].is_a?(String) &&
