@@ -196,6 +196,14 @@ module NewRelicAWS
     end
   end
 
+  module RED
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.red"
+      agent_version NewRelicAWS::VERSION
+      agent_human_labels("Redshift") { "Redshift" }
+    end
+  end
+
   #
   # Register each agent with the component.
   #
@@ -208,6 +216,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
   NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
   NewRelic::Plugin::Setup.install_agent :ecr, ECR if NewRelicAWS::agent_enabled?(:ecr)
+  NewRelic::Plugin::Setup.install_agent :red, RED if NewRelicAWS::agent_enabled?(:red)
 
   #
   # Launch the agents; this never returns.

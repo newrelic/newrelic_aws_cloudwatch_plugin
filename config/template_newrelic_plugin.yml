@@ -63,3 +63,5 @@ agents:
     enabled: false
   ecr:
     enabled: false
+  red:
+    enabled: false
