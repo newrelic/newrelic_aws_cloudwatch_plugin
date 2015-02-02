@@ -14,7 +14,7 @@ module NewRelicAWS
         )
         begin
           clusters = red.client.describe_clusters[:clusters]
-          @cluster_ids = clusters.map { |c| c[:cluster_identifier] }
+          @cluster_ids = clusters.map { |c| [c[:cluster_identifier], c[:number_of_nodes]] }
         rescue => e
           NewRelic::PlatformLogger.error("Unexpected error: " + e.inspect)
           NewRelic::PlatformLogger.debug("Backtrace: " + e.backtrace.join("\n "))
@@ -24,39 +24,84 @@ module NewRelicAWS
 
       def metric_list
         [
-          ["CPUUtilization", "Average", "Percent"],
-          ["DatabaseConnections", "Average", "Count"],
-          ["HealthStatus", "Average", "Count"],
-          ["MaintenanceMode", "Average", "Count"],
-          ["NetworkReceiveThroughput", "Average", "Bytes/Second"],
-          ["NetworkTransmitThroughput", "Average", "Bytes/Second"],
-          ["PercentageDiskSpaceUsed", "Average", "Percent"],
-          ["ReadIOPS", "Average", "Count/Second"],
-          ["ReadLatency", "Average", "Seconds"],
-          ["ReadThroughput", "Average", "Bytes/Second"],
-          ["WriteIOPS", "Average", "Count/Second"],
-          ["WriteLatency", "Average", "Seconds"],
-          ["WriteThroughput", "Average", "Bytes/Second"]
+          ["CPUUtilization",              "Average", "Percent",      [:node, :cluster]],
+          ["DatabaseConnections",         "Average", "Count",        [:cluster]],
+          ["HealthStatus",                "Average", "Count",        [:cluster]],
+          ["MaintenanceMode",             "Average", "Count",        [:cluster]],
+          ["NetworkReceiveThroughput",    "Average", "Bytes/Second", [:node, :cluster]],
+          ["NetworkTransmitThroughput",   "Average", "Bytes/Second", [:node, :cluster]],
+          ["PercentageDiskSpaceUsed",     "Average", "Percent",      [:node, :cluster]],
+          ["ReadIOPS",                    "Average", "Count/Second", [:node]],
+          ["ReadLatency",                 "Average", "Seconds",      [:node]],
+          ["ReadThroughput",              "Average", "Bytes/Second", [:node]],
+          ["WriteIOPS",                   "Average", "Count/Second", [:node]],
+          ["WriteLatency",                "Average", "Seconds",      [:node]],
+          ["WriteThroughput",             "Average", "Bytes/Second", [:node]]
         ]
+      end
+
+      def node_metric?(ty)
+        ty.include?(:node)
+      end
+
+      def cluster_metric?(ty)
+        ty.include?(:cluster)
+      end
+
+      def node_data_point(metric_name, statistic, unit, node_id, cluster_id)
+        get_data_point(
+          :namespace      => "AWS/Redshift",
+          :metric_name    => metric_name,
+          :statistic      => statistic,
+          :unit           => unit,
+          :dimensions     => [
+            {
+              :name  => "ClusterIdentifier",
+              :value => cluster_id
+            },
+            {
+              :name  => "NodeID",
+              :value => node_id
+            }
+          ]
+        )
+      end
+
+      def cluster_data_point(metric_name, statistic, unit, cluster_id)
+        get_data_point(
+          :namespace      => "AWS/Redshift",
+          :metric_name    => metric_name,
+          :statistic      => statistic,
+          :unit           => unit,
+          :dimension      => {
+            :name  => "ClusterIdentifier",
+            :value => cluster_id
+          }
+        )
+      end
+
+      def log_data_point(metric_name, statistic, unit, data_point)
+        NewRelic::PlatformLogger.debug(
+          "metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}"
+        )
       end
 
       def collect
         data_points = []
-        clusters.each do |cluster_id|
-          metric_list.each do |(metric_name, statistic, unit)|
-            data_point = get_data_point(
-              :namespace   => "AWS/Redshift",
-              :metric_name => metric_name,
-              :statistic   => statistic,
-              :unit        => unit,
-              :dimension   => {
-                :name  => "ClusterIdentifier",
-                :value => cluster_id
-              }
-            )
-            NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
-            unless data_point.nil?
-              data_points << data_point
+        clusters.each do |cluster_id, num_nodes|
+          metric_list.each do |(metric_name, statistic, unit, type)|
+            if node_metric?(type)
+              (num_nodes+1).times do |i|
+                node_id = i==num_nodes ? "Leader" : "Compute-#{i}"
+                data_point = node_data_point(metric_name, statistic, unit, node_id, cluster_id)
+                log_data_point(metric_name, statistic, unit, data_point)
+                data_points << data_point unless data_point.nil?
+              end
+            end
+            if cluster_metric?(type)
+              data_point = cluster_data_point(metric_name, statistic, unit, cluster_id)
+              log_data_point(metric_name, statistic, unit, data_point)
+              data_points << data_point unless data_point.nil?
             end
           end
         end
