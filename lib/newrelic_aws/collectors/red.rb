@@ -16,7 +16,8 @@ module NewRelicAWS
           clusters = red.client.describe_clusters[:clusters]
           @cluster_ids = clusters.map { |c| c[:cluster_identifier] }
         rescue => e
-          STDERR.puts e.backtrace.join("\n")
+          NewRelic::PlatformLogger.error("Unexpected error: " + e.inspect)
+          NewRelic::PlatformLogger.debug("Backtrace: " + e.backtrace.join("\n "))
           return []
         end
       end
