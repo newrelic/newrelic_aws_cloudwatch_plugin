@@ -2,7 +2,6 @@ module NewRelicAWS
   module Collectors
     class Base
       def initialize(access_key, secret_key, region, options)
-	Aws.config[:ssl_verify_peer] = false
         @aws_access_key = access_key
         @aws_secret_key = secret_key
         @aws_region = region
