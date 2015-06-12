@@ -134,8 +134,6 @@ If you don't like the AMI, New Relic would appreciate that you do not leave a ba
 
 ## IAM (AWS API Credentials)
 
-Note: There is a fantastic blog post on this topic [here](http://www.paulsamiq.com/how-to-use-amazons-iam-with-new-relics-aws-plugin/) (screenshots).
-
 This plugin requires AWS API credentials, using IAM is highly recommended, giving it read-only access to select services.
 
 You will need to create a new IAM group, `NewRelicCloudWatch`, where the permissions will be defined. You will want to use a custom policy for the group, `NewRelicCloudWatch`, using the following JSON for the policy document.
