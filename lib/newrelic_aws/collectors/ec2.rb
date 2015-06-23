@@ -45,6 +45,17 @@ module NewRelicAWS
             period = detailed ? 60 : 300
             time_offset = detailed ? 60 : 600
             time_offset += @cloudwatch_delay
+            if name_tag.nil? then
+              break
+            end
+            case
+            when name_tag.include?("ecsiteprod")
+              name_tag = "Production Website EC2"
+            when name_tag.include?("bridgeprod")
+              name_tag = "Bridge Production EC2"
+            else
+              break
+            end
             data_point = get_data_point(
               :namespace   => "AWS/EC2",
               :metric_name => metric_name,
@@ -57,7 +68,7 @@ module NewRelicAWS
               :period => period,
               :start_time => (Time.now.utc - (time_offset + period)).iso8601,
               :end_time => (Time.now.utc - time_offset).iso8601,
-              :component_name => name_tag.nil? ? instance.id : "#{name_tag.last} (#{instance.id})"
+              :component_name => name_tag.nil? ? instance.id : "#{name_tag}"
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
             unless data_point.nil?
