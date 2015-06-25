@@ -46,7 +46,7 @@ module NewRelicAWS
             time_offset = detailed ? 60 : 600
             time_offset += @cloudwatch_delay
             if name_tag.nil? then
-              break
+              next
             end
             case name_tag.to_s
             when /ecsiteprod-*/
@@ -70,7 +70,7 @@ module NewRelicAWS
             when /thinnerprod-*/
               app_name = "Thinner Production"
             else
-              break
+              next
             end
             data_point = get_data_point(
               :namespace   => "AWS/EC2",
