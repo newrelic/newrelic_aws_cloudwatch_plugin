@@ -1,5 +1,5 @@
 require "time"
-require "aws-sdk"
+require "aws-sdk-v1"
 
 require "newrelic_aws/collectors/base"
 require "newrelic_aws/collectors/ec2"
