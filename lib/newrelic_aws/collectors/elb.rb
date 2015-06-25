@@ -46,7 +46,7 @@ module NewRelicAWS
         load_balancers.each do |load_balancer_name|
           tag_name = elb_component_name(load_balancer_name)
           if tag_name.nil? then
-            break
+            next
           end
           case tag_name.to_s
           when /ecsiteprod-*/
@@ -73,7 +73,7 @@ module NewRelicAWS
             component_name = "Recognizer Production"
           else
             component_name = load_balancer_name
-            break
+            next
           end
           metric_list.each do |(metric_name, statistic, unit, default_value)|
             data_point = get_data_point(
