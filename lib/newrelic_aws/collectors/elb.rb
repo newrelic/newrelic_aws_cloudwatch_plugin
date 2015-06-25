@@ -73,8 +73,8 @@ module NewRelicAWS
             component_name = "Recognizer Production"
           else
             component_name = load_balancer_name
+            break
           end
-          puts component_name
           metric_list.each do |(metric_name, statistic, unit, default_value)|
             data_point = get_data_point(
               :namespace     => "AWS/ELB",

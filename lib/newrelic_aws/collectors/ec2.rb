@@ -72,7 +72,6 @@ module NewRelicAWS
             else
               break
             end
-            puts name_tag
             data_point = get_data_point(
               :namespace   => "AWS/EC2",
               :metric_name => metric_name,
@@ -87,7 +86,6 @@ module NewRelicAWS
               :end_time => (Time.now.utc - time_offset).iso8601,
               :component_name => name_tag.nil? ? instance.id : "#{app_name}"
             )
-            puts data_point.inspect
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
             unless data_point.nil?
               data_points << data_point
