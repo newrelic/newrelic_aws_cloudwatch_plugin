@@ -32,7 +32,8 @@ module NewRelicAWS
           ["DiskWriteOps", "Average", "Count"],
           ["DiskWriteBytes" , "Average", "Bytes"],
           ["NetworkIn", "Average", "Bytes"],
-          ["NetworkOut", "Average", "Bytes"]
+          ["NetworkOut", "Average", "Bytes"],
+          ["MemoryUtilization", "Average", "Bytes"]
         ]
       end
 
