@@ -90,6 +90,22 @@ agents:
       - newrelic_monitored
 ```
 
+### ELB instance Filtering
+Enabling the ELB agent will monitor all ELBs by default:
+```
+agents:
+  elb:
+    enable: true
+```
+You can filter ELBs that are monitored by setting the flag `instance_identifiers`, which will cause the agent to only gather metrics for the listed ELBs:
+```
+agents:
+  elb:
+    enabled: true
+    instance_identifiers:
+      - loadbalancer1
+```
+
 ### RDS Instance Filtering
 When an IAM policy for rds:DescribeDBInstances has Resource restrictions, the rds-describe-db-instances call will fail when an allowed DBInstanceIdentifier is not specified.
 
