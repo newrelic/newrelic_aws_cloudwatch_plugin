@@ -169,6 +169,13 @@ You will need to create a new IAM group, `NewRelicCloudWatch`, where the permiss
 
 To get API credentials, a IAM user must be created, `NewRelicCloudWatch`. Be sure to save the user access key id and secret access key on creation. Add the user to the `NewRelicCloudWatch` IAM group. Use the IAM user API credentials in the plugin configuration file.
 
+## IAM Roles
+IAM roles can be used instead of keys. To enable IAM roles enable the following line in the `config/newrelic_plugin.yml` file.
+  ```
+  aws:
+    use_aws_metadata: true
+  ```
+  
 ## Notes
 - CloudWatch detailed monitoring is recommended, please enable it when available. (see *Using Amazon CloudWatch* section on http://aws.amazon.com/cloudwatch/)
 - Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag in reporting metrics.
