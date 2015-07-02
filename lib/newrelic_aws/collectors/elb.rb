@@ -10,6 +10,12 @@ module NewRelicAWS
         @elb.load_balancers.map { |load_balancer| load_balancer.name }
       end
 
+      def define_component_names 
+        if @component_name_option
+          return get_common_names(@s3_bucket,@component_names)
+        end
+      end
+
       def metric_list
         [
           ["Latency", "Average", "Seconds"],
@@ -42,38 +48,27 @@ module NewRelicAWS
       end
 
       def collect
+        common_names = define_component_names
         data_points = []
+        app_name = nil
         load_balancers.each do |load_balancer_name|
-          tag_name = elb_component_name(load_balancer_name)
-          if tag_name.nil? then
+          name_tag = elb_component_name(load_balancer_name)
+          if name_tag.nil? then
             next
           end
-          case tag_name.to_s
-          when /ecsiteprod-*/
-            component_name = "Production Website"
-          when /bridgeprod-*/
-            component_name = "Bridge Production"
-          when /wowza-se-recognizer-prod-*/
-            component_name = "Recognizer Production"
-          when /reportcardprod-*/
-            component_name = "Reportcard Production"
-          when /tutorprod-*/
-            component_name = "Tutor Production"
-          when /postofficeprod-*/
-            component_name = "PostOffice Production"
-          when /metermanprod-*/
-            component_name = "Meterman Production"
-          when /infocusprod-*/
-            component_name = "Cambridge Production"
-          when /tallyhoprod-*/
-            component_name = "Tallyho Production"
-          when /thinnerprod-*/
-            component_name = "Thinner Production"
-          when /prod-recognizer-elb-*/
-            component_name = "Recognizer Production"
-          else
-            component_name = load_balancer_name
-            next
+          unless common_names.nil?
+            JSON.parse(common_names).each do |common_name|
+              case name_tag.to_s
+              when /#{common_name['condition']}/
+                app_name = common_name['app_name']
+                break
+              else
+                next
+              end
+            end
+            if app_name.nil? then
+              next
+            end
           end
           metric_list.each do |(metric_name, statistic, unit, default_value)|
             data_point = get_data_point(
@@ -86,11 +81,12 @@ module NewRelicAWS
                 :name  => "LoadBalancerName",
                 :value => load_balancer_name
               },
-              :component_name => component_name
+              :component_name => app_name.nil? ? load_balancer_name : "#{app_name}"
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
             unless data_point.nil?
               data_points << data_point
+              puts data_point
             end
           end
         end
