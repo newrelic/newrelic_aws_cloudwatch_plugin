@@ -12,7 +12,7 @@ module NewRelicAWS
 
       def define_component_names 
         if @component_name_option
-          return get_common_names(@s3_bucket,@component_names)
+          return get_metric_options(@s3_bucket,@component_names)
         end
       end
 
