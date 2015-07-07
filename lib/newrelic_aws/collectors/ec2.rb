@@ -9,6 +9,15 @@ module NewRelicAWS
           :region => @aws_region
         )
         @tags = options[:tags]
+        @component_name_option = options[:component_name_option]
+        @s3_bucket = options[:s3_bucket]
+        @component_names = options[:component_name_asset]
+      end
+      
+      def define_component_names 
+        if @component_name_option
+          return get_metric_options(@s3_bucket,@component_names)
+        end
       end
 
       def instances
@@ -27,26 +36,46 @@ module NewRelicAWS
 
       def metric_list
         [
-          ["CPUUtilization", "Average", "Percent"],
-          ["DiskReadOps", "Sum", "Count"],
-          ["DiskWriteOps", "Sum", "Count"],
-          ["DiskWriteBytes" , "Sum", "Bytes"],
-          ["NetworkIn", "Sum", "Bytes"],
-          ["NetworkOut", "Sum", "Bytes"]
+          ["CPUUtilization", "Maximum", "Percent", "AWS/EC2"],
+          ["DiskReadOps", "Average", "Count", "AWS/EC2"],
+          ["DiskWriteOps", "Average", "Count", "AWS/EC2"],
+          ["DiskWriteBytes" , "Average", "Bytes", "AWS/EC2"],
+          ["NetworkIn", "Average", "Bytes", "AWS/EC2"],
+          ["NetworkOut", "Average", "Bytes", "AWS/EC2"],
+          ["MemoryUtilization", "Maximum", "Percent", "System/Linux"]
         ]
       end
 
       def collect
+        common_names = define_component_names
         data_points = []
+        app_name = nil
         instances.each do |instance|
           detailed = instance.monitoring == :enabled
           name_tag = instance.tags.detect { |tag| tag.first =~ /^name$/i }
-          metric_list.each do |(metric_name, statistic, unit)|
+          if name_tag.nil? then
+            next
+          end
+          unless common_names.nil?
+            JSON.parse(common_names).each do |common_name|
+              case name_tag.to_s
+              when /#{common_name['condition']}/
+                app_name = common_name['app_name']
+                break
+              else
+                next
+              end
+            end
+            if app_name.nil? then
+              next
+            end
+          end
+          metric_list.each do |(metric_name, statistic, unit, namespace)|
             period = detailed ? 60 : 300
             time_offset = detailed ? 60 : 600
             time_offset += @cloudwatch_delay
             data_point = get_data_point(
-              :namespace   => "AWS/EC2",
+              :namespace   => namespace,
               :metric_name => metric_name,
               :statistic   => statistic,
               :unit        => unit,
@@ -57,11 +86,12 @@ module NewRelicAWS
               :period => period,
               :start_time => (Time.now.utc - (time_offset + period)).iso8601,
               :end_time => (Time.now.utc - time_offset).iso8601,
-              :component_name => name_tag.nil? ? instance.id : "#{name_tag.last} (#{instance.id})"
+              :component_name => name_tag.nil? ? instance.id : app_name.nil? ? "#{name_tag.last} (#{instance.id})" : "#{app_name}"
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
             unless data_point.nil?
               data_points << data_point
+              puts data_point
             end
           end
         end

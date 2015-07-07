@@ -196,6 +196,14 @@ module NewRelicAWS
     end
   end
 
+  module CUSTOM_METRICS
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.custom_metrics"
+      agent_version NewRelicAWS::VERSION
+      agent_human_labels("Custom_Metrics") { "Custom_Metrics" }
+    end
+  end
+
   #
   # Register each agent with the component.
   #
@@ -203,6 +211,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :ebs, EBS if NewRelicAWS::agent_enabled?(:ebs)
   NewRelic::Plugin::Setup.install_agent :elb, ELB if NewRelicAWS::agent_enabled?(:elb)
   NewRelic::Plugin::Setup.install_agent :rds, RDS if NewRelicAWS::agent_enabled?(:rds)
+  NewRelic::Plugin::Setup.install_agent :custom_metrics, CUSTOM_METRICS if NewRelicAWS::agent_enabled?(:custom_metrics)
   # NewRelic::Plugin::Setup.install_agent :ddb, DDB # WIP
   NewRelic::Plugin::Setup.install_agent :sqs, SQS if NewRelicAWS::agent_enabled?(:sqs)
   NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
