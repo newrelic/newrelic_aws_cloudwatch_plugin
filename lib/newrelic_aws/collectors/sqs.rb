@@ -2,10 +2,9 @@ module NewRelicAWS
   module Collectors
     class SQS < Base
       def queue_urls
-        sqs = AWS::SQS.new(
-          :access_key_id => @aws_access_key,
-          :secret_access_key => @aws_secret_key,
-          :region => @aws_region
+        sqs = Aws::SQS::Resource.new(
+          region:      @aws_region,
+          credentials: Aws::Credentials.new(@aws_access_key, @aws_secret_key)
         )
         sqs.queues.map { |queue| queue.url }
       end

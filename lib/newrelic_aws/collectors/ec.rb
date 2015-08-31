@@ -2,10 +2,9 @@ module NewRelicAWS
   module Collectors
     class EC < Base
       def clusters(engine = 'memcached')
-        ec = AWS::ElastiCache.new(
-          :access_key_id => @aws_access_key,
-          :secret_access_key => @aws_secret_key,
-          :region => @aws_region
+        ec = AWS::ElastiCache::Client.new(
+          region:      @aws_region,
+          credentials: Aws::Credentials.new(@aws_access_key, @aws_secret_key)
         )
         clusters = ec.client.describe_cache_clusters(:show_cache_node_info => true)
         clusters[:cache_clusters].map do |cluster|
