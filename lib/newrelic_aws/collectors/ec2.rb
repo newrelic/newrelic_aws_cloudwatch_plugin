@@ -45,9 +45,9 @@ module NewRelicAWS
 
       def collect
         data_points = []
-        NewRelic::PlatformLogger.debug("instances: #{instances.inspect}")
         instances.each do |instance|
           detailed = instance.monitoring == :enabled
+          NewRelic::PlatformLogger.debug("tags: #{instance.tags.inspect}")
           name_tag = instance.tags.detect { |tag| tag.first =~ /^name$/i }
           metric_list.each do |(metric_name, statistic, unit)|
             period = detailed ? 60 : 300

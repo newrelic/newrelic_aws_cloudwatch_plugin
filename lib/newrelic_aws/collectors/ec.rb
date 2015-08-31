@@ -6,7 +6,7 @@ module NewRelicAWS
           region:      @aws_region,
           credentials: Aws::Credentials.new(@aws_access_key, @aws_secret_key)
         )
-        clusters = ec.client.describe_cache_clusters(:show_cache_node_info => true)
+        clusters = ec.describe_cache_clusters(:show_cache_node_info => true)
         clusters[:cache_clusters].map do |cluster|
           if cluster[:engine] == engine
             {
