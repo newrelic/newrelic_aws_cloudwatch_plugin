@@ -19,17 +19,9 @@ module NewRelicAWS
       end
 
       def tagged_instances
-        # instances = @ec2.instances.tagged(@tags).to_a
-        # instances.concat(@ec2.instances.tagged('Name', 'name').tagged_values(@tags).to_a)
-        # instances
-        instances = @ec2.instances({
-          filters: [
-            {
-              name: 'tag:Name',
-              values: ["@tags"]
-            }
-          ]
-          })
+        instances = @ec2.instances.tagged(@tags).to_a
+        instances.concat(@ec2.instances.tagged('Name', 'name').tagged_values(@tags).to_a)
+        instances
       end
 
       def metric_list
@@ -48,7 +40,7 @@ module NewRelicAWS
         instances.each do |instance|
           detailed = instance.monitoring == :enabled
           NewRelic::PlatformLogger.debug("tags: #{instance.tags.inspect}")
-          name_tag = instance.tags.detect { |tag| tag.first =~ /^name$/i }
+          name_tag = instance.tags.detect { |tag| tag.key =~ /^name$/i }
           metric_list.each do |(metric_name, statistic, unit)|
             period = detailed ? 60 : 300
             time_offset = detailed ? 60 : 600

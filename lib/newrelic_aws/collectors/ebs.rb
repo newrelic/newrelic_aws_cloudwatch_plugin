@@ -43,7 +43,7 @@ module NewRelicAWS
         data_points = []
         volumes.each do |volume|
           detailed = !!volume.iops
-          name_tag = volume.tags.detect { |tag| tag.first =~ /^name$/i }
+          name_tag = volume.tags.detect { |tag| tag.key =~ /^name$/i }
           metric_list.each do |(metric_name, statistic, unit)|
             period = detailed ? 60 : 300
             time_offset = detailed ? 60 : 600
