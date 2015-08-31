@@ -14,7 +14,7 @@ module NewRelicAWS
       end
 
       def get_data_point(options)
-        options[:period]     ||= 60
+        options[:period]     ||= 300
         options[:start_time] ||= (Time.now.utc - (@cloudwatch_delay + options[:period])).iso8601
         options[:end_time]   ||= (Time.now.utc - @cloudwatch_delay).iso8601
         options[:dimensions] ||= [options[:dimension]]

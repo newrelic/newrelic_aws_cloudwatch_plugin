@@ -8,13 +8,16 @@ module NewRelicAWS
           credentials:      Aws::Credentials.new(@aws_access_key, @aws_secret_key)
         )
         @tags = options[:tags]
+        @detailed = options[:detailed] || false
       end
 
       def volumes
         if @tags
           tagged_volumes
         else
-          @ec2.volumes(filters: [{ name: "status", values: ["in-use"] }])
+          @ec2.volumes({
+            filters: [{ name: "status", values: ["in-use"] }]
+          })
 	      end
       end
 
@@ -42,11 +45,10 @@ module NewRelicAWS
       def collect
         data_points = []
         volumes.each do |volume|
-          detailed = !!volume.iops
           name_tag = volume.tags.detect { |tag| tag.key =~ /^name$/i }
           metric_list.each do |(metric_name, statistic, unit)|
-            period = detailed ? 60 : 300
-            time_offset = detailed ? 60 : 600
+            period = @detailed ? 60 : 300
+            time_offset = @detailed ? 60 : 600
             time_offset += @cloudwatch_delay
             data_point = get_data_point(
               :namespace   => "AWS/EBS",
