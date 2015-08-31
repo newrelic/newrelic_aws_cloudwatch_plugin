@@ -6,7 +6,7 @@ module NewRelicAWS
         @ec2 = Aws::EC2::Resource.new(
           region:           @aws_region,
           credentials:      Aws::Credentials.new(@aws_access_key, @aws_secret_key)
-	         )
+	      )
         @tags = options[:tags]
       end
 

@@ -15,7 +15,7 @@ module NewRelicAWS
           tagged_volumes
         else
           @ec2.volumes(filters: [{ name: "status", values: ["in-use"] }])
-	end
+	      end
       end
 
       def tagged_volumes
