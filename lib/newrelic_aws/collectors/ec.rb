@@ -9,7 +9,7 @@ module NewRelicAWS
         )
         clusters = ec.client.describe_cache_clusters(:show_cache_node_info => true)
         clusters[:cache_clusters].map do |cluster|
-          if cluster[:engine] == engine
+          if cluster[:engine] == engine && (@instance_ids.include?(cluster[:cache_cluster_id].to_s) || @instance_ids.nil?)
             {
               :id    => cluster[:cache_cluster_id],
               :nodes => cluster[:cache_nodes].map { |node| node[:cache_node_id] }
