@@ -97,6 +97,7 @@ module NewRelicAWS
             agent_options["aws"]["access_key"],
             agent_options["aws"]["secret_key"],
             region,
+            NewRelic::Plugin::Config.config.newrelic["proxy_uri"],
             agent_options["agents"][agent_name]
           )
         end
