@@ -167,6 +167,72 @@ You will need to create a new IAM group, `NewRelicCloudWatch`, where the permiss
 
 To get API credentials, a IAM user must be created, `NewRelicCloudWatch`. Be sure to save the user access key id and secret access key on creation. Add the user to the `NewRelicCloudWatch` IAM group. Use the IAM user API credentials in the plugin configuration file.
 
+## Grouping of Servers by Application
+- This is a way to group server metrics by application. Specifically created to monitor applications in EC2 and ELB.
+- AWS instances/ELB should have have a tag "name" so that it could be filtered and grouped.
+- Access to s3 is required to access the json file that contains information of the desired application to monitor. 
+- newrelic_plugin.yml should be modified to contain the following properties (component_name_option, s3_bucket, component_name_asset)
+```
+...
+agents:
+  ec2:
+    enabled: false
+    cloudwatch_delay: 120
+    component_name_option: true
+    s3_bucket: 'ecnewrelic'
+    component_name_asset: 'component_names.json'
+  elb:
+    enabled: false
+    cloudwatch_delay: 120
+    component_name_option: true
+    s3_bucket: 'ecnewrelic'
+    component_name_asset: 'component_names.json'
+...
+```
+Example of the json file:
+```json
+[
+ { "condition" : "siteprod-*", "app_name" : "Production Website" },
+ { "condition" : "goprod-*", "app_name" : "Go Production" },
+ { "condition" : "wow-prod-*", "app_name" : "Wow Production" }
+]
+```
+Note: the "condition" field is used to filter the instance tag "name". The "*" in the condition is a regular expression function, so feel free to use regular expression in the condition field.
+
+## Custom Metrics
+- This gives a way to gather custom metrics created specifically for your application.
+- Access to s3 is required to access the json file that contains information of the desired application to monitor. 
+- This makes use of a json file uploaded to s3 with the following format:
+  - Component name
+  - Metric name
+  - Statistics
+  - Metrics
+  - Namespace
+  - dimension
+    - name
+    - value
+
+Example of the json file:
+```json
+[
+  ["Recognizer Production","RecognizerRecordingQueueSize", "Average", "Count", "Recognizer", "DeploymentEnvironment", "prod"],
+  ["Recognizer Production","RecognizerRecordingQueueLatency", "Average", "Milliseconds", "Recognizer", "DeploymentEnvironment", "prod"],
+  ["Recognizer Production","RecognizerRecordingProcessingLatency", "Average", "Milliseconds", "Recognizer", "DeploymentEnvironment", "prod"],
+  ["Recognizer Production","RecognizerUploadFailure", "Sum", "Count", "Recognizer", "DeploymentEnvironment", "prod"]
+]
+```
+- newrelic_plugin.yml should be modified to contain the following properties (s3_bucket, custom_metrics_asset)
+```
+...
+agents:
+  custom_metrics:
+    enabled: true
+    cloudwatch_delay: 120
+    s3_bucket: 'ecnewrelic'
+    custom_metrics_asset: 'custom_metrics.json'
+...
+```
+
 ## Notes
 - CloudWatch detailed monitoring is recommended, please enable it when available. (see *Using Amazon CloudWatch* section on http://aws.amazon.com/cloudwatch/)
 - Chart x-axis (time) is off by 60 seconds, this is due to CloudWatch's lag in reporting metrics.
