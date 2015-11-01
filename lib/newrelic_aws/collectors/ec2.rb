@@ -3,11 +3,10 @@ module NewRelicAWS
     class EC2 < Base
       def initialize(access_key, secret_key, region, options)
         super(access_key, secret_key, region, options)
-        @ec2 = AWS::EC2.new(
-          :access_key_id => @aws_access_key,
-          :secret_access_key => @aws_secret_key,
-          :region => @aws_region
-        )
+        @ec2 = Aws::EC2::Resource.new(
+          region:           @aws_region,
+          credentials:      Aws::Credentials.new(@aws_access_key, @aws_secret_key)
+	         )
         @tags = options[:tags]
       end
 
@@ -57,7 +56,7 @@ module NewRelicAWS
               :period => period,
               :start_time => (Time.now.utc - (time_offset + period)).iso8601,
               :end_time => (Time.now.utc - time_offset).iso8601,
-              :component_name => name_tag.nil? ? instance.id : "#{name_tag.last} (#{instance.id})"
+              :component_name => name_tag.nil? ? instance.id : "#{name_tag.value} (#{instance.id})"
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
             unless data_point.nil?
