@@ -4,6 +4,7 @@ module NewRelicAWS
       def initialize(access_key, secret_key, region, options)
         super(access_key, secret_key, region, options)
         @instance_ids = options[:instance_identifiers]
+        @name_patterns = options[:name_patterns]
       end
 
       def instance_ids
@@ -13,7 +14,14 @@ module NewRelicAWS
           :secret_access_key => @aws_secret_key,
           :region => @aws_region
         )
-        rds.instances.map { |instance| instance.id }
+        instance_ids = rds.instances.map { |instance| instance.id }
+
+        if @name_patterns
+          name_patterns_re = Regexp.union(@name_patterns)
+          instance_ids.select! { |instance_id| instance_id if instance_id.match(name_patterns_re) }
+        end
+
+        instance_ids
       end
 
       def metric_list

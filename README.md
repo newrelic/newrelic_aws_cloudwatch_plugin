@@ -90,6 +90,37 @@ agents:
       - newrelic_monitored
 ```
 
+### Name Filtering
+Filtering instances by name pattern is supported for `ELB`, `RDS` and `ElastiCache`.
+You should just specify name pattern(s) in the following way:
+
+```
+...
+agents:
+  elb:
+    enabled: true
+    name_patterns:
+      - !ruby/regexp '/^patterA/'
+      - !ruby/regexp '/^patterB/'
+  rds:
+    enabled: true
+    name_patterns:
+      - !ruby/regexp '/^patterA/'
+      - !ruby/regexp '/^patterB/'
+  ec:
+    enabled: true
+    name_patterns:
+      - !ruby/regexp '/^patterA/'
+      - !ruby/regexp '/^patterB/'
+  ecr:
+    enabled: true
+    name_patterns:
+      - !ruby/regexp '/^patterA/'
+      - !ruby/regexp '/^patterB/'
+```
+
+
+
 ### RDS Instance Filtering
 When an IAM policy for rds:DescribeDBInstances has Resource restrictions, the rds-describe-db-instances call will fail when an allowed DBInstanceIdentifier is not specified.
 

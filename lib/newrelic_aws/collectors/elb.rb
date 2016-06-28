@@ -1,30 +1,42 @@
 module NewRelicAWS
   module Collectors
     class ELB < Base
-      def load_balancers
-        elb = AWS::ELB.new(
-          :access_key_id => @aws_access_key,
-          :secret_access_key => @aws_secret_key,
-          :region => @aws_region
+      def initialize(access_key, secret_key, region, options)
+        super(access_key, secret_key, region, options)
+        @elb = AWS::ELB.new(
+            :access_key_id => @aws_access_key,
+            :secret_access_key => @aws_secret_key,
+            :region => @aws_region
         )
-        elb.load_balancers.map { |load_balancer| load_balancer.name }
+        @name_patterns = options[:name_patterns]
+      end
+
+      def load_balancers
+        load_balancers = @elb.load_balancers.map { |load_balancer| load_balancer.name }
+
+        if @name_patterns
+          name_patterns_re = Regexp.union(@name_patterns)
+          load_balancers.select! { |load_balancer_name| load_balancer_name if load_balancer_name.match(name_patterns_re) }
+        end
+
+        load_balancers
       end
 
       def metric_list
         [
-          ["Latency", "Average", "Seconds"],
-          ["RequestCount", "Sum", "Count", 0],
-          ["HealthyHostCount", "Maximum", "Count", 0],
-          ["UnHealthyHostCount", "Maximum", "Count", 0],
-          ["HTTPCode_ELB_4XX", "Sum", "Count", 0],
-          ["HTTPCode_ELB_5XX", "Sum", "Count", 0],
-          ["HTTPCode_Backend_2XX", "Sum", "Count", 0],
-          ["HTTPCode_Backend_3XX", "Sum", "Count", 0],
-          ["HTTPCode_Backend_4XX", "Sum", "Count", 0],
-          ["HTTPCode_Backend_5XX", "Sum", "Count", 0],
-          ["BackendConnectionErrors", "Sum", "Count", 0],
-          ["SurgeQueueLength", "Maximum", "Count", 0],
-          ["SpilloverCount", "Sum", "Count", 0]
+            ["Latency", "Average", "Seconds"],
+            ["RequestCount", "Sum", "Count", 0],
+            ["HealthyHostCount", "Maximum", "Count", 0],
+            ["UnHealthyHostCount", "Maximum", "Count", 0],
+            ["HTTPCode_ELB_4XX", "Sum", "Count", 0],
+            ["HTTPCode_ELB_5XX", "Sum", "Count", 0],
+            ["HTTPCode_Backend_2XX", "Sum", "Count", 0],
+            ["HTTPCode_Backend_3XX", "Sum", "Count", 0],
+            ["HTTPCode_Backend_4XX", "Sum", "Count", 0],
+            ["HTTPCode_Backend_5XX", "Sum", "Count", 0],
+            ["BackendConnectionErrors", "Sum", "Count", 0],
+            ["SurgeQueueLength", "Maximum", "Count", 0],
+            ["SpilloverCount", "Sum", "Count", 0]
         ]
       end
 
@@ -33,16 +45,17 @@ module NewRelicAWS
         load_balancers.each do |load_balancer_name|
           metric_list.each do |(metric_name, statistic, unit, default_value)|
             data_point = get_data_point(
-              :namespace     => "AWS/ELB",
-              :metric_name   => metric_name,
-              :statistic     => statistic,
-              :unit          => unit,
-              :default_value => default_value,
-              :dimension     => {
-                :name  => "LoadBalancerName",
-                :value => load_balancer_name
-              }
+                :namespace     => "AWS/ELB",
+                :metric_name   => metric_name,
+                :statistic     => statistic,
+                :unit          => unit,
+                :default_value => default_value,
+                :dimension     => {
+                    :name  => "LoadBalancerName",
+                    :value => load_balancer_name
+                }
             )
+
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
             unless data_point.nil?
               data_points << data_point
