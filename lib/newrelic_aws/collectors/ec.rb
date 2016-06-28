@@ -12,14 +12,14 @@ module NewRelicAWS
       end
 
       def clusters(engine = 'memcached')
-        clusters = @ec.client.describe_cache_clusters(:show_cache_node_info => true)
+        clusters = @ec.client.describe_cache_clusters(:show_cache_node_info => true)[:cache_clusters]
 
         if @name_patterns
           name_patterns_re = Regexp.union(@name_patterns)
           clusters.select! { |cluster| cluster if cluster[:cache_cluster_id].match(name_patterns_re) }
         end
 
-        clusters[:cache_clusters].map do |cluster|
+        clusters.map do |cluster|
           if cluster[:engine] == engine
             {
               :id    => cluster[:cache_cluster_id],
