@@ -18,6 +18,7 @@ This tool provides the metric collection agents for the following New Relic plug
 - Rubygems (>= 1.3.7)
 - Bundler `gem install bundler`
 - Git
+
 ### Additional Amazon Linux Dependencies
 - ruby-devel `yum install ruby-devel`
 - libxml2-devel `yum install libxml2-devel`
