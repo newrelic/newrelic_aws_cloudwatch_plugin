@@ -1,5 +1,17 @@
 ## New Relic Amazon CloudWatch Plugin ##
 
+### v3.3.4 - July 21, 2016 ###
+
+**Changes**
+
+* Support new region: ap-south-1
+
+### v3.3.3 - February 21, 2016 ###
+
+**Changes**
+
+* Update AWS SDK and support new regions: ap-northeast-2, eu-central-1
+
 ### v3.3.2 - September 25, 2014 ###
 
 **Bug Fixes**
