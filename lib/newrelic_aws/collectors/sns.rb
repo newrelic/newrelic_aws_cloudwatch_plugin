@@ -4,7 +4,7 @@ module NewRelicAWS
       def topic_names
         sns = Aws::SNS::Resource.new(
           region:      @aws_region,
-          credentials: Aws::Credentials.new(@aws_access_key, @aws_secret_key)
+          credentials: @credentials
         )
         sns.topics.map { |topic| topic.name }
       end

@@ -6,9 +6,15 @@ module NewRelicAWS
         @aws_access_key = access_key
         @aws_secret_key = secret_key
         @aws_region = region
+        @credentials = if @aws_access_key
+          Aws::Credentials.new(@aws_access_key, @aws_secret_key)
+        else
+          Aws::CredentialProviderChain.new.resolve
+        end
+
         @cloudwatch = Aws::CloudWatch::Client.new(
           region:           @aws_region,
-          credentials:      Aws::Credentials.new(@aws_access_key, @aws_secret_key)
+          credentials:      @credentials
 	      )
         @cloudwatch_delay = options[:cloudwatch_delay] || 60
       end

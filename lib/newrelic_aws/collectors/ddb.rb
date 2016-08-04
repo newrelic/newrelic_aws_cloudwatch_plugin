@@ -4,7 +4,7 @@ module NewRelicAWS
       def tables
         ddb = Aws::DynamoDB::Resource.new(
           region:           @aws_region,
-          credentials:      Aws::Credentials.new(@aws_access_key, @aws_secret_key)
+          credentials:      @credentials
         )
         ddb.tables.map { |table| table.name }
       end

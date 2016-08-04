@@ -10,7 +10,7 @@ module NewRelicAWS
         return @instance_ids if @instance_ids
         rds = Aws::RDS::Resource.new(
           region:           @aws_region,
-          credentials:      Aws::Credentials.new(@aws_access_key, @aws_secret_key)
+          credentials:      @credentials
         )
         rds.db_instances.map { |instance| instance.id }
       end

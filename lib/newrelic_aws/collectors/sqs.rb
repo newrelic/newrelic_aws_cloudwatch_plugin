@@ -4,7 +4,7 @@ module NewRelicAWS
       def queue_urls
         sqs = Aws::SQS::Resource.new(
           region:      @aws_region,
-          credentials: Aws::Credentials.new(@aws_access_key, @aws_secret_key)
+          credentials: @credentials
         )
         sqs.queues.map { |queue| queue.url }
       end
