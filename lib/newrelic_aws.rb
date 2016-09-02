@@ -26,6 +26,7 @@ module NewRelicAWS
     ap-northeast-2
     sa-east-1
     eu-central-1
+    ap-south-1
   ]
 
   def self.agent_options_exist?(agent_options)
