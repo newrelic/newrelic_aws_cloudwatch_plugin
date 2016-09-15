@@ -6,11 +6,11 @@ module NewRelicAWS
         @aws_secret_key = secret_key
         @aws_region = region
         @aws_proxy_uri = proxy
-        @cloudwatch = AWS::CloudWatch.new(
+        @cloudwatch = Aws::CloudWatch::Resource.new(
           :access_key_id     => @aws_access_key,
           :secret_access_key => @aws_secret_key,
           :region            => @aws_region,
-          :proxy_uri         => @aws_proxy_uri
+          :http_proxy        => @aws_proxy_uri
         )
         @cloudwatch_delay = options[:cloudwatch_delay] || 60
       end
