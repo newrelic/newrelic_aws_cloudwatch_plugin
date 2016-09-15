@@ -14,7 +14,7 @@ This tool provides the metric collection agents for the following New Relic plug
 
 ## Dependencies
 - A single t1.micro EC2 instance (in any region)
-- Ruby (>= 1.9.2)
+- Ruby (>= 2.2.0)
 - Rubygems (>= 1.3.7)
 - Bundler `gem install bundler`
 - Git
@@ -133,8 +133,6 @@ If you like the AMI, please [leave a 5-star review](https://aws.amazon.com/marke
 If you don't like the AMI, New Relic would appreciate that you do not leave a bad review on the AWS Marketplace. Instead, open a ticket with [New Relic Support](https://support.newrelic.com) and let us know what we could do better. We take your feedback very seriously - and by opening a ticket, we can notify you when we've addressed your feedback.
 
 ## IAM (AWS API Credentials)
-
-Note: There is a fantastic blog post on this topic [here](http://www.paulsamiq.com/how-to-use-amazons-iam-with-new-relics-aws-plugin/) (screenshots).
 
 This plugin requires AWS API credentials, using IAM is highly recommended, giving it read-only access to select services.
 

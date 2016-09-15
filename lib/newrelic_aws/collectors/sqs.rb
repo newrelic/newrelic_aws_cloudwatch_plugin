@@ -2,13 +2,13 @@ module NewRelicAWS
   module Collectors
     class SQS < Base
       def queue_urls
-        sqs = AWS::SQS.new(
+        sqs = Aws::SQS::Resource.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
           :region => @aws_region,
-          :proxy_uri => @aws_proxy_uri
+          :http_proxy => @aws_proxy_uri
         )
-        sqs.queues.map { |queue| queue.url }
+	sqs.client.list_queues.queue_urls.map {|name| name.split("/").last}
       end
 
       def metric_list
@@ -37,7 +37,7 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "QueueName",
-                :value => url.split("/").last
+                :value => url
               },
               :period => period,
               :start_time => (Time.now.utc - (time_offset + period)).iso8601,
