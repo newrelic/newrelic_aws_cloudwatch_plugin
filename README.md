@@ -51,12 +51,9 @@ The plugin can also be configured to query specific CloudWatch regions, e.g. `us
 
 ```
   regions:
-    -
-      us-east-1
-    -
-      us-east-2
-    -
-      us-west-1
+    - us-east-1
+    - us-east-2
+    - us-west-1
 ```
 
 ### Amazon ElastiCache
