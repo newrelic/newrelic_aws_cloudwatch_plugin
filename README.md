@@ -14,7 +14,7 @@ This tool provides the metric collection agents for the following New Relic plug
 
 ## Dependencies
 - A single t1.micro EC2 instance (in any region)
-- Ruby (>= 1.9.2)
+- Ruby (>= 2.2.0)
 - Rubygems (>= 1.3.7)
 - Bundler `gem install bundler`
 - Git
