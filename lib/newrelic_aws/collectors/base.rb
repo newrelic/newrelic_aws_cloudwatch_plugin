@@ -2,25 +2,31 @@ module NewRelicAWS
   module Collectors
     class Base
       def initialize(access_key, secret_key, region, options)
+	      # Aws.config[:ssl_verify_peer] = false
         @aws_access_key = access_key
         @aws_secret_key = secret_key
         @aws_region = region
-        @cloudwatch = AWS::CloudWatch.new(
-          :access_key_id     => @aws_access_key,
-          :secret_access_key => @aws_secret_key,
-          :region            => @aws_region
-        )
+        @credentials = if @aws_access_key
+          Aws::Credentials.new(@aws_access_key, @aws_secret_key)
+        else
+          Aws::CredentialProviderChain.new.resolve
+        end
+
+        @cloudwatch = Aws::CloudWatch::Client.new(
+          region:           @aws_region,
+          credentials:      @credentials
+	      )
         @cloudwatch_delay = options[:cloudwatch_delay] || 60
       end
 
       def get_data_point(options)
-        options[:period]     ||= 60
+        options[:period]     ||= 300
         options[:start_time] ||= (Time.now.utc - (@cloudwatch_delay + options[:period])).iso8601
         options[:end_time]   ||= (Time.now.utc - @cloudwatch_delay).iso8601
         options[:dimensions] ||= [options[:dimension]]
         NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect)
         begin
-          statistics = @cloudwatch.client.get_metric_statistics(
+          statistics = @cloudwatch.get_metric_statistics(
             :namespace   => options[:namespace],
             :metric_name => options[:metric_name],
             :unit        => options[:unit],
