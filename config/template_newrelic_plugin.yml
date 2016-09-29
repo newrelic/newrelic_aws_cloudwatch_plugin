@@ -63,3 +63,5 @@ agents:
     enabled: false
     name_patterns:
       - !ruby/regexp '/^hermes/'
+  asg:
+    enabled: false

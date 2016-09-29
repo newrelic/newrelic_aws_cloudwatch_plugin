@@ -25,6 +25,12 @@
 * Added support for pulling AWS credentials from IAM Roles and Instance Profiles
 * Added support for filtering RDS instances by instance identifiers
 
+### v3.3.0a - March 22, 2014 ###
+
+**Features**
+
+* Added new `ASG` plugin support for AutoScaling Groups (Brett Cave <brett@cave.za.net>)
+
 **Bug Fixes**
 
 * Fixed cloudwatch_delay bug for EC2, EBS, SNS, and SQS where end_time was being set incorrectly
