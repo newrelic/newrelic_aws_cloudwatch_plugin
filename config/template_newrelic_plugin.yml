@@ -27,11 +27,9 @@ aws:
   #use_aws_metadata: true
 
   # Specify AWS regions to query for metrics
-  # regions:
-  #  -
-  #   us-west-1
-  #  -
-  #   us-east-2
+  #regions:
+  #  - us-west-1
+  #  - us-east-2
 
 #
 # Agent configuration.
