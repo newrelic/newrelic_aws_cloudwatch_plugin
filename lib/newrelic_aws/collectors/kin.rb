@@ -15,7 +15,9 @@ module NewRelicAWS
         [
           ["IncomingBytes", "Sum", "Count", 0],
           ["IncomingRecords", "Sum", "Count", 0],
-          ["OutgoingBytes", "Sum", "Count", 0],
+          ["GetRecords.Success", "Sum", "Count", 0],
+          ["GetRecords.Latency", "Average", "Seconds", 0],
+	  ["OutgoingBytes", "Sum", "Count", 0],
           ["OutgoingRecords", "Sum", "Count", 0],
           ["IteratorAgeMilliseconds", "Maximum", "Count", 0],
           ["ReadProvisionedThroughputExceeded", "Sum", "Count", 0],
