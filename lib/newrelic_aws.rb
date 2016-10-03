@@ -201,7 +201,7 @@ module NewRelicAWS
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.kin"
       agent_version NewRelicAWS::VERSION
-      agent_human_labels("ElastiCacheRedis") { "ElastiCacheRedis" }
+      agent_human_labels("Kinesis") { "Kinesis" }    
     end
   end
 
