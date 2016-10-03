@@ -61,3 +61,5 @@ agents:
     enabled: false
   ecr:
     enabled: false
+  lambda:
+    enabled: false

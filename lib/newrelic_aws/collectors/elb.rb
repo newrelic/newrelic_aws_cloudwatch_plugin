@@ -2,7 +2,7 @@ module NewRelicAWS
   module Collectors
     class ELB < Base
       def load_balancers
-        elb = AWS::ELB.new(
+        elb = Aws::ELB::Resource.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
           :region => @aws_region

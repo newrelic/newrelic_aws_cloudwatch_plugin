@@ -8,7 +8,7 @@ require 'newrelic_aws/version'
 
 # AWS SDK debug logging
 if NewRelic::Plugin::Config.config.newrelic['verbose'].to_i > 1
-  AWS.config(
+  AWS.config.update(
     :logger => NewRelic::PlatformLogger,
     :log_level => :debug
   )
@@ -199,6 +199,15 @@ module NewRelicAWS
     end
   end
 
+  module LAMBDA
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.lambda"
+      agent_version NewRelicAWS::VERSION
+      agent_human_labels("Lambda") { "Lambda" }
+    end
+  end
+
+
   #
   # Register each agent with the component.
   #
@@ -211,6 +220,8 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
   NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
   NewRelic::Plugin::Setup.install_agent :ecr, ECR if NewRelicAWS::agent_enabled?(:ecr)
+  NewRelic::Plugin::Setup.install_agent :lambda, LAMBDA if NewRelicAWS::agent_enabled?(:lambda)
+
 
   #
   # Launch the agents; this never returns.

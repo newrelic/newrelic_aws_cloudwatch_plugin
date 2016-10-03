@@ -2,7 +2,7 @@ module NewRelicAWS
   module Collectors
     class EC < Base
       def clusters(engine = 'memcached')
-        ec = AWS::ElastiCache.new(
+        ec = Aws::ElastiCache::Resource.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
           :region => @aws_region

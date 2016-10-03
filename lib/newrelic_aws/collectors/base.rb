@@ -5,7 +5,7 @@ module NewRelicAWS
         @aws_access_key = access_key
         @aws_secret_key = secret_key
         @aws_region = region
-        @cloudwatch = AWS::CloudWatch.new(
+        @cloudwatch = Aws::CloudWatch::Resource.new(
           :access_key_id     => @aws_access_key,
           :secret_access_key => @aws_secret_key,
           :region            => @aws_region
