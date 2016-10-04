@@ -5,7 +5,7 @@ module NewRelicAWS
         ddb = AWS::DynamoDB.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key
-	)
+        )
         ddb.tables.map { |table| table.name }
       end
 
