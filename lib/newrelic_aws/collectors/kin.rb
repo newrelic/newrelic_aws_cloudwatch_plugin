@@ -5,8 +5,7 @@ module NewRelicAWS
         kinesis = Aws::Kinesis::Client.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
-          :region => @aws_region,
-          :http_proxy => @aws_proxy_uri
+          :region => @aws_region
         )
         kinesis.list_streams.stream_names.map {|names|names}
       end

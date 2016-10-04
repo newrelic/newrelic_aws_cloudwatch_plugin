@@ -6,8 +6,7 @@ module NewRelicAWS
         @ec2 = AWS::EC2.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
-          :region => @aws_region,
-          :proxy_uri => @aws_proxy_uri
+          :region => @aws_region
         )
         @tags = options[:tags]
       end

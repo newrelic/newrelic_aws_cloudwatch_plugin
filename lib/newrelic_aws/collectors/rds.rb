@@ -1,8 +1,8 @@
 module NewRelicAWS
   module Collectors
     class RDS < Base
-      def initialize(access_key, secret_key, region, proxy, options)
-        super(access_key, secret_key, region, proxy, options)
+      def initialize(access_key, secret_key, region, options)
+        super(access_key, secret_key, region, options)
         @instance_ids = options[:instance_identifiers]
       end
 
@@ -11,8 +11,7 @@ module NewRelicAWS
         rds = Aws::RDS::Resource.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
-          :region => @aws_region,
-          :http_proxy => @aws_proxy_uri
+          :region => @aws_region
         )
         rds.db_instances.map { |instance| instance.id }
       end

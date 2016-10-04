@@ -1,16 +1,14 @@
 module NewRelicAWS
   module Collectors
     class Base
-      def initialize(access_key, secret_key, region, proxy, options)
+      def initialize(access_key, secret_key, region, options)
         @aws_access_key = access_key
         @aws_secret_key = secret_key
         @aws_region = region
-        @aws_proxy_uri = proxy
         @cloudwatch = Aws::CloudWatch::Resource.new(
           :access_key_id     => @aws_access_key,
           :secret_access_key => @aws_secret_key,
-          :region            => @aws_region,
-          :http_proxy        => @aws_proxy_uri
+          :region            => @aws_region
         )
         @cloudwatch_delay = options[:cloudwatch_delay] || 60
       end

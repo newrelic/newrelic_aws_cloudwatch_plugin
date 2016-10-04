@@ -5,8 +5,7 @@ module NewRelicAWS
         elb = Aws::ElasticLoadBalancing::Client.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
-          :region => @aws_region,
-          :http_proxy => @aws_proxy_uri
+          :region => @aws_region
         )
         elb.describe_load_balancers.load_balancer_descriptions.map { |load_balancer| load_balancer.load_balancer_name }
       end
