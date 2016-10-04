@@ -197,6 +197,14 @@ module NewRelicAWS
     end
   end
 
+  module KIN
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.kin"
+      agent_version NewRelicAWS::VERSION
+      agent_human_labels("Kinesis") { "Kinesis" }
+    end
+  end
+
   #
   # Register each agent with the component.
   #
@@ -209,6 +217,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :sns, SNS if NewRelicAWS::agent_enabled?(:sns)
   NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
   NewRelic::Plugin::Setup.install_agent :ecr, ECR if NewRelicAWS::agent_enabled?(:ecr)
+  NewRelic::Plugin::Setup.install_agent :kin, KIN if NewRelicAWS::agent_enabled?(:kin)
 
   #
   # Launch the agents; this never returns.
