@@ -11,9 +11,6 @@ newrelic:
   # All output goes to stdout/stderr.
   #
   # verbose: 1
-
-  # Set proxy URI
-  # proxy_uri: 
 #
 # AWS configuration.
 #

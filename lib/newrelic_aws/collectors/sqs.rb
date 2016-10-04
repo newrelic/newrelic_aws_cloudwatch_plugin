@@ -8,7 +8,7 @@ module NewRelicAWS
           :region => @aws_region,
           :http_proxy => @aws_proxy_uri
         )
-	sqs.client.list_queues.queue_urls.map {|name| name.split("/").last}
+        sqs.client.list_queues.queue_urls.map {|name| name.split("/").last}
       end
 
       def metric_list
