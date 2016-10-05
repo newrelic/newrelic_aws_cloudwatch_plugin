@@ -43,7 +43,7 @@ module NewRelicAWS
       def collect
         data_points = []
         volumes.each do |volume|
-          detailed = !!volume.iops
+          detailed = volume.type == 'io1'
           name_tag = volume.tags.detect { |tag| tag.first =~ /^name$/i }
           metric_list.each do |(metric_name, statistic, unit)|
             period = detailed ? 60 : 300
