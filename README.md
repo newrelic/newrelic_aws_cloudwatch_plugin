@@ -87,11 +87,12 @@ agents:
       - newrelic_monitored
 ```
 
-### RDS Instance Filtering
+### RDS and ElastiCache Instance/Cluster Filtering
 When an IAM policy for rds:DescribeDBInstances has Resource restrictions, the rds-describe-db-instances call will fail when an allowed DBInstanceIdentifier is not specified.
 
 If there are no configured instance_identifiers, all available instances will be monitored. This is the default behavior.
 
+The parameter is `instance_identifiers` for ElastiCache as well, even if it rather deals with cluster identifiers.
 ```
 ...
 agents:
@@ -100,6 +101,10 @@ agents:
     instance_identifiers:
       - db1
       - db2
+  ecr:
+    enabled: true
+    instance_identifiers:
+      - cache1
 ```
 
 ### CloudWatch Delay
