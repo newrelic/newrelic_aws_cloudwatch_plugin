@@ -1,7 +1,13 @@
 module NewRelicAWS
   module Collectors
     class ELB < Base
+      def initialize(access_key, secret_key, region, options)
+        super(access_key, secret_key, region, options)
+        @load_balancers = options[:instance_identifiers]
+      end
+
       def load_balancers
+        return @load_balancers if @load_balancers
         elb = AWS::ELB.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
