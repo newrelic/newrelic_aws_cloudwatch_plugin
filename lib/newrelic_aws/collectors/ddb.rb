@@ -2,7 +2,7 @@ module NewRelicAWS
   module Collectors
     class DDB < Base
       def tables
-        ddb = AWS::DynamoDB.new(
+        ddb = Aws::DynamoDB::Resource.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key
         )
