@@ -19,6 +19,15 @@ This tool provides the metric collection agents for the following New Relic plug
 - Bundler `gem install bundler`
 - Git
 
+### Additional Amazon Linux Dependencies
+- ruby-devel `yum install ruby-devel`
+- libxml2-devel `yum install libxml2-devel`
+- libxslt-devel `yum install libxslt-devel`
+- nokogiri `gem install nokogiri`
+- io-console `gem install io-console`
+- Also add /usr/local/bin/ to your $PATH if not defined
+
+
 ## Install
 
 ### Manual Installation
