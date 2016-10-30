@@ -5,7 +5,8 @@ module NewRelicAWS
         sns = AWS::SNS.new(
           :access_key_id => @aws_access_key,
           :secret_access_key => @aws_secret_key,
-          :region => @aws_region
+          :region => @aws_region,
+          :proxy_uri => @aws_proxy_uri
         )
         sns.topics.map { |topic| topic.name }
       end
