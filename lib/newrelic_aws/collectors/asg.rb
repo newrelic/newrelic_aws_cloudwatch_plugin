@@ -38,8 +38,6 @@ module NewRelicAWS
                 :name  => "AutoScalingGroupName",
                 :value => group.name
               },
-              :period => 60,
-              :start_time => (Time.now.utc-120).iso8601,
               :component_name => group.name
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")
