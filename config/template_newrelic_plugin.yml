@@ -65,3 +65,5 @@ agents:
       - !ruby/regexp '/^hermes/'
   asg:
     enabled: false
+  es:
+    enabled: false

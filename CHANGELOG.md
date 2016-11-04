@@ -1,5 +1,11 @@
 ## New Relic Amazon CloudWatch Plugin ##
 
+### 3.3.4-olx.0.1 - November 3, 2016 ###
+
+**Features**
+
+* Added new `AWS ES` plugin support for AWS Elasticsearch (Dmytro Zavalkin <dmytro.zavalkin@olx.com>)
+
 ### v3.3.4 - July 21, 2016 ###
 
 **Changes**

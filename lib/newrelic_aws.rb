@@ -207,6 +207,14 @@ module NewRelicAWS
     end
   end
 
+  module ES
+    class Agent < Base::Agent
+        agent_guid "com.newrelic.aws.es"
+        agent_version NewRelicAWS::VERSION
+        agent_human_labels("AWS ES") { "AWS ES" }
+    end
+  end
+
   #
   # Register each agent with the component.
   #
@@ -220,6 +228,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :ec,  EC  if NewRelicAWS::agent_enabled?(:ec)
   NewRelic::Plugin::Setup.install_agent :ecr, ECR if NewRelicAWS::agent_enabled?(:ecr)
   NewRelic::Plugin::Setup.install_agent :asg, ASG if NewRelicAWS::agent_enabled?(:asg)
+  NewRelic::Plugin::Setup.install_agent :es, ES if NewRelicAWS::agent_enabled?(:es)
 
   #
   # Launch the agents; this never returns.
