@@ -32,7 +32,8 @@ module NewRelicAWS
           ["DiskWriteOps", "Sum", "Count"],
           ["DiskWriteBytes" , "Sum", "Bytes"],
           ["NetworkIn", "Sum", "Bytes"],
-          ["NetworkOut", "Sum", "Bytes"]
+          ["NetworkOut", "Sum", "Bytes"],
+          ["StatusCheckFailed_System","Minimum","Count"]
         ]
       end
 
