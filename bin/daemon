@@ -10,4 +10,6 @@
 
 require 'daemons'
 
-Daemons.run('newrelic_aws')
+pwd=File.dirname(File.expand_path(__FILE__))
+
+Daemons.run(File.join(pwd,'newrelic_aws'))
