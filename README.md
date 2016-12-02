@@ -153,6 +153,7 @@ You will need to create a new IAM group, `NewRelicCloudWatch`, where the permiss
         "sqs:GetQueueAttributes",
         "sqs:ListQueues",
         "rds:DescribeDBInstances",
+        "redshift:Describe*",
         "SNS:ListTopics"
       ],
       "Effect": "Allow",
