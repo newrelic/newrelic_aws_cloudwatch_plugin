@@ -46,7 +46,7 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "DBInstanceIdentifier",
-                :value => instance_id
+                :value => instance_id.to_s
               }
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")

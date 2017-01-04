@@ -40,7 +40,7 @@ module NewRelicAWS
               :default_value => default_value,
               :dimension     => {
                 :name  => "LoadBalancerName",
-                :value => load_balancer_name
+                :value => load_balancer_name.to_s
               }
             )
             NewRelic::PlatformLogger.debug("metric_name: #{metric_name}, statistic: #{statistic}, unit: #{unit}, response: #{data_point.inspect}")

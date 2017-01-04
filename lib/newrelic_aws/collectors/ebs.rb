@@ -56,7 +56,7 @@ module NewRelicAWS
               :unit        => unit,
               :dimension   => {
                 :name  => "VolumeId",
-                :value => volume.id
+                :value => volume.id.to_s
               },
               :period => period,
               :start_time => (Time.now.utc - (time_offset + period)).iso8601,
