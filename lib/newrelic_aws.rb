@@ -143,6 +143,14 @@ module NewRelicAWS
     end
   end
 
+  module ALB
+    class Agent < Base::Agent
+      agent_guid "com.newrelic.aws.alb"
+      agent_version NewRelicAWS::VERSION
+      agent_human_labels("ALB") { "ALB" }
+    end
+  end
+
   module ELB
     class Agent < Base::Agent
       agent_guid "com.newrelic.aws.elb"
@@ -221,6 +229,7 @@ module NewRelicAWS
   NewRelic::Plugin::Setup.install_agent :ec2, EC2 if NewRelicAWS::agent_enabled?(:ec2)
   NewRelic::Plugin::Setup.install_agent :ebs, EBS if NewRelicAWS::agent_enabled?(:ebs)
   NewRelic::Plugin::Setup.install_agent :elb, ELB if NewRelicAWS::agent_enabled?(:elb)
+  NewRelic::Plugin::Setup.install_agent :alb, ALB if NewRelicAWS::agent_enabled?(:alb)
   NewRelic::Plugin::Setup.install_agent :rds, RDS if NewRelicAWS::agent_enabled?(:rds)
   # NewRelic::Plugin::Setup.install_agent :ddb, DDB # WIP
   NewRelic::Plugin::Setup.install_agent :sqs, SQS if NewRelicAWS::agent_enabled?(:sqs)

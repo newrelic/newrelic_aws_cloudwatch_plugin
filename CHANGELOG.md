@@ -1,5 +1,11 @@
 ## New Relic Amazon CloudWatch Plugin ##
 
+### v3.3.5 - October 19, 2016 ###
+
+**Changes**
+
+* Support new namespace: AWS/ApplicationELB
+
 ### 3.3.4-olx.0.1 - November 3, 2016 ###
 
 **Features**
