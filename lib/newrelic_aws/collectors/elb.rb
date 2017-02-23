@@ -24,19 +24,19 @@ module NewRelicAWS
 
       def metric_list
         [
-            ["Latency", "Average", "Seconds"],
-            ["RequestCount", "Sum", "Count", 0],
-            ["HealthyHostCount", "Maximum", "Count", 0],
-            ["UnHealthyHostCount", "Maximum", "Count", 0],
-            ["HTTPCode_ELB_4XX", "Sum", "Count", 0],
-            ["HTTPCode_ELB_5XX", "Sum", "Count", 0],
-            ["HTTPCode_Backend_2XX", "Sum", "Count", 0],
-            ["HTTPCode_Backend_3XX", "Sum", "Count", 0],
-            ["HTTPCode_Backend_4XX", "Sum", "Count", 0],
-            ["HTTPCode_Backend_5XX", "Sum", "Count", 0],
-            ["BackendConnectionErrors", "Sum", "Count", 0],
-            ["SurgeQueueLength", "Maximum", "Count", 0],
-            ["SpilloverCount", "Sum", "Count", 0]
+          ["Latency", "Average", "Seconds"],
+          ["RequestCount", "Sum", "Count", 0],
+          ["HealthyHostCount", "Maximum", "Count", 0],
+          ["UnHealthyHostCount", "Maximum", "Count", 0],
+          ["HTTPCode_ELB_4XX", "Sum", "Count", 0],
+          ["HTTPCode_ELB_5XX", "Sum", "Count", 0],
+          ["HTTPCode_Backend_2XX", "Sum", "Count", 0],
+          ["HTTPCode_Backend_3XX", "Sum", "Count", 0],
+          ["HTTPCode_Backend_4XX", "Sum", "Count", 0],
+          ["HTTPCode_Backend_5XX", "Sum", "Count", 0],
+          ["BackendConnectionErrors", "Sum", "Count", 0],
+          ["SurgeQueueLength", "Maximum", "Count", 0],
+          ["SpilloverCount", "Sum", "Count", 0]
         ]
       end
 

@@ -5,6 +5,7 @@ This tool provides the metric collection agents for the following New Relic plug
 - EC2
 - EBS
 - ELB
+- ALB
 - RDS
 - SQS
 - SNS
