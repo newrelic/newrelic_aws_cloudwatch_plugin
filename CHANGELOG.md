@@ -6,6 +6,12 @@
 
 * Support new namespace: AWS/ApplicationELB
 
+### 3.3.4-olx.0.1 - November 3, 2016 ###
+
+**Features**
+
+* Added new `AWS ES` plugin support for AWS Elasticsearch (Dmytro Zavalkin <dmytro.zavalkin@olx.com>)
+
 ### v3.3.4 - July 21, 2016 ###
 
 **Changes**
@@ -30,6 +36,12 @@
 
 * Added support for pulling AWS credentials from IAM Roles and Instance Profiles
 * Added support for filtering RDS instances by instance identifiers
+
+### v3.3.0a - March 22, 2014 ###
+
+**Features**
+
+* Added new `ASG` plugin support for AutoScaling Groups (Brett Cave <brett@cave.za.net>)
 
 **Bug Fixes**
 

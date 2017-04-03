@@ -5,12 +5,14 @@ This tool provides the metric collection agents for the following New Relic plug
 - EC2
 - EBS
 - ELB
+- ALB
 - RDS
 - SQS
 - SNS
 - ElastiCache
   - Memcached
   - Redis
+- ASG
 
 ## Dependencies
 - A single t1.micro EC2 instance (in any region)
@@ -60,6 +62,10 @@ The plugin can also be configured to query specific CloudWatch regions, e.g. `us
 
 Amazon ElastiCache supports both Memcached and Redis caching technologies. The Memcached agent is configured under the `ec` section, while the Redis agent is configured under the `ecr` section.
 
+### Amazon AutoScaling groups
+
+Amazon AutoScaling is a sub-service of EC2, and in CloudWatch is reported in the EC2 namespace. However, the New Relic plugin has been implemented as a seperate plugin, as this allows you to monitoring Auto Scaling groups independently of individual instances.
+
 ### Tag Filtering
 
 Filtering instances by tags is supported for both `EC2` and `EBS`. Details on adding tags to instances is available in the [AWS documentation](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html).
@@ -86,6 +92,37 @@ agents:
     tags:
       - newrelic_monitored
 ```
+
+### Name Filtering
+Filtering instances by name pattern is supported for `ELB`, `RDS` and `ElastiCache`.
+You should just specify name pattern(s) in the following way:
+
+```
+...
+agents:
+  elb:
+    enabled: true
+    name_patterns:
+      - !ruby/regexp '/^patterA/'
+      - !ruby/regexp '/^patterB/'
+  rds:
+    enabled: true
+    name_patterns:
+      - !ruby/regexp '/^patterA/'
+      - !ruby/regexp '/^patterB/'
+  ec:
+    enabled: true
+    name_patterns:
+      - !ruby/regexp '/^patterA/'
+      - !ruby/regexp '/^patterB/'
+  ecr:
+    enabled: true
+    name_patterns:
+      - !ruby/regexp '/^patterA/'
+      - !ruby/regexp '/^patterB/'
+```
+
+
 
 ### RDS Instance Filtering
 When an IAM policy for rds:DescribeDBInstances has Resource restrictions, the rds-describe-db-instances call will fail when an allowed DBInstanceIdentifier is not specified.

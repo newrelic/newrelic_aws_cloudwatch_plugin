@@ -17,7 +17,7 @@ module NewRelicAWS
         options[:period]     ||= 60
         options[:start_time] ||= (Time.now.utc - (@cloudwatch_delay + options[:period])).iso8601
         options[:end_time]   ||= (Time.now.utc - @cloudwatch_delay).iso8601
-        options[:dimensions] ||= [options[:dimension]]
+        options[:dimensions] ||= options[:dimension].is_a?(Hash) ? [options[:dimension]] : options[:dimension]
         NewRelic::PlatformLogger.info("Retrieving statistics: " + options.inspect)
         begin
           statistics = @cloudwatch.client.get_metric_statistics(

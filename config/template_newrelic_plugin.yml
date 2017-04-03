@@ -45,6 +45,8 @@ agents:
   # which adjusts the time window in seconds for CloudWatch querying.
   # Some of the Cloudwatch metrics are not immediately available and may
   # require a delay before being queried.
+  alb:
+    enabled: true
   ec2:
     enabled: true
   ebs:
@@ -60,4 +62,10 @@ agents:
   ec:
     enabled: false
   ecr:
+    enabled: false
+    name_patterns:
+      - !ruby/regexp '/^hermes/'
+  asg:
+    enabled: false
+  es:
     enabled: false
