@@ -44,7 +44,8 @@ module NewRelicAWS
           ["WriteLatency", "Average", "Seconds", false],
           ["ReadThroughput", "Sum", "Bytes/Second", false],
           ["WriteThroughput", "Sum", "Bytes/Second", false],
-          ["CPUCreditBalance", "Minimum", "Count", false]
+          ["CPUCreditBalance", "Minimum", "Count", false],
+          ["ClusterIndexWritesBlocked", "Maximum", "Count", false]
         ]
       end
 
