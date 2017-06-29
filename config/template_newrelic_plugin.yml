@@ -49,6 +49,8 @@ agents:
     enabled: true
   ebs:
     enabled: true
+  alb:
+    enabled: false
   elb:
     enabled: false
   rds:
