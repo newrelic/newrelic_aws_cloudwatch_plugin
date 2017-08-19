@@ -67,11 +67,8 @@ module NewRelicAWS
         aws = @agent_options["aws"]
         if aws.is_a?(Hash)
           if aws["use_aws_metadata"] == true
-            @agent_options["aws"] = {
-              "use_aws_metadata" => true,
-              "access_key" => nil,
-              "secret_key" => nil
-            }
+            @agent_options["aws"]["access_key"] = nil
+            @agent_options["aws"]["secret_key"] = nil
           else
             unless aws["access_key"].is_a?(String) &&
                 aws["secret_key"].is_a?(String)
