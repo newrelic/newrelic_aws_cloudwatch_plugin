@@ -224,5 +224,9 @@ module NewRelicAWS
   #
   # Launch the agents; this never returns.
   #
-  NewRelic::Plugin::Run.setup_and_run
+  run = new NewRelic::Plugin::Run
+  run.setup_from_config component_type_filter
+  run.setup_no_config_agents
+  run.agent_startup
+  run.agent_shutdown
 end

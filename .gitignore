@@ -2,3 +2,4 @@ config/newrelic_plugin.yml
 .bundle
 vendor/
 Gemfile.lock
+test.sh
