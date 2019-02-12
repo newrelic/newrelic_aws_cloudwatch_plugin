@@ -1,4 +1,4 @@
-TAG ?= :latest
+TAG ?= nrcp:latest
 
 .PHONY: build
 build:
@@ -14,4 +14,7 @@ run:
 
 .PHONY: shell
 shell: build
-	docker run -it --env-file=ops/.env -v ${PWD}:/root/nra docker.camplexer.com/$(TAG) bash
+	docker run -it  docker.camplexer.com/$(TAG) env \
+	-d AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+	-d AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+	-d NEWRELIC_KEY=${NEWRELIC_KEY}

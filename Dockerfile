@@ -7,13 +7,15 @@ RUN DEBIAN_FRONTEND=noninteractive && \
   apt-get autoremove --purge && \
   apt-get clean
 
+COPY . .
+
 RUN gem install --no-rdoc --no-ri bundler && \
-  curl -L https://github.com/newrelic-platform/newrelic_aws_cloudwatch_plugin/archive/latest.tar.gz > latest.tar.gz && \
-  tar -zxf latest.tar.gz -C /usr/local && \
   cp config/template_newrelic_plugin.yml config/newrelic_plugin.yml && \
   sed -e "s/YOUR_LICENSE_KEY_HERE/<%= ENV[\"NEWRELIC_KEY\"] %>/g" -i config/newrelic_plugin.yml && \
   sed -e "s/YOUR_AWS_ACCESS_KEY_HERE/<%= ENV[\"AWS_ACCESS_KEY\"] %>/g" -i config/newrelic_plugin.yml && \
   sed -e "s/YOUR_AWS_SECRET_KEY_HERE/<%= ENV[\"AWS_SECRET_KEY\"] %>/g" -i config/newrelic_plugin.yml
+
+RUN cat config/newrelic_plugin.yml
 
 RUN bundle install --quiet --without test && \
   bundle clean --force && \

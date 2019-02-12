@@ -1,0 +1,25 @@
+newrelic:
+  license_key: '<%= ENV["NEWRELIC_KEY"] %>'
+  verbose: 0
+
+aws:
+  use_aws_metadata: true
+
+agents:
+  sqs:
+    enabled: true
+  ec2:
+    enabled: false
+  ebs:
+    enabled: false
+  elb:
+    enabled: false
+  rds:
+    enabled: true
+  sns:
+    enabled: false
+  ec:
+    enabled: false
+  ecr:
+    enabled: false
+
