@@ -9,13 +9,7 @@ RUN DEBIAN_FRONTEND=noninteractive && \
 
 COPY . .
 
-RUN gem install --no-rdoc --no-ri bundler && \
-  cp config/template_newrelic_plugin.yml config/newrelic_plugin.yml && \
-  sed -e "s/YOUR_LICENSE_KEY_HERE/<%= ENV[\"NEWRELIC_KEY\"] %>/g" -i config/newrelic_plugin.yml && \
-  sed -e "s/YOUR_AWS_ACCESS_KEY_HERE/<%= ENV[\"AWS_ACCESS_KEY\"] %>/g" -i config/newrelic_plugin.yml && \
-  sed -e "s/YOUR_AWS_SECRET_KEY_HERE/<%= ENV[\"AWS_SECRET_KEY\"] %>/g" -i config/newrelic_plugin.yml
-
-RUN cat config/newrelic_plugin.yml
+RUN gem install --no-rdoc --no-ri bundler
 
 RUN bundle install --quiet --without test && \
   bundle clean --force && \
@@ -24,4 +18,5 @@ RUN bundle install --quiet --without test && \
   rm -rf latest.tar.gz /tmp/* /var/tmp/* /var/lib/apt/lists/*
 
 ADD newrelic_plugin.yml config/
+
 ENTRYPOINT ["bundle", "exec", "./bin/newrelic_aws"]
